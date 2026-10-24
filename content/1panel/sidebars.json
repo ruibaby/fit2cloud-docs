@@ -123,9 +123,9 @@
           "items": [
             {
               "type": "doc",
-              "id": "user_manual/appstore/appstore",
+              "id": "user_manual/appstore/index",
               "label": "概述",
-              "key": "doc:user_manual/appstore/appstore @ 功能手册 / 应用商店"
+              "key": "doc:user_manual/appstore/index @ 功能手册 / 应用商店"
             },
             {
               "type": "doc",
@@ -199,9 +199,9 @@
           "items": [
             {
               "type": "doc",
-              "id": "user_manual/websites/websites",
+              "id": "user_manual/websites/index",
               "label": "概述",
-              "key": "doc:user_manual/websites/websites @ 功能手册 / 网站"
+              "key": "doc:user_manual/websites/index @ 功能手册 / 网站"
             },
             {
               "type": "doc",
@@ -499,9 +499,9 @@
               "items": [
                 {
                   "type": "doc",
-                  "id": "user_manual/xpack/waf/waf",
+                  "id": "user_manual/xpack/waf/index",
                   "label": "概述",
-                  "key": "doc:user_manual/xpack/waf/waf @ 功能手册 / 高级功能 / WAF"
+                  "key": "doc:user_manual/xpack/waf/index @ 功能手册 / 高级功能 / WAF"
                 },
                 {
                   "type": "doc",
@@ -874,7 +874,7 @@
         },
         {
           "type": "doc",
-          "id": "faq/faq",
+          "id": "faq/index",
           "label": "产品 FAQ"
         },
         {
@@ -993,9 +993,9 @@
           "items": [
             {
               "type": "doc",
-              "id": "user-manual/appstore/appstore",
+              "id": "user-manual/appstore/index",
               "label": "概述",
-              "key": "v1-doc:user-manual/appstore/appstore @ 功能手册 / 应用商店"
+              "key": "v1-doc:user-manual/appstore/index @ 功能手册 / 应用商店"
             },
             {
               "type": "doc",
@@ -1019,9 +1019,9 @@
           "items": [
             {
               "type": "doc",
-              "id": "user-manual/websites/websites",
+              "id": "user-manual/websites/index",
               "label": "概述",
-              "key": "v1-doc:user-manual/websites/websites @ 功能手册 / 网站"
+              "key": "v1-doc:user-manual/websites/index @ 功能手册 / 网站"
             },
             {
               "type": "doc",
@@ -1370,9 +1370,9 @@
               "items": [
                 {
                   "type": "doc",
-                  "id": "user-manual/xpack/waf/waf",
+                  "id": "user-manual/xpack/waf/index",
                   "label": "概述",
-                  "key": "v1-doc:user-manual/xpack/waf/waf @ 功能手册 / 高级功能 / WAF"
+                  "key": "v1-doc:user-manual/xpack/waf/index @ 功能手册 / 高级功能 / WAF"
                 },
                 {
                   "type": "doc",
@@ -1426,9 +1426,9 @@
       "items": [
         {
           "type": "doc",
-          "id": "faq/faq",
+          "id": "faq/index",
           "label": "产品 FAQ",
-          "key": "v1-doc:faq/faq @ 常见问题"
+          "key": "v1-doc:faq/index @ 常见问题"
         },
         {
           "type": "doc",
@@ -1458,9 +1458,9 @@
       "items": [
         {
           "type": "doc",
-          "id": "dev-manual/dev-manual",
+          "id": "dev-manual/index",
           "label": "开发环境搭建",
-          "key": "v1-doc:dev-manual/dev-manual @ 开发文档"
+          "key": "v1-doc:dev-manual/index @ 开发文档"
         },
         {
           "type": "doc",

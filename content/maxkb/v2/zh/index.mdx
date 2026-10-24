@@ -13,13 +13,13 @@ import styles from './product_landing.module.css';
 <div className={styles.hero}>
 
   <div className={styles.heroBody}>
-    <p className={styles.heroDesc}>
+    <div className={styles.heroDesc}>
       MaxKB = Max Knowledge Brain，是一款强大易用的企业级智能体平台，致力于解决企业 AI
       落地面临的技术门槛高、部署成本高、迭代周期长等问题。秉承“开箱即用，伴随成长”的设计理念，
       支持快速接入主流大模型、高效构建专属知识库，提供从知识问答（RAG）、
       流程自动化（Workflow）到智能体（Agent）的渐进式升级路径，
       赋能智能客服、智慧办公等场景。
-    </p>
+    </div>
     <div className={styles.heroBtns}>
 
       <Link className={styles.heroBtn} href="/changelog">产品动态</Link>
@@ -67,8 +67,8 @@ import styles from './product_landing.module.css';
         <div className={styles.subLinkRow}>
           <Link className={styles.subLink} href="/product-intro">MaxKB 介绍</Link>
 
-          <Link className={styles.subLink} href="/user_manual/dataset/dataset">知识库</Link>
-          <Link className={styles.subLink} href="/user_manual/app/app">智能体</Link>
+          <Link className={styles.subLink} href="/user_manual/dataset/">知识库</Link>
+          <Link className={styles.subLink} href="/user_manual/app/">智能体</Link>
           <Link className={styles.subLink} href="/user_manual/dataset/workflow">工作流</Link>
         </div>
       </div>
@@ -100,7 +100,7 @@ import styles from './product_landing.module.css';
           <Link className={styles.subLink} href="/installation/offline_installtion">安装部署</Link>
           <Link className={styles.subLink} href="/user_manual/model/model_summary">模型对接</Link>
 
-          <Link className={styles.subLink} href="/user_manual/dataset/dataset">知识库构建</Link>
+          <Link className={styles.subLink} href="/user_manual/dataset/">知识库构建</Link>
           <Link className={styles.subLink} href="/user_manual/app/simple_app">智能体创建</Link>
         </div>
       </div>
@@ -108,12 +108,12 @@ import styles from './product_landing.module.css';
         <span className={styles.groupLabel}>操作指南</span>
 
         <div className={styles.subLinkRow}>
-          <Link className={styles.subLink} href="/user_manual/dataset/dataset">知识库管理</Link>
+          <Link className={styles.subLink} href="/user_manual/dataset/">知识库管理</Link>
           <Link className={styles.subLink} href="/user_manual/dataset/doclist">文档分段</Link>
           <Link className={styles.subLink} href="/user_manual/dataset/hit-testing">命中测试</Link>
           <Link className={styles.subLink} href="/user_manual/dataset/workflow">工作流编排</Link>
-          <Link className={styles.subLink} href="/user_manual/tool/tool">工具与函数库</Link>
-          <Link className={styles.subLink} href="/user_manual/trigger/trigger">触发器</Link>
+          <Link className={styles.subLink} href="/user_manual/tool/">工具与函数库</Link>
+          <Link className={styles.subLink} href="/user_manual/trigger/">触发器</Link>
           <Link className={styles.subLink} href="/user_manual/app/log">对话日志</Link>
           <Link className={styles.subLink} href="/user_manual/email">系统设置</Link>
           <Link className={styles.subLink} href="/user_manual/X-Pack/user">用户管理</Link>

@@ -278,7 +278,7 @@
           "items": [
             {
               "type": "doc",
-              "id": "user_manual/tool/tool",
+              "id": "user_manual/tool/index",
               "label": "工具",
               "key": "doc:功能手册/工具/工具"
             },
@@ -298,7 +298,7 @@
           "items": [
             {
               "type": "doc",
-              "id": "user_manual/dataset/dataset",
+              "id": "user_manual/dataset/index",
               "label": "知识库",
               "key": "doc:功能手册/知识库/知识库"
             },
@@ -342,7 +342,7 @@
           "items": [
             {
               "type": "doc",
-              "id": "user_manual/app/app",
+              "id": "user_manual/app/index",
               "label": "智能体概述",
               "key": "doc:功能手册/智能体/智能体概述"
             },
@@ -383,7 +383,7 @@
         },
         {
           "type": "doc",
-          "id": "user_manual/trigger/trigger",
+          "id": "user_manual/trigger/index",
           "label": "触发器",
           "key": "doc:功能手册/触发器"
         },
@@ -770,7 +770,7 @@
           "items": [
             {
               "type": "doc",
-              "id": "user_manual/dataset/dataset",
+              "id": "user_manual/dataset/index",
               "label": "知识库",
               "key": "v1-doc:功能手册/知识库/知识库"
             },
@@ -797,7 +797,7 @@
         },
         {
           "type": "doc",
-          "id": "user_manual/fx/fx",
+          "id": "user_manual/fx/index",
           "label": "函数库",
           "key": "v1-doc:功能手册/函数库"
         },
@@ -1003,7 +1003,7 @@
         },
         {
           "type": "doc",
-          "id": "user_manual/team/team",
+          "id": "user_manual/team/index",
           "label": "团队管理",
           "key": "v1-doc:功能手册/团队管理"
         },

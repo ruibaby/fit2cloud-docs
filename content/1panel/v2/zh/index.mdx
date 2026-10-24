@@ -13,12 +13,12 @@ import styles from './product_landing.module.css';
 <div className={styles.hero}>
 
   <div className={styles.heroBody}>
-    <p className={styles.heroDesc}>
+    <div className={styles.heroDesc}>
       1Panel 是一款现代化、开源的 Linux 服务器运维管理面板，同时也是轻量级的 AI 管理平台。
       通过直观易用的 Web 界面，帮助你轻松掌控服务器全局：无论是 AI 智能体与本地大模型，
       还是网站、数据库、容器、文件及计划任务，所有核心运维场景均能一站式高效管理，
       让 Linux 服务器运维化繁为简。
-    </p>
+    </div>
     <div className={styles.heroBtns}>
 
       <Link className={styles.heroBtn} href="/changelog">产品动态</Link>
@@ -66,9 +66,9 @@ import styles from './product_landing.module.css';
         <div className={styles.subLinkRow}>
           <Link className={styles.subLink} href="/product-intro">1Panel 介绍</Link>
 
-          <Link className={styles.subLink} href="/user_manual/websites/websites">建站工具</Link>
+          <Link className={styles.subLink} href="/user_manual/websites/">建站工具</Link>
           <Link className={styles.subLink} href="/user_manual/ai/agent">AI 智能体管理</Link>
-          <Link className={styles.subLink} href="/user_manual/appstore/appstore">应用商店</Link>
+          <Link className={styles.subLink} href="/user_manual/appstore/">应用商店</Link>
         </div>
       </div>
     </div>
@@ -182,7 +182,7 @@ import styles from './product_landing.module.css';
         <Link className={styles.subLink} href="/faq/openclaw#4-openclaw-从-v71-升级到-v91-或更高版本失败怎么办">OpenClaw 升级失败怎么办？</Link>
         <Link className={styles.subLink} href="/faq/community_faq#32-智能路由为什么没有生效">智能路由为什么没有生效？</Link>
 
-        <Link className={styles.subLink} href="/faq/faq#1-1panel-和宝塔有什么区别">1Panel 和宝塔有什么区别？</Link>
+        <Link className={styles.subLink} href="/faq/#1-1panel-和宝塔有什么区别">1Panel 和宝塔有什么区别？</Link>
         <Link className={styles.subLink} href="/installation/cli">1pctl 命令行工具</Link>
       </div>
     </div>

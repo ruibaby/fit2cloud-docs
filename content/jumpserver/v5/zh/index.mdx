@@ -13,11 +13,11 @@ import styles from './product_landing.module.css';
 <div className={styles.hero}>
 
   <div className={styles.heroBody}>
-    <p className={styles.heroDesc}>
+    <div className={styles.heroDesc}>
       JumpServer 是广受欢迎的开源堡垒机，是符合 4A 规范的专业运维安全审计系统。帮助企业以更安全的方式管控和登录所有类型的资产，
       实现事前授权、事中监察、事后审计，满足等保合规要求。支持 SSH、Windows、数据库、云服务（Kubernetes / VMware）、
       Web 站点以及 Remote App 等多种资产类型。
-    </p>
+    </div>
     <div className={styles.heroBtns}>
 
       <Link className={styles.heroBtn} href="/change_log">产品动态</Link>
@@ -103,7 +103,7 @@ import styles from './product_landing.module.css';
         <span className={styles.groupLabel}>操作指南</span>
         <div className={styles.subLinkRow}>
 
-          <Link className={styles.subLink} href="/manual/admin/console/users/users">用户管理</Link>
+          <Link className={styles.subLink} href="/manual/admin/console/users/">用户管理</Link>
           <Link className={styles.subLink} href="/manual/admin/console/account_management/account_list">账号管理</Link>
           <Link className={styles.subLink} href="/manual/admin/console/authorization_manage/assets_authorization">授权管理</Link>
           <Link className={styles.subLink} href="/manual/pam/introduction">PAM 管理</Link>

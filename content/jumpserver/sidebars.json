@@ -290,7 +290,7 @@
               "items": [
                 {
                   "type": "doc",
-                  "id": "manual/admin/console/users/users",
+                  "id": "manual/admin/console/users/index",
                   "label": "用户列表",
                   "key": "doc:使用手册/管理员手册/控制台/用户管理/用户列表"
                 },
@@ -1099,7 +1099,7 @@
       "items": [
         {
           "type": "doc",
-          "id": "faq/faq",
+          "id": "faq/index",
           "label": "产品 FAQ",
           "key": "doc:常见问题/产品 FAQ"
         },
@@ -1344,7 +1344,7 @@
                   "items": [
                     {
                       "type": "doc",
-                      "id": "manual/admin/console/users/users",
+                      "id": "manual/admin/console/users/index",
                       "label": "用户列表",
                       "key": "doc:用户手册/管理员手册/控制台/用户管理/用户列表"
                     },
@@ -2103,7 +2103,7 @@
       "items": [
         {
           "type": "doc",
-          "id": "faq/faq",
+          "id": "faq/index",
           "label": "产品 FAQ",
           "key": "doc:常见问题/产品 FAQ"
         },
@@ -2997,7 +2997,7 @@
       "items": [
         {
           "type": "doc",
-          "id": "faq/faq",
+          "id": "faq/index",
           "label": "产品 FAQ",
           "key": "v3-doc:常见问题/产品 FAQ"
         },
