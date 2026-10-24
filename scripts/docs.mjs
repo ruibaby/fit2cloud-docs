@@ -6,6 +6,7 @@ import http from "node:http";
 import { createReadStream } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { generateSearchIndex } from "./search-index.mjs";
+import { generateSitemap } from "./sitemap.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 process.chdir(root);
@@ -92,6 +93,8 @@ async function build() {
   if (interrupted) throw new Error("Build interrupted");
   // Shared assets live at the root; Rspress emits each product's own public files.
   await cp("portal/public", "build", { recursive: true });
+  const pageCount = await generateSitemap();
+  console.log(`[sitemap] ${pageCount} URLs`);
 }
 // ---------------------------------------------------------------------------
 // Development server
@@ -177,11 +180,6 @@ function startSiteDev(id) {
   })();
   devSites.set(id, entry);
   return entry;
-}
-
-function siteForPath(pathname) {
-  const segment = pathname.split("/")[1];
-  return projectIds.has(segment) ? segment : "portal";
 }
 
 // Root-level endpoints that every dev server serves itself (HMR, lazy

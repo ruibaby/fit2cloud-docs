@@ -3,11 +3,11 @@
 *.local
 *.log*
 
-# Dist
+# Dependencies and build output
 node_modules
-dist/
-doc_build/
 build/
+.site-work/
+portal/public/search-index.json
 
 # IDE
 .vscode/*
@@ -16,5 +16,3 @@ build/
 .venv/
 .env.local
 .env.*.local
-.site-work/
-portal/public/search-index.json

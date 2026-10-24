@@ -1,14 +1,16 @@
 # 文档发布 Action
 
-本版以原始 `deploy-oss.yml` 为基准，保持一个 YAML、一个 Job、一次手动点击：
-检出代码 → 安装依赖 → `npm run build` → OSS 同步 → 可选 CDN 刷新。
-构建与上传在同一 Runner 中直接交接 `build/`。
+发布由 `.github/workflows/deploy-oss.yml` 完成，仅手动触发，一个 Job 内依次执行：
+检出代码 → `pnpm install --frozen-lockfile` → `pnpm build` → OSS 同步 → 可选 CDN 刷新。
 
-## 本次优化
+## 构建
 
-- OSS 多文件并发从默认 `3` 提高到 `20`，缩短大量图片上传时的等待。
-- `npm ci --no-audit --no-fund` 保持 lockfile 安装方式，跳过安装阶段的审计请求和资助提示。
-- 使用原有 npm 下载缓存，构建产物在同一 Runner 内直接用于上传。
+- 仓库要求 Node.js 24 和 pnpm 12；工作流用 `pnpm/action-setup` 与 `actions/setup-node` 的 pnpm 缓存安装依赖。
+- `pnpm build` 按 `scripts/docs.mjs` 编排：先构建门户到 `build/` 根目录，再并发构建各产品到 `build/<产品>/`；CI 环境使用双并发。
+- 构建末尾生成 `build/sitemap.xml`（汇总门户、全部产品和历史版本的页面）并复制门户公共资源，因此 `build/` 可直接作为完整站点镜像。
+- 新增产品、版本或页面后无需改工作流，重新执行构建即可。
+
+## 同步与刷新
 
 核心同步命令：
 
@@ -16,31 +18,15 @@
 ./ossutil sync ./build/ "oss://$ALIYUN_OSS_BUCKET/" --delete --checksum -f --job 20
 ```
 
-`ossutil 2.4.0` 的 `--checksum` 仅对 OSS 对象间拷贝生效。因此本版沿用原有上传判断，
-并发优化不等于按内容增量上传；上传量仍可能是完整站点。
-官方参数说明：https://www.alibabacloud.com/help/en/oss/developer-reference/sync-synchronize-local-files-to-oss
+- 上传并发从 ossutil 默认的 `3` 提高到 `20`，图片较多的站点可减少传输等待；实际耗时仍受总带宽限制。
+- `ossutil 2.4.0` 的 `--checksum` 仅对 OSS 对象之间拷贝生效，本地上传仍可能全量传输；同大小但内容变化的文件会正常覆盖。
+- 同步以 `build/` 镜像 Bucket 根目录，`--delete` 会删除云端多余文件，包括已下线的产品版本。
+- CDN 刷新提供两种方式：`directory` 刷新整站目录，`url-all` 按本次构建的 HTML 生成完整 URL 批量刷新；可通过 `purge_cdn=false` 跳过。
 
-## 与原流程的兼容性
+## 需要的 Secrets
 
-- 继续仅通过 `workflow_dispatch` 手动执行，沿用 `purge_cdn`、`cdn_refresh_mode` 两个输入及其默认值。
-- 构建语言继续由 `package.json` 的 `npm run build` 决定，当前为中文站。
-- 沿用原有 Node、ossutil、aliyun-cli 版本，Secrets、地域推导方式及 GitHub 权限。
-- 继续以完整 `build/` 镜像 Bucket 根目录；云端多余文件按原来的 `--delete` 规则删除。
-- 同大小但内容不同的文件仍会覆盖，上传失败时后续 CDN 步骤不会执行。
-- 沿用原有目录刷新、全部 HTML URL 刷新及关闭 CDN 刷新的分支逻辑。
-- 沿用 `cancel-in-progress: true` 和 30 分钟超时，重复触发、失败重跑方式与原流程一致。
+`ALIYUN_ACCESS_KEY_ID`、`ALIYUN_ACCESS_KEY_SECRET`、`ALIYUN_OSS_ENDPOINT`、`ALIYUN_OSS_BUCKET`、`ALIYUN_CDN_DOMAIN`。OSS 同步需要对象读写权限，CDN 刷新需要 `cdn:RefreshObjectCaches` 权限。
 
-## 验证与耗时
+## 本地校验
 
-已使用真实 ossutil 2.4.0 对本机模拟 OSS 对比默认并发和 `--job 20`，检查最终文件内容、
-上传与删除请求、同大小 HTML 更新、重复发布和失败行为，结果一致。
-120 个文件、每次上传模拟 150ms 延迟时，耗时从 6.564 秒降至 1.123 秒。
-该实验只验证延迟场景下的并发收益，线上耗时需按真实带宽测量。
-YAML 语义对比及 actionlint 检查均通过：除安装附加参数、同步并发和显示文字外，其他配置与原备份一致。
-
-上线后直接比较 Actions 中 `Build site`、`Sync build to OSS` 两个步骤及整个 Job 的耗时。
-并发不会按比例提升受总带宽限制的传输速度，应以真实运行结果验收。
-
-原始 YAML 备份保留在
-[`workflow-backups/deploy-oss.20260910-162735.yml.bak`](workflow-backups/deploy-oss.20260910-162735.yml.bak)。
-回退可直接使用该备份覆盖工作流文件。
+发布前在本地执行 `pnpm check:ci`、`pnpm build`、`pnpm verify:build`，然后可用 `pnpm preview` 打开 `http://localhost:4173/` 检查产物，包括 `/sitemap.xml` 和 `/robots.txt`。

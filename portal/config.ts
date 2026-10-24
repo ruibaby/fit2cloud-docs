@@ -5,6 +5,7 @@ import type { UserConfig, SidebarItem, SidebarGroup } from "@rspress/core";
 import projects from "./projects.json" with { type: "json" };
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const siteOrigin = "https://docs.fit2cloud.com";
 interface SourceItem {
   type?: string;
   id?: string;
@@ -129,7 +130,7 @@ export async function createSiteConfig(id = "portal"): Promise<UserConfig> {
           : "portal/public/img/favicon.ico",
       ),
     ),
-    siteOrigin: "https://docs.fit2cloud.com",
+    siteOrigin,
     route: { cleanUrls: true },
     llms:
       id === "portal"
@@ -143,7 +144,7 @@ export async function createSiteConfig(id = "portal"): Promise<UserConfig> {
                   .filter((item) => item.href.startsWith("/"))
                   .map(
                     (item) =>
-                      `- [${item.name}](${item.href}llms.txt): ${item.desc}`,
+                      `- [${item.name}](${siteOrigin}${item.href}llms.txt): ${item.desc}`,
                   )
                   .join("\n"),
                 "## 外部项目文档",

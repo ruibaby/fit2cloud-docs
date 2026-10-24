@@ -30,6 +30,10 @@ async function fixture(t, { ci = "", fail = "", project } = {}) {
     new URL("./docs.mjs", import.meta.url),
     path.join(root, "scripts/docs.mjs"),
   );
+  await cp(
+    new URL("./sitemap.mjs", import.meta.url),
+    path.join(root, "scripts/sitemap.mjs"),
+  );
   await writeFile(path.join(root, "package.json"), '{"type":"module"}');
   await writeFile(path.join(root, "build/keep/marker"), "keep");
   await mkdir(path.join(root, "build/a"), { recursive: true });
@@ -149,6 +153,12 @@ for (const [ci, expected] of [
     await assert.rejects(readFile(path.join(root, "build/keep/marker")), {
       code: "ENOENT",
     });
+    const sitemap = await readFile(
+      path.join(root, "build/sitemap.xml"),
+      "utf8",
+    );
+    for (const id of ["a", "b", "c", "d", "e", "f"])
+      assert.ok(sitemap.includes(`https://docs.fit2cloud.com/${id}/`));
   });
 }
 
