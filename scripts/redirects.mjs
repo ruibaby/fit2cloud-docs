@@ -5,8 +5,11 @@ const root = path.resolve("build");
 const origin = "https://docs.fit2cloud.com";
 
 // Docusaurus used these frontmatter slugs, so old public URLs did not match
-// the file names Rspress routes by. Keep the published links working.
+// the file names Rspress routes by. The two portal help pages were removed in
+// the migration. Keep the published links working.
 const redirects = {
+  "/docs/intro": "/",
+  "/docs/portal-guide": "/",
   "/ai-gateway/ai-gateway/integrate-third-party":
     "/ai-gateway/integrate_third_party",
   "/ai-gateway/user_manual/ai_gateway/call_logs":
