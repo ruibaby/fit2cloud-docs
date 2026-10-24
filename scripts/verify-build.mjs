@@ -42,7 +42,10 @@ for (const file of files) {
       /^(?:data:|mailto:|tel:|javascript:)/.test(ref)
     )
       continue;
-    const url = new URL(ref, `http://docs.local/${path.relative(root, file)}`);
+    // Pages are stored as `<route>/index.html`, but clean URLs and the OSS
+    // redirect resolve them at `<route>` without a trailing slash.
+    const page = path.relative(root, file).replace(/(?:^|\/)index\.html$/, "");
+    const url = new URL(ref, `http://docs.local/${page}`);
     if (url.origin !== "http://docs.local" || (await exists(url))) continue;
     if (!failures.has(url.pathname))
       failures.set(url.pathname, path.relative(root, file));

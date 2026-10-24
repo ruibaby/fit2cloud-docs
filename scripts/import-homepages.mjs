@@ -92,9 +92,18 @@ for (const project of projects.filter((p) => p.href.startsWith("/"))) {
         [".md", ".mdx", "/index.md", "/index.mdx"].some((suffix) =>
           existsSync(path.join(dest, value + suffix)),
         );
-      if (route && !exists(route)) route += `/${path.basename(route)}`;
-      if (route && !exists(route))
-        throw new Error(`Missing landing link: ${id}/${route}`);
+      if (route && !exists(route)) {
+        const expanded = `${route}/${path.basename(route)}`;
+        const parent = route.slice(0, -path.basename(route).length - 1);
+        if (exists(expanded)) route = expanded;
+        else if (
+          parent &&
+          path.basename(parent) === path.basename(route) &&
+          exists(parent)
+        )
+          route = parent;
+        else throw new Error(`Missing landing link: ${id}/${route}`);
+      }
       return `href="/${route}${hash ? `#${hash}` : ""}"`;
     });
   for (const [, asset] of text.matchAll(/src="(\/img\/[^"]+)"/g)) {

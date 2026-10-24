@@ -34,6 +34,18 @@ async function fixture(t, { ci = "", fail = "", project } = {}) {
     new URL("./sitemap.mjs", import.meta.url),
     path.join(root, "scripts/sitemap.mjs"),
   );
+  await cp(
+    new URL("./directory-index.mjs", import.meta.url),
+    path.join(root, "scripts/directory-index.mjs"),
+  );
+  await cp(
+    new URL("./llms-links.mjs", import.meta.url),
+    path.join(root, "scripts/llms-links.mjs"),
+  );
+  await cp(
+    new URL("./redirects.mjs", import.meta.url),
+    path.join(root, "scripts/redirects.mjs"),
+  );
   await writeFile(path.join(root, "package.json"), '{"type":"module"}');
   await writeFile(path.join(root, "build/keep/marker"), "keep");
   await mkdir(path.join(root, "build/a"), { recursive: true });
@@ -68,6 +80,7 @@ setTimeout(() => {
   const out = path.join(root, "build", id === "portal" ? "" : id);
   mkdirSync(out, { recursive: true });
   writeFileSync(path.join(out, "index.html"), id);
+  writeFileSync(path.join(out, "page.html"), id);
   if (id !== "portal") cpSync(path.join(root, "content", id, "public"), out, { recursive: true });
   event("end");
 }, id === "portal" ? 20 : id === process.env.FAIL_PROJECT ? 100 : 500);
@@ -159,6 +172,20 @@ for (const [ci, expected] of [
     );
     for (const id of ["a", "b", "c", "d", "e", "f"])
       assert.ok(sitemap.includes(`https://docs.fit2cloud.com/${id}/`));
+    for (const id of ["a", "b", "c", "d", "e", "f"]) {
+      assert.equal(
+        await readFile(path.join(root, "build", id, "page/index.html"), "utf8"),
+        id,
+      );
+      await assert.rejects(
+        readFile(path.join(root, "build", id, "page.html")),
+        { code: "ENOENT" },
+      );
+    }
+    assert.equal(
+      await readFile(path.join(root, "build/page/index.html"), "utf8"),
+      "portal",
+    );
   });
 }
 

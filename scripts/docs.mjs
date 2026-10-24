@@ -5,8 +5,11 @@ import net from "node:net";
 import http from "node:http";
 import { createReadStream } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { createDirectoryIndexes } from "./directory-index.mjs";
+import { fixLlmsLinks } from "./llms-links.mjs";
 import { generateSearchIndex } from "./search-index.mjs";
 import { generateSitemap } from "./sitemap.mjs";
+import { generateRedirects } from "./redirects.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 process.chdir(root);
@@ -95,6 +98,18 @@ async function build() {
   await cp("portal/public", "build", { recursive: true });
   const pageCount = await generateSitemap();
   console.log(`[sitemap] ${pageCount} URLs`);
+  const directoryCount =
+    project && project !== "portal"
+      ? await createDirectoryIndexes(path.join(root, "build", project))
+      : await createDirectoryIndexes(
+          path.join(root, "build"),
+          project === "portal" ? sites.filter((id) => id !== "portal") : [],
+        );
+  console.log(`[pages] ${directoryCount} directory indexes`);
+  const redirectCount = await generateRedirects(project);
+  console.log(`[redirects] ${redirectCount} pages`);
+  const llmsCount = await fixLlmsLinks();
+  console.log(`[llms] ${llmsCount} links fixed`);
 }
 // ---------------------------------------------------------------------------
 // Development server
@@ -295,12 +310,12 @@ function preview(port = 4173) {
     ".pdf": "application/pdf",
     ".txt": "text/plain; charset=utf-8",
     ".md": "text/markdown; charset=utf-8",
+    ".xml": "application/xml; charset=utf-8",
   };
   const server = http.createServer(async (req, res) => {
     try {
-      const pathname = decodeURIComponent(
-        new URL(req.url, "http://local").pathname,
-      );
+      const requestUrl = new URL(req.url, "http://local");
+      const pathname = decodeURIComponent(requestUrl.pathname);
       const requested = path.resolve(root, "." + pathname);
       if (requested !== root && !requested.startsWith(root + path.sep)) {
         res.writeHead(403);
@@ -320,6 +335,18 @@ function preview(port = 4173) {
       if (!file) {
         res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
         res.end('<h1>页面不存在</h1><a href="/">返回文档中心</a>');
+        return;
+      }
+      // Match OSS: a directory page requested without the trailing slash redirects.
+      if (
+        file === path.join(requested, "index.html") &&
+        pathname !== "/" &&
+        !pathname.endsWith("/")
+      ) {
+        res.writeHead(302, {
+          Location: `${requestUrl.pathname}/${requestUrl.search}`,
+        });
+        res.end();
         return;
       }
       res.writeHead(200, {

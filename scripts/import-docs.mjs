@@ -12,6 +12,14 @@ const titleOf = (text, fallback) =>
   text.match(/^title:\s*["']?(.+?)["']?\s*$/m)?.[1] ||
   text.match(/^# (.+)$/m)?.[1] ||
   fallback;
+// Docusaurus folds `<dir>/<dir>.md` onto the directory route; Rspress serves
+// that route from `<dir>/index.mdx`.
+const isCollapsed = (id) => {
+  const parts = id.split("/");
+  return parts.length > 1 && parts.at(-1) === parts.at(-2);
+};
+const collapseId = (id) =>
+  isCollapsed(id) ? `${path.posix.dirname(id)}/index` : id;
 const walk = async (root) =>
   (
     await Promise.all(
@@ -32,18 +40,80 @@ for (const project of projects.filter(
   await mkdir(dest, { recursive: true });
   const sidebars = {};
   const titles = {};
-  for (const [index, version] of project.versions.entries()) {
-    const origin = path.join(
-      source,
-      index === 0
-        ? `${project.id}-docs`
-        : `${project.id}_versioned_docs/version-${version}`,
-    );
+  const versions = await Promise.all(
+    project.versions.map(async (version, index) => {
+      const origin = path.join(
+        source,
+        index === 0
+          ? `${project.id}-docs`
+          : `${project.id}_versioned_docs/version-${version}`,
+      );
+      const files = await walk(origin);
+      return {
+        version,
+        index,
+        origin,
+        files,
+        collapsed: new Set(
+          files
+            .map((file) => path.relative(origin, file).replace(/\.mdx?$/, ""))
+            .filter(isCollapsed),
+        ),
+      };
+    }),
+  );
+  const collapsedByVersion = new Map(
+    versions.map(({ version, collapsed }) => [version, collapsed]),
+  );
+  for (const { version, index, origin, files, collapsed } of versions) {
     const output = path.join(dest, version, "zh");
     await mkdir(output, { recursive: true });
-    for (const file of await walk(origin)) {
+    const rewriteLink = (url, from) => {
+      const [, target = "", suffix = ""] =
+        url.match(/^([^#?]*)([#?].*)?$/) || [];
+      if (!target || /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(target)) return url;
+      const ext = target.match(/\.mdx?$/)?.[0] || "";
+      const stem = ext ? target.slice(0, -ext.length) : target;
+      if (stem.startsWith("/")) {
+        const parts = stem.slice(1).split("/");
+        if (parts.shift() !== project.id) return url;
+        const targetVersion = project.versions.includes(parts[0])
+          ? parts.shift()
+          : project.versions[0];
+        if (parts[0] === "zh") parts.shift();
+        const id = parts.join("/");
+        if (!collapsedByVersion.get(targetVersion)?.has(id)) return url;
+        return `${stem.slice(0, stem.length - id.length)}${path.posix.dirname(id)}/${suffix}`;
+      }
+      const id = path.posix.normalize(
+        path.posix.join(path.posix.dirname(from), stem),
+      );
+      if (!collapsed.has(id)) return url;
+      return `${path.posix.relative(
+        path.posix.dirname(from),
+        `${collapseId(id)}.mdx`,
+      )}${suffix}`;
+    };
+    const collapseSidebar = (value) => {
+      if (typeof value === "string")
+        return collapsed.has(value) ? collapseId(value) : value;
+      if (Array.isArray(value)) return value.map(collapseSidebar);
+      if (!value || typeof value !== "object") return value;
+      const next = { ...value };
+      if (typeof next.id === "string" && collapsed.has(next.id))
+        next.id = collapseId(next.id);
+      if (typeof next.key === "string")
+        next.key = next.key.replace(/(:)([^ ]+) @ /, (match, colon, id) =>
+          collapsed.has(id) ? `${colon}${collapseId(id)} @ ` : match,
+        );
+      for (const [key, child] of Object.entries(next))
+        if (key !== "id" && key !== "key") next[key] = collapseSidebar(child);
+      return next;
+    };
+    for (const file of files) {
       if (!/\.mdx?$/.test(file)) continue;
       const relative = path.relative(origin, file);
+      const relativeWithoutExt = relative.replace(/\.mdx?$/, "");
       if (index === 0 && relative === "product_landing.md") continue;
       if (relative.split(path.sep).some((s) => s.startsWith("."))) continue;
       let text = await readFile(file, "utf8");
@@ -73,15 +143,24 @@ for (const project of projects.filter(
         /(src=["'])(\/[^"']+)(["'])/g,
         (_, start, url, end) => `${start}${decodeURI(url)}${end}`,
       );
-      const target = path.join(
-        output,
+      text = text
+        .replace(
+          /(?<!!)\]\(([^)\s]+)\)/g,
+          (_, url) => `](${rewriteLink(url, relativeWithoutExt)})`,
+        )
+        .replace(
+          /(href=["'])([^"']+)(["'])/g,
+          (_, start, url, end) =>
+            `${start}${rewriteLink(url, relativeWithoutExt)}${end}`,
+        );
+      const docId =
         index === 0 && relative === "index.md"
-          ? "product-intro.mdx"
-          : relative.replace(/\.md$/, ".mdx"),
-      );
+          ? "product-intro"
+          : collapseId(relativeWithoutExt);
+      const target = path.join(output, `${docId}.mdx`);
       await mkdir(path.dirname(target), { recursive: true });
       await writeFile(target, scopeImagePaths(text, project.id));
-      titles[`${version}/${relative.replace(/\.mdx?$/, "")}`] = titleOf(
+      titles[`${version}/${docId}`] = titleOf(
         text,
         path.basename(file, path.extname(file)),
       );
@@ -104,7 +183,7 @@ for (const project of projects.filter(
     const raw = sidebarFile.endsWith(".json")
       ? JSON.parse(await readFile(sidebarFile, "utf8"))
       : (await import(pathToFileURL(sidebarFile))).default;
-    sidebars[version] = Object.values(raw).flat();
+    sidebars[version] = collapseSidebar(Object.values(raw).flat());
   }
   await writeFile(
     path.join(dest, "sidebars.json"),
