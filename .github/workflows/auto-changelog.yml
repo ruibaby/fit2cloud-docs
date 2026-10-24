@@ -5,10 +5,10 @@
 #
 # 移植自旧 mkdocs 仓库 jumpserver/docs 的 .github/workflows/auto-changelog.yml，
 # 主要差异:
-#   - 目标文件不再是固定的 docs/change_log.md，而是按主版本号路由到
-#     jumpserver-docs/ 或 jumpserver_versioned_docs/version-v{3,4}/ (见 gen_changelog.py)
+#   - 目标文件不再是固定的路径，而是按主版本号路由到
+#     content/jumpserver/v{3,4,5}/zh/change_log.mdx (见 gen_changelog.py)
 #   - PR 的 base 固定为 main（旧仓库是 v{major}.0，本仓库没有这种分支）
-#   - 输出格式改为 Docusaurus 的平铺列表，不再使用 mkdocs 的 !!! admonition
+#   - 输出格式改为 Markdown 平铺列表，不再使用 mkdocs 的 !!! admonition
 #
 # 注意:
 #   - schedule 触发器只在仓库默认分支(main)上生效。放在功能分支上时，
@@ -25,12 +25,12 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: '指定版本号(如 v5.0.1 / v4.10.20-lts)；留空则自动取社区 API 最新版本'
+        description: "指定版本号(如 v5.0.1 / v4.10.20-lts)；留空则自动取社区 API 最新版本"
         required: false
-        default: ''
+        default: ""
   schedule:
     # 每日 20:05 UTC（北京时间次日 04:05）
-    - cron: '5 20 * * *'
+    - cron: "5 20 * * *"
 
 permissions:
   contents: write
@@ -55,7 +55,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Detect version and target file
         id: detect

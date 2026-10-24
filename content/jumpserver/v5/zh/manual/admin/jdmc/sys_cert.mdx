@@ -1,0 +1,42 @@
+---
+title: 域名配置
+description: 介绍 JDMC 域名配置中的域名设置、当前证书信息与证书上传。
+---
+
+## 1 功能概述
+
+域名配置用于设置 JDMC 的访问域名，并查看、更新服务端证书。
+
+路径：登录后选择 **系统设置 > 设备管理**，进入 JDMC 控制台后，在左侧菜单选择 **域名配置**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_jdmc_cert_01.png"} alt="图 1  域名配置" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  域名配置</div>
+
+## 2 域名设置
+
+**当前域名** 用于填写 JDMC 的访问域名，输入框下方提示「仅支持纯域名，不需要包含协议 http/https」。域名设置区右上角提供 **查看应用结果**，用于查看域名检查的执行输出。
+
+**域名检查结果** 提供 **DNS 解析** 与 **匹配本机 IP** 两个检查项，勾选后点击 **检查域名** 执行校验。未检查时显示「暂无检查结果，请点击「检查域名」」。
+
+## 3 当前证书信息
+
+**当前证书信息** 区读取当前服务端证书的主体、签发者和有效期信息，右上角显示 **已配置** 状态。区内的 **普通证书** 与 **国密证书** 两种类型可切换，分别提示「上传单张服务证书和对应私钥」与「上传签名证书、签名私钥、加密证书链和加密私钥」。下方按以下字段展示当前证书：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  当前证书信息字段说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>字段</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>主体</td><td style={{padding:'8px'}}>证书的主体名称</td></tr>
+<tr><td style={{padding:'8px'}}>签发者</td><td style={{padding:'8px'}}>证书的签发机构</td></tr>
+<tr><td style={{padding:'8px'}}>有效期</td><td style={{padding:'8px'}}>证书生效与失效时间，并显示剩余天数</td></tr>
+<tr><td style={{padding:'8px'}}>证书域名</td><td style={{padding:'8px'}}>证书覆盖的域名</td></tr>
+<tr><td style={{padding:'8px'}}>SHA-256 指纹</td><td style={{padding:'8px'}}>证书指纹，用于比对当前服务端证书</td></tr>
+</tbody>
+</table>
+
+## 4 上传证书
+
+同时上传普通证书和私钥文件，服务端会校验证书和私钥是否匹配。普通证书需要提供 **证书文件（.crt / .cer）** 与 **私钥文件（.key）**，选择文件后点击 **上传证书对**。国密证书需要上传签名证书、签名私钥、加密证书链和加密私钥。

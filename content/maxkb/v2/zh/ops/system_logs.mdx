@@ -1,0 +1,83 @@
+---
+title: 查看系统日志
+description: 介绍 MaxKB 系统日志的存放目录，以及通过日志文件与 Docker 容器查看日志的方法。
+---
+
+## 1 功能简介
+
+MaxKB 以容器方式部署，应用运行日志写入数据目录下的日志文件夹。当服务启动失败、知识库检索异常或对话接口报错时，可通过查看系统日志定位原因。本文介绍系统日志的存放位置，以及通过日志文件与 Docker 容器两种方式查看日志的方法。
+
+## 2 前提条件
+
+- 已使用具备服务器权限的账号登录 MaxKB 所在主机。
+- 已确认 MaxKB 的数据目录。离线安装默认运行目录为 `/opt/maxkb`；在线 `docker run` 常见挂载为 `~/.maxkb:/opt/maxkb`。如已自定义，请按实际路径替换本文示例。
+- 使用 Docker 方式查看日志时，主机已安装 Docker，且当前账号可执行 `docker` 命令。
+
+## 3 日志文件目录
+
+MaxKB 应用日志目录由源码中的 `LOG_DIR` 决定，对应容器内路径为 `/opt/maxkb/app/data/logs`。当宿主机将数据目录挂载到 `/opt/maxkb` 时，宿主机上的路径与下表一致（以默认 `/opt/maxkb` 为例）：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  各组件日志目录</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'22%', padding:'8px', textAlign:'left'}}>组件</th><th style={{width:'28%', padding:'8px', textAlign:'left'}}>容器名</th><th style={{width:'50%', padding:'8px', textAlign:'left'}}>日志目录（默认）</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>MaxKB</td><td style={{padding:'8px'}}><code>maxkb</code></td><td style={{padding:'8px'}}><code>/opt/maxkb/app/data/logs</code></td></tr>
+</tbody>
+</table>
+
+- **MaxKB**： 主日志为 `max_kb.log`，另有 `drf_exception.log`、`unexpected_exception.log`。日志使用滚动文件方式写入，并同时输出到容器标准输出。
+
+## 4 查看日志文件
+
+1. 查看日志目录下的文件列表：
+
+```sh
+ls -lh /opt/maxkb/app/data/logs
+```
+
+2. 实时跟踪主日志，排查进行中的问题时使用，按 `Ctrl + C` 结束：
+
+```sh
+tail -f /opt/maxkb/app/data/logs/max_kb.log
+```
+
+:::warning[及时留存日志]
+日志会按策略滚动。排查重要问题时，请先将相关日志复制到其他目录留存。
+
+:::
+
+
+## 5 查看容器日志
+
+应用日志会同时输出到容器标准输出，可直接使用 Docker 命令查看。
+
+1. 查看最近的日志：
+
+```sh
+docker logs --tail 100 maxkb
+```
+
+2. 实时跟踪容器日志，按 `Ctrl + C` 结束：
+
+```sh
+docker logs -f maxkb
+```
+
+3. 按时间范围查看，例如查看最近 30 分钟的日志：
+
+```sh
+docker logs --since 30m maxkb
+```
+
+:::note[容器日志的留存范围]
+`docker logs` 输出的内容随容器生命周期存在，容器重建（如升级、重新部署）后历史输出不再保留。需要长期留存，请导出宿主机日志目录下的日志文件。
+
+:::
+
+
+## 6 后续操作
+
+- 离线安装环境可使用 `mkctl` 启停服务，见 [命令行工具](../installation/cli.mdx)。

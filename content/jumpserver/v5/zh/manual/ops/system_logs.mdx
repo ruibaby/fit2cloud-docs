@@ -1,0 +1,101 @@
+---
+title: 查看系统日志
+description: 介绍 JumpServer 各组件系统日志的存放目录，以及通过日志文件与 Docker 容器查看日志的方法。
+---
+
+## 1 功能简介
+
+JumpServer 以容器方式部署，各组件（Core、Koko、Chen 等）会把运行日志分别写入宿主机的数据目录。当组件启动失败、资产连接异常或接口报错时，可通过查看系统日志定位原因。本文介绍系统日志的存放位置，以及通过日志文件与 Docker 容器两种方式查看日志的方法。
+
+## 2 前提条件
+
+- 已使用具备服务器权限的账号登录 JumpServer 所在主机。
+- 已确认 JumpServer 的数据目录 `VOLUME_DIR`，默认值为 `/data/jumpserver`；如已自定义，请按实际路径替换本文示例。相关参数见 [系统参数设置](./system_params.mdx)。
+- 使用 Docker 方式查看日志时，主机已安装 Docker，且当前账号可执行 `docker` 命令。
+
+## 3 日志文件目录
+
+各组件日志按天滚动写入宿主机数据目录，彼此独立存放。默认情况下各组件的容器名与日志目录如下（以默认 `VOLUME_DIR=/data/jumpserver` 为例）：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  各组件日志目录</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'18%', padding:'8px', textAlign:'left'}}>组件</th><th style={{width:'22%', padding:'8px', textAlign:'left'}}>容器名</th><th style={{width:'60%', padding:'8px', textAlign:'left'}}>日志目录（默认）</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>Core</td><td style={{padding:'8px'}}><code>jms_core</code></td><td style={{padding:'8px'}}><code>/data/jumpserver/core/data/logs</code></td></tr>
+<tr><td style={{padding:'8px'}}>Celery</td><td style={{padding:'8px'}}><code>jms_celery</code></td><td style={{padding:'8px'}}><code>/data/jumpserver/core/data/logs</code></td></tr>
+<tr><td style={{padding:'8px'}}>Koko</td><td style={{padding:'8px'}}><code>jms_koko</code></td><td style={{padding:'8px'}}><code>/data/jumpserver/koko/data/logs</code></td></tr>
+<tr><td style={{padding:'8px'}}>Chen</td><td style={{padding:'8px'}}><code>jms_chen</code></td><td style={{padding:'8px'}}><code>/data/jumpserver/chen/data/logs</code></td></tr>
+<tr><td style={{padding:'8px'}}>Kael</td><td style={{padding:'8px'}}><code>jms_kael</code></td><td style={{padding:'8px'}}><code>/data/jumpserver/kael/data/logs</code></td></tr>
+<tr><td style={{padding:'8px'}}>Razor</td><td style={{padding:'8px'}}><code>jms_razor</code></td><td style={{padding:'8px'}}><code>/data/jumpserver/razor/data/logs</code></td></tr>
+<tr><td style={{padding:'8px'}}>Magnus</td><td style={{padding:'8px'}}><code>jms_magnus</code></td><td style={{padding:'8px'}}><code>/data/jumpserver/magnus/data/logs</code></td></tr>
+<tr><td style={{padding:'8px'}}>Nec</td><td style={{padding:'8px'}}><code>jms_nec</code></td><td style={{padding:'8px'}}><code>/data/jumpserver/nec/data/logs</code></td></tr>
+<tr><td style={{padding:'8px'}}>Web</td><td style={{padding:'8px'}}><code>jms_web</code></td><td style={{padding:'8px'}}><code>/data/jumpserver/nginx/data/logs</code></td></tr>
+</tbody>
+</table>
+
+- **Core**： 主日志 `jumpserver.log`，另有 `gunicorn.log`、`drf_exception.log`、`unexpected_exception.log`。
+- **Koko**： 日志文件 `koko.log`。
+- **Web**： Nginx 的访问与错误日志，位于 `nginx` 子目录。
+
+:::note[日志级别]
+日志内容详略由 `LOG_LEVEL` 控制，取值包括 `DEBUG`、`INFO`、`WARNING`、`ERROR`、`CRITICAL`，调整后需重启服务生效，见 [系统参数设置](./system_params.mdx)。
+
+:::
+
+
+## 4 查看日志文件
+
+1. 查看组件日志目录下的文件列表，以 Core 组件为例：
+
+```sh
+ls -lh /data/jumpserver/core/data/logs
+```
+
+2. 实时跟踪日志输出，排查进行中的问题时使用，按 `Ctrl + C` 结束：
+
+```sh
+tail -f /data/jumpserver/core/data/logs/jumpserver.log
+```
+
+:::warning[及时留存日志]
+系统日志按天滚动并受定期清理策略影响，历史日志可能被清理。排查重要问题时，请先将相关日志复制到其他目录留存。
+
+:::
+
+
+## 5 查看容器日志
+
+各组件的日志会同时输出到容器标准输出，可直接使用 Docker 命令查看，无需进入宿主机日志目录。数据库、Redis 等基础组件的日志同样可用该方式查看。
+
+1. 查看指定容器最近的日志，以 Core 组件为例：
+
+```sh
+docker logs --tail 100 jms_core
+```
+
+2. 实时跟踪容器日志，按 `Ctrl + C` 结束：
+
+```sh
+docker logs -f jms_core
+```
+
+3. 按时间范围查看，例如查看最近 30 分钟的日志：
+
+```sh
+docker logs --since 30m jms_core
+```
+
+:::note[容器日志的留存范围]
+`docker logs` 输出的内容随容器生命周期存在，容器重建（如升级、重新部署）后历史输出不再保留。需要长期留存，请导出组件日志目录下的日志文件。
+
+:::
+
+
+## 6 后续操作
+
+- 应用日志、Syslog、会话命令与录像的存储配置见 [日志存储配置](./log_storage.mdx)。
+- 使用 `jmsctl` 查看组件日志、启停服务见 [命令行工具](./cli_tools.mdx)。
+- 企业版可在 JDMC 控制台的 **应用日志** 页面实时监控各容器日志，见 [应用日志](../admin/jdmc/app_log.mdx)。

@@ -1,0 +1,44 @@
+---
+title: 人脸识别运维设置
+description: 介绍 JumpServer 人脸识别（MFA Facelive）功能的服务端配置方法、前提条件与相关参数。
+---
+
+人脸识别（MFA Facelive）在登录、连接资产等场景中通过人脸比对完成身份验证。该功能为**旗舰版功能**，需要在服务端完成以下配置后才能使用。
+
+## 1 前提条件
+
+- 旗舰版许可证 5000 个以上的资产
+- 启用 HTTPS 访问
+
+## 2 配置人脸识别
+
+在 JumpServer 安装目录下编辑 `config.txt`：
+
+```sh
+vim /opt/jumpserver/config/config.txt
+```
+
+新增以下参数：
+
+```sh
+#config.txt
+USE_XPACK=1
+FACE_RECOGNITION_ENABLED=true
+FACELIVE_ENABLED=1
+```
+
+## 3 重启 JumpServer
+
+保存配置后重启 JumpServer 服务，使配置生效：
+
+```sh
+./jmsctl.sh restart
+```
+
+## 4 结果验证
+
+重启完成后，登录 JumpServer，进入 **个人设置 > 个人信息**，页面右侧出现 **生物特征** 区域，并显示 **人脸特征** 与 **绑定** 按钮，即表示人脸识别配置成功。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/ops_face_recognition_success.png"} alt="图 1  人脸识别配置成功" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  人脸识别配置成功</div>

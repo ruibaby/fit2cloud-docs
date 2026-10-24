@@ -1,0 +1,2 @@
+minimumReleaseAgeExclude:
+  - "@iconify-json/simple-icons@1.2.99"

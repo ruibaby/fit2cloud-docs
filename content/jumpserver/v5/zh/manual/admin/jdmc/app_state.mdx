@@ -1,0 +1,54 @@
+---
+title: 应用状态
+description: 介绍 JDMC 应用状态中的应用命令与容器运行状态列表。
+---
+
+## 1 功能概述
+
+应用状态用于对 JumpServer 容器执行运维操作，并查看各容器的运行状态。
+
+路径：登录后选择 **系统设置 > 设备管理**，进入 JDMC 控制台后，在左侧菜单选择 **应用状态**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_jdmc_appstate_01.png"} alt="图 1  应用状态" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  应用状态</div>
+
+## 2 应用命令
+
+应用命令用于对 JumpServer 容器执行启动、重启与状态查看，输出实时流式展示，不影响 JDMC 服务。页面提供三个操作按钮：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  应用命令按钮说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>按钮</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>启动</td><td style={{padding:'8px'}}>启动 JumpServer 容器</td></tr>
+<tr><td style={{padding:'8px'}}>重启</td><td style={{padding:'8px'}}>重启 JumpServer 容器</td></tr>
+<tr><td style={{padding:'8px'}}>状态</td><td style={{padding:'8px'}}>查看 JumpServer 容器的运行状态</td></tr>
+</tbody>
+</table>
+
+## 3 应用状态
+
+**应用状态** 列表展示当前服务器上的全部容器，右上角提供搜索框（**搜索容器 ID、容器名称或镜像**）、**列设置** 与刷新操作。
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 2  应用状态列表字段说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>列</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>容器名</td><td style={{padding:'8px'}}>容器名称</td></tr>
+<tr><td style={{padding:'8px'}}>容器短 ID</td><td style={{padding:'8px'}}>容器 ID 的前 12 位</td></tr>
+<tr><td style={{padding:'8px'}}>镜像</td><td style={{padding:'8px'}}>容器使用的镜像及版本</td></tr>
+<tr><td style={{padding:'8px'}}>容器状态</td><td style={{padding:'8px'}}>容器当前状态，如运行中、已退出</td></tr>
+<tr><td style={{padding:'8px'}}>运行状态</td><td style={{padding:'8px'}}>容器运行时长与健康状态</td></tr>
+<tr><td style={{padding:'8px'}}>端口映射</td><td style={{padding:'8px'}}>容器端口与宿主机端口的映射关系，未映射时显示 --</td></tr>
+<tr><td style={{padding:'8px'}}>创建时间</td><td style={{padding:'8px'}}>容器创建时间</td></tr>
+<tr><td style={{padding:'8px'}}>操作</td><td style={{padding:'8px'}}>该容器可执行的操作</td></tr>
+</tbody>
+</table>
+
+列表底部显示容器总数，并支持分页浏览。

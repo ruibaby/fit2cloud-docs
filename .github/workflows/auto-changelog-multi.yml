@@ -22,16 +22,16 @@ on:
   workflow_dispatch:
     inputs:
       product:
-        description: '仅运行指定产品(dataease/1panel/cordys/ai-gateway/maxkb/sqlbot，逗号分隔)；留空则运行全部'
+        description: "仅运行指定产品(dataease/1panel/cordys/ai-gateway/maxkb/sqlbot，逗号分隔)；留空则运行全部"
         required: false
-        default: ''
+        default: ""
       version:
-        description: '指定版本号(如 v3.1.0)；留空则各产品自动取发布源的最新版本'
+        description: "指定版本号(如 v3.1.0)；留空则各产品自动取发布源的最新版本"
         required: false
-        default: ''
+        default: ""
   schedule:
     # 每日 20:10 UTC（北京时间次日 04:10），与 JumpServer 的 20:05 错开
-    - cron: '10 20 * * *'
+    - cron: "10 20 * * *"
 
 permissions:
   contents: write
@@ -58,7 +58,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Resolve product matrix
         id: resolve
@@ -88,7 +88,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Detect version and target file
         id: detect

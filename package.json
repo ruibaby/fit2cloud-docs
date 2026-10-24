@@ -1,48 +1,49 @@
 {
-  "name": "docusaurus-demo",
-  "version": "0.0.0",
+  "name": "fit2cloud-docs",
   "private": true,
+  "type": "module",
   "scripts": {
-    "docusaurus": "docusaurus",
-    "start": "docusaurus start",
-    "dev": "cross-env DOCS_DEV_LITE=1 docusaurus start --no-open",
-    "build": "docusaurus build --locale zh-Hans",
-    "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy",
-    "clear": "docusaurus clear",
-    "serve": "docusaurus serve",
-    "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids"
+    "build": "node scripts/docs.mjs build",
+    "check": "rs lint --fix && rs fmt",
+    "check:ci": "rs lint && rs fmt --check",
+    "dev": "node scripts/docs.mjs dev",
+    "format": "rs fmt",
+    "prepare": "rs hooks",
+    "preview": "node scripts/docs.mjs preview",
+    "import:docs": "node scripts/import-docs.mjs",
+    "import:homepages": "node scripts/import-homepages.mjs",
+    "typecheck": "tsc --noEmit",
+    "verify:build": "node scripts/verify-build.mjs"
   },
   "dependencies": {
-    "@docusaurus/core": "3.10.2",
-    "@docusaurus/faster": "3.10.2",
-    "@docusaurus/preset-classic": "3.10.2",
-    "@easyops-cn/docusaurus-search-local": "^0.55.3",
-    "@mdx-js/react": "^3.0.0",
-    "clsx": "^2.0.0",
-    "prism-react-renderer": "^2.3.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@rspress/core": "^2.0.23",
+    "@shikijs/transformers": "^4.5.0",
+    "rspress-plugin-file-tree": "^1.0.7",
+    "rspress-plugin-google-analytics": "^1.0.1",
+    "rspress-plugin-mermaid": "^1.0.3"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.10.2",
-    "@docusaurus/types": "3.10.2",
-    "cross-env": "^10.1.0"
+    "@iconify-json/mingcute": "^1.2.8",
+    "@iconify-json/ph": "^1.2.2",
+    "@iconify-json/simple-icons": "^1.2.99",
+    "@rsbuild/plugin-sass": "^2.0.1",
+    "@rspress/plugin-sitemap": "^2.0.23",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@types/node": "^22.20.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "rstack": "^0.8.0",
+    "typescript": "^6.0.3",
+    "unplugin-icons": "^24.0.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.5%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 3 chrome version",
-      "last 3 firefox version",
-      "last 5 safari version"
-    ]
-  },
-  "engines": {
-    "node": ">=20.0"
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.4.2",
+      "onFail": "download"
+    }
   }
 }

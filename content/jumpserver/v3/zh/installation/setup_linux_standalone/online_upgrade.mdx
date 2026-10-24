@@ -1,0 +1,37 @@
+---
+title: 在线升级
+---
+
+:::warning
+
+v3 版本与 v2 版本存在一定的差异，如需 v2 版本升级至 v3 版本 [请先阅读此文档](https://kb.fit2cloud.com/?p=06638d69-f109-4333-b5bf-65b17b297ed9)
+
+:::
+
+
+升级前请先参考 [升级或迁移须知](../upgrade_notice)
+### 中国大陆
+
+
+```sh
+cd /opt
+wget https://resource.fit2cloud.com/jumpserver/installer/releases/download/v3.10.21/jumpserver-installer-v3.10.21.tar.gz
+tar -xf jumpserver-installer-v3.10.21.tar.gz
+cd jumpserver-installer-v3.10.21
+```
+### 其他地区
+
+
+```sh
+cd /opt
+wget https://github.com/jumpserver/installer/releases/download/v3.10.21/jumpserver-installer-v3.10.21.tar.gz
+tar -xf jumpserver-installer-v3.10.21.tar.gz
+cd jumpserver-installer-v3.10.21
+```
+
+```sh
+./jmsctl.sh upgrade
+
+# 启动 JumpServer 服务
+./jmsctl.sh start
+```

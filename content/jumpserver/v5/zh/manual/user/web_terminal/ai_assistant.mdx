@@ -1,0 +1,39 @@
+---
+title: AI 助手
+description: 介绍 JumpServer Web 终端中 AI 助手的用途、使用前提与使用方式。
+---
+
+## 1 功能简介
+
+AI 助手位于 Web 终端左侧列表中，用于通过对话方式查询资产状态，也可以直接接手资产进行操作，协助用户完成日常运维操作。
+
+## 2 前提条件
+
+使用 AI 助手前，需要由管理员在 [系统设置 > AI 助手](../../admin/system_settings/ai_assistant.mdx) 中完成模型服务配置并启用。未启用时，Web 终端中无法使用 AI 助手。
+
+- 管理员需配置模型连接（内置 API 或 iframe 嵌入方式）并开启启用开关。
+- 当前用户需已被授权相关资产，AI 助手仅能操作已授权的资产。
+
+## 3 使用 AI 助手
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/web_terminal_ai.png"} alt="图 1  AI助手" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  AI助手</div>
+
+Luna 运维助手，可以帮你连接和管理授权资产、整理工作区会话布局，并把具体操作任务委派给对应终端执行并反馈结果。
+
+下面图片演示使用AI助手查询mysql中的表结构并且分析
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/AI_mysql.png"} alt="图 2  分析mysql表结构" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  分析mysql表结构</div>
+
+:::warning[注意操作范围]
+AI 助手的操作会真实作用于已授权的资产，请在确认操作对象和操作内容后再继续。
+
+:::
+
+
+## 4 配置说明
+
+AI 助手的模型服务、接入方式与启用开关均由管理员在系统设置中维护，详细配置参数请参考 [AI 助手（系统设置）](../../admin/system_settings/ai_assistant.mdx)。

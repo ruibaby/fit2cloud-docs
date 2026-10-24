@@ -1,0 +1,414 @@
+{
+  "v1": [
+    {
+      "type": "doc",
+      "id": "index",
+      "label": "概览"
+    },
+    {
+      "type": "doc",
+      "id": "product-intro",
+      "label": "产品介绍"
+    },
+    {
+      "type": "doc",
+      "id": "quick_start",
+      "label": "快速入门"
+    },
+    {
+      "type": "doc",
+      "id": "changelog",
+      "label": "更新日志"
+    },
+    {
+      "type": "doc",
+      "id": "system_arch",
+      "label": "系统架构"
+    },
+    {
+      "type": "category",
+      "label": "安装部署",
+      "collapsed": true,
+      "items": [
+        {
+          "type": "doc",
+          "id": "installation/offline_installtion",
+          "label": "离线安装",
+          "className": "sidebar-item-badge-rec"
+        },
+        {
+          "type": "doc",
+          "id": "installation/offline_upgrade",
+          "label": "离线升级"
+        },
+        {
+          "type": "doc",
+          "id": "installation/1panel_installtion",
+          "label": "1Panel 安装"
+        },
+        {
+          "type": "doc",
+          "id": "installation/aliyun_installtion",
+          "label": "阿里云安装"
+        },
+        {
+          "type": "doc",
+          "id": "installation/online_installtion",
+          "label": "在线安装"
+        },
+        {
+          "type": "doc",
+          "id": "installation/windows_installation",
+          "label": "Windows 下安装"
+        },
+        {
+          "type": "doc",
+          "id": "installation/cli",
+          "label": "命令行工具"
+        },
+        {
+          "type": "doc",
+          "id": "installation/source_run",
+          "label": "源码运行"
+        },
+        {
+          "type": "doc",
+          "id": "installation/backup",
+          "label": "备份还原"
+        },
+        {
+          "type": "doc",
+          "id": "installation/migration",
+          "label": "数据迁移"
+        }
+      ],
+      "key": "cat:安装部署"
+    },
+    {
+      "type": "category",
+      "label": "功能手册",
+      "collapsed": true,
+      "items": [
+        {
+          "type": "category",
+          "label": "数据源",
+          "collapsed": true,
+          "items": [
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_description",
+              "label": "数据源概览"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_excel",
+              "label": "配置 Excel/CSV 数据"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_mysql",
+              "label": "配置 MySQL 数据源"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_oracle",
+              "label": "配置 Oracle 数据源"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_postgresql",
+              "label": "配置 PostgreSQL 数据源"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_sqlserver",
+              "label": "配置 SQL Server 数据源"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_clickhouse",
+              "label": "配置 ClickHouse 数据源"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_DM",
+              "label": "配置达梦数据源"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_apachedoris",
+              "label": "配置 Apache Doris 数据源"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_redshift",
+              "label": "配置 AWS Redshift 数据源"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_elasticsearch",
+              "label": "配置 Elasticsearch 数据源"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_kingbase",
+              "label": "配置 Kingbase 数据源"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_starrocks",
+              "label": "配置 StarRocks 数据源"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/datasource_apachehive",
+              "label": "配置 Apache Hive 数据源"
+            }
+          ],
+          "key": "cat:数据源"
+        },
+        {
+          "type": "doc",
+          "id": "user_manual/smart_question_description",
+          "label": "智能问数",
+          "key": "doc:user_manual/smart_question_description @ 功能手册"
+        },
+        {
+          "type": "doc",
+          "id": "user_manual/dashboard_description",
+          "label": "仪表板"
+        },
+        {
+          "type": "doc",
+          "id": "user_manual/assistant",
+          "label": "小助手应用",
+          "key": "doc:user_manual/assistant @ 功能手册"
+        },
+        {
+          "type": "category",
+          "label": "设置",
+          "collapsed": true,
+          "items": [
+            {
+              "type": "doc",
+              "id": "user_manual/member",
+              "label": "成员管理"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/permission",
+              "label": "权限配置"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/professional",
+              "label": "术语配置"
+            },
+            {
+              "type": "doc",
+              "id": "user_manual/data_training",
+              "label": "SQL 示例库"
+            }
+          ],
+          "key": "cat:设置"
+        },
+        {
+          "type": "category",
+          "label": "系统管理",
+          "collapsed": true,
+          "items": [
+            {
+              "type": "doc",
+              "id": "system/user",
+              "label": "用户管理"
+            },
+            {
+              "type": "doc",
+              "id": "system/workspace",
+              "label": "工作空间"
+            },
+            {
+              "type": "doc",
+              "id": "system/model",
+              "label": "AI 模型配置"
+            },
+            {
+              "type": "doc",
+              "id": "system/embedding",
+              "label": "嵌入式管理"
+            },
+            {
+              "type": "category",
+              "label": "系统设置",
+              "collapsed": true,
+              "items": [
+                {
+                  "type": "doc",
+                  "id": "system/parameter_setting",
+                  "label": "参数设置"
+                },
+                {
+                  "type": "doc",
+                  "id": "system/variables",
+                  "label": "系统变量"
+                }
+              ],
+              "key": "cat:系统设置"
+            }
+          ],
+          "key": "cat:系统管理"
+        }
+      ],
+      "key": "cat:功能手册"
+    },
+    {
+      "type": "category",
+      "label": "企业版功能",
+      "collapsed": true,
+      "items": [
+        {
+          "type": "doc",
+          "id": "enterprise/prompt",
+          "label": "自定义提示词"
+        },
+        {
+          "type": "doc",
+          "id": "enterprise/identification_setting",
+          "label": "登录认证"
+        },
+        {
+          "type": "doc",
+          "id": "enterprise/platform_integration",
+          "label": "平台对接"
+        },
+        {
+          "type": "doc",
+          "id": "enterprise/appearance_configuration",
+          "label": "外观设置"
+        },
+        {
+          "type": "doc",
+          "id": "enterprise/third-party-platform-settings",
+          "label": "参数配置"
+        },
+        {
+          "type": "doc",
+          "id": "enterprise/operation_log",
+          "label": "操作日志"
+        }
+      ],
+      "key": "cat:企业版功能"
+    },
+    {
+      "type": "category",
+      "label": "运维指南",
+      "collapsed": true,
+      "items": [
+        {
+          "type": "doc",
+          "id": "ops/config_files",
+          "label": "配置文件说明",
+          "key": "doc:运维指南/配置文件说明"
+        },
+        {
+          "type": "doc",
+          "id": "ops/system_logs",
+          "label": "查看系统日志",
+          "key": "doc:运维指南/查看系统日志"
+        }
+      ],
+      "key": "cat:运维指南"
+    },
+    {
+      "type": "category",
+      "label": "常见问题",
+      "collapsed": true,
+      "items": [
+        {
+          "type": "doc",
+          "id": "faq/community_faq",
+          "label": "常见问题",
+          "key": "doc:faq/community_faq @ 常见问题"
+        },
+        {
+          "type": "doc",
+          "id": "faq/installation",
+          "label": "安装部署",
+          "key": "doc:faq/installation @ 常见问题"
+        },
+        {
+          "type": "doc",
+          "id": "faq/datasource",
+          "label": "数据源",
+          "key": "doc:faq/datasource @ 常见问题"
+        },
+        {
+          "type": "doc",
+          "id": "faq/smart_question_description",
+          "label": "智能问数",
+          "key": "doc:faq/smart_question_description @ 常见问题"
+        },
+        {
+          "type": "doc",
+          "id": "faq/assistant",
+          "label": "小助手应用",
+          "key": "doc:faq/assistant @ 常见问题"
+        },
+        {
+          "type": "doc",
+          "id": "faq/mcp",
+          "label": "MCP"
+        },
+        {
+          "type": "doc",
+          "id": "faq/other",
+          "label": "其他"
+        }
+      ],
+      "key": "cat:常见问题"
+    },
+    {
+      "type": "category",
+      "label": "模型接入",
+      "collapsed": true,
+      "items": [
+        {
+          "type": "doc",
+          "id": "model_integration/ollama",
+          "label": "Ollama 部署模型接入 SQLBot"
+        }
+      ],
+      "key": "cat:模型接入"
+    },
+    {
+      "type": "doc",
+      "id": "mcp_server",
+      "label": "MCP 服务"
+    },
+    {
+      "type": "doc",
+      "id": "dataease_integration",
+      "label": "DataEase 接入"
+    },
+    {
+      "type": "doc",
+      "id": "embedding_integration",
+      "label": "嵌入式对接"
+    },
+    {
+      "type": "doc",
+      "id": "best_practice",
+      "label": "最佳实践"
+    },
+    {
+      "type": "doc",
+      "id": "buy",
+      "label": "商业版本"
+    },
+    {
+      "type": "doc",
+      "id": "contact",
+      "label": "联系我们"
+    }
+  ]
+}

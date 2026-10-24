@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-JumpServer 更新日志自动生成脚本（Docusaurus / fit2cloud-docs）
+JumpServer 更新日志自动生成脚本（Rspress / fit2cloud-docs）
 
 从社区发布 API 取指定版本的发布说明，按本仓库 change_log.md 的既有格式
 生成一个新版本区块，插入到对应更新日志文件的顶部。
@@ -12,9 +12,9 @@ JumpServer 更新日志自动生成脚本（Docusaurus / fit2cloud-docs）
     python .github/scripts/gen_changelog.py v4.10.20 --print-target # 只打印目标文件路径
 
 版本 → 目标文件（按主版本号路由，v3/v4 的版本化文档与当前版本文档分属不同目录）:
-    v5.x 及以后 -> jumpserver-docs/change_log.md
-    v4.x        -> jumpserver_versioned_docs/version-v4/change_log.md
-    v3.x        -> jumpserver_versioned_docs/version-v3/change_log.md
+    v5.x 及以后 -> content/jumpserver/v5/zh/change_log.mdx
+    v4.x        -> content/jumpserver/v4/zh/change_log.mdx
+    v3.x        -> content/jumpserver/v3/zh/change_log.mdx
 
 退出码: 0=成功或已存在无需修改, 1=版本在社区列表中不存在, 2=参数/文件错误,
         3=版本与目标文件不匹配(见 sanity_check, 路由配置可能已过期)
@@ -30,11 +30,11 @@ TZ = timezone(timedelta(hours=8))
 
 # 主版本号 -> 更新日志文件。新增大版本时在此补一行。
 TARGET_MAP = {
-    '3': 'jumpserver_versioned_docs/version-v3/change_log.md',
-    '4': 'jumpserver_versioned_docs/version-v4/change_log.md',
-    '5': 'jumpserver-docs/change_log.md',
+    '3': 'content/jumpserver/v3/zh/change_log.mdx',
+    '4': 'content/jumpserver/v4/zh/change_log.mdx',
+    '5': 'content/jumpserver/v5/zh/change_log.mdx',
 }
-DEFAULT_TARGET = 'jumpserver-docs/change_log.md'
+DEFAULT_TARGET = 'content/jumpserver/v5/zh/change_log.mdx'
 
 # 列表项自带的前缀，如 "fix: xxx" / "perf：xxx"；生成时统一归一成 "- <tag>: xxx"
 PREFIX_RE = re.compile(r'^(feat|perf|fix|note)\s*[:：]\s*', re.I)

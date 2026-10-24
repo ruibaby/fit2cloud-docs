@@ -1,0 +1,192 @@
+---
+title: 1gctl 命令行工具
+description: 介绍 1Panel AI 网关离线安装内置的命令行运维工具 1gctl，涵盖服务状态检查、启停与重启、日志查看、版本查询与卸载等命令，以及环境变量与退出码说明。
+---
+
+## 1 1gctl
+
+通过[离线安装](./offline_installation.mdx)部署 1Panel AI 网关后，安装脚本会自动在服务器上注册命令行运维工具 **1gctl**（路径为 `/usr/local/bin/1gctl`），执行 `1gctl` 或 `1gctl help` 可以查看相关的命令说明。
+
+<img src={"/ai-gateway/img/cli/image1-1gctl-help.png"} alt="1gctl 帮助信息" style={{display:'block',margin:'16px auto',maxWidth:'100%'}}/>
+
+<div style={{textAlign:'center',color:'#8a8f99',fontSize:'13px',margin:'6px 0 20px'}}>图 1  1gctl 帮助信息</div>
+
+```text
+1gctl - AI-Gateway 控制工具
+
+用法:
+  1gctl <命令> [参数...]
+  1gctl --dir <安装目录> <命令>
+
+命令:
+  status      查看服务状态与健康检查
+  start       启动服务（按当前配置，会重建有变更的容器）
+  stop        停止服务（保留容器）
+  restart     快速重启（不应用配置变更）
+  logs [服务] [-f] [--tail N] [--since 时间]
+              查看日志，服务默认 ai-gateway
+  version     查看版本与安装信息
+  uninstall [--purge] [--yes]
+              卸载：移除容器与网络、删除控制工具；
+              --purge 同时删除数据（仅限标准安装目录），--yes 跳过确认
+  help        显示本帮助
+
+环境变量:
+  AI_GATEWAY_INSTALL_DIR   直接指定安装目录
+  AI_GATEWAY_INSTALL_BASE  安装基础目录（默认 /opt）
+  NO_COLOR=1               关闭彩色输出
+
+退出码:
+  0 成功/健康  1 执行失败  2 用法错误  3 未找到安装  4 Docker 不可用  5 服务不健康
+```
+
+:::note[仅离线安装提供该工具]
+
+`1gctl` 由离线安装包注册。通过[在线安装](./online_installation.mdx)（Docker 官方镜像）或 [1Panel 安装](./1panel_installation.mdx)（应用商店）方式部署的网关没有该工具，请通过 1Panel 的容器管理功能或 `docker` 命令进行维护。
+
+
+:::
+
+
+## 2 命令说明
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  1gctl 命令说明</div>
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'16%', padding:'8px'}}>命令</th><th style={{width:'28%', padding:'8px'}}>参数</th><th style={{width:'56%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}><code>status</code></td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>查看服务状态与健康检查</td></tr>
+<tr><td style={{padding:'8px'}}><code>start</code></td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>启动服务（按当前配置，会重建有变更的容器）</td></tr>
+<tr><td style={{padding:'8px'}}><code>stop</code></td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>停止服务（保留容器）</td></tr>
+<tr><td style={{padding:'8px'}}><code>restart</code></td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>快速重启（不应用配置变更）</td></tr>
+<tr><td style={{padding:'8px'}}><code>logs</code></td><td style={{padding:'8px'}}><code>[服务] [-f] [--tail N] [--since 时间]</code></td><td style={{padding:'8px'}}>查看日志，服务默认 <code>ai-gateway</code></td></tr>
+<tr><td style={{padding:'8px'}}><code>version</code></td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>查看版本与安装信息</td></tr>
+<tr><td style={{padding:'8px'}}><code>uninstall</code></td><td style={{padding:'8px'}}><code>[--purge] [--yes]</code></td><td style={{padding:'8px'}}>卸载：移除容器与网络、删除控制工具</td></tr>
+<tr><td style={{padding:'8px'}}><code>help</code></td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>显示本帮助</td></tr>
+</tbody>
+</table>
+
+## 3 典型应用说明
+
+### 3.1 1gctl status
+
+**查看服务状态与健康检查**
+
+```bash
+1gctl status
+```
+
+命令会校验安装目录、Docker 可用性与网关健康状态，并以退出码反映结果（见「退出码」一节），适合放在巡检脚本中定时执行。
+
+### 3.2 1gctl start
+
+**启动服务（按当前配置，会重建有变更的容器）**
+
+```bash
+1gctl start
+```
+
+与 `restart` 的区别在于：`start` 会**应用当前配置**，对配置有变更的容器执行重建。修改安装目录下 `.env` 中的端口等参数后，应使用该命令使其生效。
+
+### 3.3 1gctl stop
+
+**停止服务（保留容器）**
+
+```bash
+1gctl stop
+```
+
+仅停止服务，容器与数据均保留，可随时通过 `1gctl start` 恢复。
+
+### 3.4 1gctl restart
+
+**快速重启（不应用配置变更）**
+
+```bash
+1gctl restart
+```
+
+仅重启进程，**不会**应用配置变更。若修改了 `.env` 等配置，请改用 `1gctl start`。
+
+### 3.5 1gctl logs
+
+**查看日志，服务默认 ai-gateway**
+
+```bash
+1gctl logs                        # 查看网关日志（默认服务 ai-gateway）
+1gctl logs postgres               # 查看数据库容器日志
+1gctl logs -f                     # 持续输出最新日志
+1gctl logs --tail 200             # 仅显示最后 200 行
+1gctl logs --since <时间>          # 仅显示指定时间之后的日志
+```
+
+可指定的服务名与容器编排文件中的服务名一致，即 `ai-gateway` 与 `postgres`。
+
+### 3.6 1gctl version
+
+**查看版本与安装信息**
+
+```bash
+1gctl version
+```
+
+### 3.7 1gctl uninstall
+
+**卸载：移除容器与网络、删除控制工具**
+
+```bash
+1gctl uninstall             # 卸载服务，保留数据
+1gctl uninstall --purge     # 同时删除数据
+1gctl uninstall --yes       # 跳过确认
+```
+
+- `--purge`：同时删除数据，**仅对标准安装目录生效**。
+- `--yes`：跳过交互确认，便于脚本化调用。
+
+:::warning
+
+`--purge` 会删除数据且不可恢复，执行前请确认数据已备份。
+
+
+:::
+
+
+## 4 环境变量
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 2  1gctl 环境变量</div>
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'32%', padding:'8px'}}>环境变量</th><th style={{width:'68%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}><code>AI_GATEWAY_INSTALL_DIR</code></td><td style={{padding:'8px'}}>直接指定安装目录</td></tr>
+<tr><td style={{padding:'8px'}}><code>AI_GATEWAY_INSTALL_BASE</code></td><td style={{padding:'8px'}}>安装基础目录，默认 <code>/opt</code></td></tr>
+<tr><td style={{padding:'8px'}}><code>NO_COLOR</code></td><td style={{padding:'8px'}}>设置为 <code>1</code> 时关闭彩色输出</td></tr>
+</tbody>
+</table>
+
+## 5 退出码
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 3  1gctl 退出码</div>
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'12%', padding:'8px'}}>退出码</th><th style={{width:'88%', padding:'8px'}}>含义</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}><code>0</code></td><td style={{padding:'8px'}}>成功 / 健康</td></tr>
+<tr><td style={{padding:'8px'}}><code>1</code></td><td style={{padding:'8px'}}>执行失败</td></tr>
+<tr><td style={{padding:'8px'}}><code>2</code></td><td style={{padding:'8px'}}>用法错误</td></tr>
+<tr><td style={{padding:'8px'}}><code>3</code></td><td style={{padding:'8px'}}>未找到安装</td></tr>
+<tr><td style={{padding:'8px'}}><code>4</code></td><td style={{padding:'8px'}}>Docker 不可用</td></tr>
+<tr><td style={{padding:'8px'}}><code>5</code></td><td style={{padding:'8px'}}>服务不健康</td></tr>
+</tbody>
+</table>
+
+## 6 注意事项
+
+- **安装目录的定位**：未指定 `--dir` 或 `AI_GATEWAY_INSTALL_DIR` 时，`1gctl` 依据安装基础目录（默认 `/opt`）自动定位安装目录。若安装时修改过基础目录，请使用 `1gctl --dir <安装目录> <命令>` 显式指定。
+- **配置变更后用 `start` 而非 `restart`**：`restart` 为快速重启，不会应用配置变更。
+- **卸载前确认数据**：`--purge` 会一并删除数据且仅对标准安装目录生效，请确认后再执行。
+- **脚本化判断服务状态**：可依据退出码区分「Docker 不可用」与「服务不健康」，便于在自动化脚本中分别处理。
+- **其他部署方式无此工具**：`1gctl` 仅由离线安装注册，在线安装与 1Panel 应用商店安装请使用 `docker` 命令或 1Panel 的容器管理功能维护。

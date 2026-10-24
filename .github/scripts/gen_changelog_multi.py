@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-fit2cloud 多产品更新日志自动生成脚本（Docusaurus / fit2cloud-docs）
+fit2cloud 多产品更新日志自动生成脚本（Rspress / fit2cloud-docs）
 
 从发布源取指定版本的发布说明，按各产品 changelog.md 的既有格式生成一个新的版本区块，
 插入到目标文件「更新内容」章节的最前面（即现有最新版本之前）。
@@ -19,12 +19,12 @@ fit2cloud 多产品更新日志自动生成脚本（Docusaurus / fit2cloud-docs�
     python .github/scripts/gen_changelog_multi.py maxkb   v2.10.6-lts --force   # 忽略「已存在」
 
 产品 -> 目标文件（按主版本号路由；未列出的大版本走 default_target）:
-    maxkb      -> maxkb-docs/changelog.md      (v1.x -> maxkb_versioned_docs/version-v1/changelog.md)
-    dataease   -> dataease-docs/changelog.md   (v2.x -> dataease_versioned_docs/version-v2/changelog.md)
-    1panel     -> 1panel-docs/changelog.md     (v1.x -> 1panel_versioned_docs/version-v1/changelog.md)
-    sqlbot     -> sqlbot-docs/changelog.md
-    cordys     -> cordys-docs/changelog.md
-    ai-gateway -> ai-gateway-docs/changelog.md (数据源为 GitHub Releases，无版本快照目录)
+    maxkb      -> content/maxkb/v2/zh/changelog.mdx      (v1.x -> content/maxkb/v1/zh/changelog.mdx)
+    dataease   -> content/dataease/v3/zh/changelog.mdx   (v2.x -> content/dataease/v2/zh/changelog.mdx)
+    1panel     -> content/1panel/v2/zh/changelog.mdx     (v1.x -> content/1panel/v1/zh/changelog.mdx)
+    sqlbot     -> content/sqlbot/v1/zh/changelog.mdx
+    cordys     -> content/cordys/v1/zh/changelog.mdx
+    ai-gateway -> content/ai-gateway/v1/zh/changelog.mdx (数据源为 GitHub Releases，无版本快照目录)
 
 退出码: 0=成功或已存在无需修改, 1=版本在发布列表中不存在, 2=参数/文件错误,
         3=版本与目标文件不匹配(见 sanity_check, 路由配置可能已过期)
@@ -65,8 +65,8 @@ TZ = timezone(timedelta(hours=8))
 PRODUCTS = {
     'maxkb': {
         'api': 'maxkb',
-        'targets': {'1': 'maxkb_versioned_docs/version-v1/changelog.md'},
-        'default_target': 'maxkb-docs/changelog.md',
+        'targets': {'1': 'content/maxkb/v1/zh/changelog.mdx'},
+        'default_target': 'content/maxkb/v2/zh/changelog.mdx',
         'source': 'br',
         'date_style': 'spaced',
         'title_date_blank': False,
@@ -82,8 +82,8 @@ PRODUCTS = {
     },
     'dataease': {
         'api': 'dataease',
-        'targets': {'2': 'dataease_versioned_docs/version-v2/changelog.md'},
-        'default_target': 'dataease-docs/changelog.md',
+        'targets': {'2': 'content/dataease/v2/zh/changelog.mdx'},
+        'default_target': 'content/dataease/v3/zh/changelog.mdx',
         'source': 'ul',
         'date_style': 'plain',
         'title_date_blank': True,
@@ -99,8 +99,8 @@ PRODUCTS = {
     },
     '1panel': {
         'api': '1panel',
-        'targets': {'1': '1panel_versioned_docs/version-v1/changelog.md'},
-        'default_target': '1panel-docs/changelog.md',
+        'targets': {'1': 'content/1panel/v1/zh/changelog.mdx'},
+        'default_target': 'content/1panel/v2/zh/changelog.mdx',
         'source': 'ul',
         'date_style': 'plain',
         'title_date_blank': True,
@@ -116,7 +116,7 @@ PRODUCTS = {
     'sqlbot': {
         'api': 'sqlbot',
         'targets': {},
-        'default_target': 'sqlbot-docs/changelog.md',
+        'default_target': 'content/sqlbot/v1/zh/changelog.mdx',
         'source': 'ul',
         'date_style': 'spaced',
         'title_date_blank': True,
@@ -135,7 +135,7 @@ PRODUCTS = {
     'cordys': {
         'api': 'cordys-crm',
         'targets': {},
-        'default_target': 'cordys-docs/changelog.md',
+        'default_target': 'content/cordys/v1/zh/changelog.mdx',
         'source': 'ul',
         'date_style': 'plain',
         'title_date_blank': True,
@@ -155,7 +155,7 @@ PRODUCTS = {
         'source': 'gh',
         'gh_repo': '1Panel-dev/1Panel-Gateway',
         'targets': {},
-        'default_target': 'ai-gateway-docs/changelog.md',
+        'default_target': 'content/ai-gateway/v1/zh/changelog.mdx',
         'date_style': 'plain',
         'title_date_blank': True,
         'bullet': '- ',
@@ -467,11 +467,12 @@ def sanity_check(version: str, path: Path, content: str) -> None:
         raise ValueError(f'无法解析主版本号: {version}')
     major = int(m0.group(1))
 
-    m = re.search(r'version-v(\d+)/', str(path).replace('\\', '/'))
-    if m and int(m.group(1)) != major:
+    m = re.search(r'(?:version-v(\d+)|/v(\d+))/', str(path).replace('\\', '/'))
+    found = (m.group(1) or m.group(2)) if m else None
+    if found and int(found) != major:
         raise ValueError(
-            f'目标文件 {path} 是 v{m.group(1)} 的版本快照，与 {version} 的主版本不符；'
-            f'请检查 targets 配置是否已随版本快照更新')
+            f'目标文件 {path} 属于 v{found}，与 {version} 的主版本不符；'
+            f'请检查 targets 配置是否已随版本更新')
 
     majors = {int(x) for x in re.findall(r'^###\s+v(\d+)\.', content, re.M)}
     if not majors:

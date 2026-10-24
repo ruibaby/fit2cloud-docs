@@ -1,0 +1,85 @@
+---
+title: 模型概述
+---
+
+## 1 功能概述
+
+
+MaxKB 支持与多种供应商模型的集成，支持对接当前主流的大型模型。这包括但不限于本地部署的私有模型如 Llama 3 和 Qwen 2，国内提供的公共模型服务例如 DeepSeek、SILICONFLOW、Kimi、智谱 AI 和百度千帆，以及国际知名的公共模型服务如 OpenAI、Azure OpenAI、Anthropic 和 Gemini。集成的模型类型广泛，涵盖文本生成、向量分析、排序算法、语音识别、语音合成、计算机视觉模型以及图像生成等，满足多样化的业务需求和应用场景。
+
+【模型】用来管理各类大型模型，为后续知识库和应用提供模型使用；
+
+ - 共享模型：系统管理员在【共享资源】中创建共享模型后，可以授权给指定工作空间。
+ - 全部模型：用户可以创建模型，其他用户[**资源授权**](../X-Pack/authorization_resources)后可以查看、使用和维护。
+   
+ **注意**：共享资源为企业版 X-Pack 功能。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/model/model_view.png"} alt="图 1  模型列表页面" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  模型列表页面</div>
+
+## 2 模型管理
+
+
+左侧选择全部模型后，选择对应供应商，【添加模型】进行模型添加。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/model/create_model.png"} alt="图 2  添加模型对话框" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  添加模型对话框</div>
+
+
+支持编辑、模型参数设置、资源授权、查看关联资源和删除。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/model/edit_model.png"} alt="图 3  模型更多操作菜单" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 3  模型更多操作菜单</div>
+
+
+支持按创建者、模型类型、模型名称查询。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/model/search_model.png"} alt="图 4  模型搜索查询" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 4  模型搜索查询</div>
+
+
+模型删除需要二次确认，确认后将直接删除模型。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/model/delete_model.png"} alt="图 5  删除模型确认提示框" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 5  删除模型确认提示框</div>
+
+## 3 支持的供应商及模型
+
+各供应商支持的类型详情见下表（按字母排序）：
+
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  各供应商支持的模型类型一览</div>
+
+|                 | 大语言模型 |  向量模型  |  重排模型  | 语音识别 | 语音合成 |  视觉模型  | 图片生成  |   文生视频  |  图生视频   |
+|-----------------|:--------:|:---------:|:----------:|:----------:|:----------:|:----------:|:----------:|:----------:|:----------:|
+|阿里云百炼         |  ✓ |  ✓  | ✓    |  ✓   | ✓   |  ✓   |  ✓  |  ✓   |  ✓  |
+|Anthropic        |  ✓ |           |            |            |           |   ✓  |           |            |         |
+|Amazon Bedrock   |  ✓ |  ✓  |  ✓  |            |           |  ✓  |         |            |         |
+|Azure OpenAI     |  ✓ |  ✓  |            |  ✓   | ✓   |  ✓  | ✓ |            |         |
+|DeepSeek         |  ✓ |           |            |            |           |           |         |             |         |
+|Gemini           |  ✓ |  ✓  |            |  ✓   |           | ✓   | ✓  |            |         |
+|kimi             |  ✓ |           |            |            |           |           |          |            |         |
+|OpenAI           |  ✓ |  ✓  |            | ✓    |  ✓  | ✓ | ✓ |            |         |
+|SILICONFLOW      | ✓  |  ✓  |   ✓  |  ✓   |  ✓ | ✓   | ✓ |            |         |
+|腾讯云            |  ✓ |           |            |            |         |            |            |            |         |
+|腾讯混元          |  ✓ |  ✓  |            |  ✓   |           | ✓ | ✓ |            |         |
+|火山引擎          |  ✓ |  ✓ |            |  ✓   |  ✓  | ✓ | ✓ |  ✓   |  ✓  |
+|千帆大模型         | ✓ |  ✓  |  ✓   |            |           |        |        |            |         |
+|讯飞星火          | ✓ |  ✓   |            | ✓    |  ✓  |        |         |            |         |
+|智谱 AI           | ✓ |            |            |            |           | ✓ | ✓ |            |         |
+|本地模型          |          |  ✓  | ✓    |            |           |        |        |            |         |
+|Ollama           |  ✓ |  ✓  | ✓ |            |           | ✓ |          |            |         |
+|vLLM             |  ✓ |  ✓  |  ✓ | ✓    |           | ✓ |          |            |         |
+|Xorbits Inference| ✓ |  ✓   | ✓    | ✓   |   ✓  | ✓ | ✓ |            |         |
+|Docker AI        | ✓  |  ✓  |   ✓  |            |            |           |            |            |         |
+|MiniMax        | ✓  |            |            |            | ✓  |        |   ✓    |  ✓   |  ✓  |
+
+
+
+
+

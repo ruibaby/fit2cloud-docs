@@ -1,0 +1,8 @@
+/* The shared portal header sits above the native 64px project navigation. */
+:root {
+  --rp-banner-height: 70px;
+}
+
+.portal-nav {
+  box-shadow: none;
+}

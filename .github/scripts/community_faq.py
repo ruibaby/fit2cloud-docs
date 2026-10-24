@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-多产品社区常见问题自动生成脚本（Docusaurus / fit2cloud-docs）
+多产品社区常见问题自动生成脚本（Rspress / fit2cloud-docs）
 
 产品范围由文件里的 PRODUCTS 表驱动，默认 jumpserver（保持历史行为不变）：
     jumpserver / dataease / maxkb / 1panel / sqlbot / cordys
@@ -12,7 +12,7 @@
       -> 大模型把近义问题归组，挑出**可复用（别人也会问）且有明确答案**的问题
       -> 再按官方文档原文或官方人员答复成稿（读了正文后才裁决「文档是否已能直接回答」）
       -> 校验引用路径真实存在（模糊纠错后仍找不到只当没有文档依据）、问题未与页面已有条目重复
-      -> 追加到 <product>-docs/faq/community_faq.md 对应小节
+      -> 追加到 content/<product>/<version>/zh/faq/community_faq.mdx 对应小节
 
 窗口说明:
     days 默认 8 天（今天含在内，即 today-7 … today）。
@@ -99,11 +99,11 @@ PACKAGE_JSON = REPO_ROOT / "package.json"
 #   min_md          Preflight 的稀疏检出防呆阈值（该产品文档目录下期望的 md 数量下限）
 #
 # ⚠️ version_scope 需人工确认：它决定模型「哪些版本的提问该收」，写错会静默漏收或误收。
-#    取值依据是各产品 changelog 的当前主线（见 <product>-docs/changelog.md 最新版本标题）。
+#    取值依据是各产品当前文档版本（见 content/<product>/<version>/zh/changelog.mdx 最新版本标题）。
 PRODUCTS: dict[str, dict] = {
     "jumpserver": {
-        "docs": "jumpserver-docs",
-        "faq_rel": "faq/community_faq.md",
+        "docs": "content/jumpserver/v5/zh",
+        "faq_rel": "faq/community_faq.mdx",
         "name": "JumpServer（飞致云开源堡垒机）",
         # 兼容旧行为：未传 --product 时的默认产品就是它，关键词回落到 PRODUCT_KEYWORD
         "keyword": "jumpserver",
@@ -115,8 +115,8 @@ PRODUCTS: dict[str, dict] = {
         "min_md": 50,
     },
     "dataease": {
-        "docs": "dataease-docs",
-        "faq_rel": "faq/community_faq.md",
+        "docs": "content/dataease/v3/zh",
+        "faq_rel": "faq/community_faq.mdx",
         "name": "DataEase（飞致云开源 BI 工具）",
         "keyword": "dataease",
         "exclude": [],
@@ -127,8 +127,8 @@ PRODUCTS: dict[str, dict] = {
         "min_md": 50,
     },
     "maxkb": {
-        "docs": "maxkb-docs",
-        "faq_rel": "faq/community_faq.md",
+        "docs": "content/maxkb/v2/zh",
+        "faq_rel": "faq/community_faq.mdx",
         "name": "MaxKB（飞致云开源大模型知识库问答系统）",
         "keyword": "maxkb",
         "exclude": [],
@@ -139,8 +139,8 @@ PRODUCTS: dict[str, dict] = {
         "min_md": 50,
     },
     "1panel": {
-        "docs": "1panel-docs",
-        "faq_rel": "faq/community_faq.md",
+        "docs": "content/1panel/v2/zh",
+        "faq_rel": "faq/community_faq.mdx",
         "name": "1Panel（飞致云开源 Linux 运维管理面板）",
         "keyword": "1panel",
         # 「1Panel VIP 交流群8/7/9」不是普通用户交流群，剔除
@@ -152,8 +152,8 @@ PRODUCTS: dict[str, dict] = {
         "min_md": 50,
     },
     "sqlbot": {
-        "docs": "sqlbot-docs",
-        "faq_rel": "faq/community_faq.md",
+        "docs": "content/sqlbot/v1/zh",
+        "faq_rel": "faq/community_faq.mdx",
         "name": "SQLBot（飞致云开源智能问数系统）",
         "keyword": "sqlbot",
         "exclude": [],
@@ -164,8 +164,8 @@ PRODUCTS: dict[str, dict] = {
         "min_md": 30,
     },
     "cordys": {
-        "docs": "cordys-docs",
-        "faq_rel": "faq/community_faq.md",
+        "docs": "content/cordys/v1/zh",
+        "faq_rel": "faq/community_faq.mdx",
         "name": "Cordys CRM（飞致云开源 AI CRM）",
         "keyword": "cordys",
         "exclude": [],
@@ -1048,7 +1048,7 @@ def resolve_doc_path(raw: str, index: list[str]) -> str:
     low = p.lower()
     # 前缀剥离必须按**当前产品**的文档目录名来：写死 "jumpserver-docs/" 时，
     # dataease 的模型输出若带上 "dataease-docs/" 前缀就剥不掉，路径直接匹配失败。
-    for pref in ("docs/", ACTIVE["docs"].lower() + "/", "/"):
+    for pref in ("docs/", ACTIVE["docs"].lower() + "/", ACTIVE["key"] + "/", "/"):
         if low.startswith(pref):
             p, low = p[len(pref):], low[len(pref):]
     p = p.lstrip("./")
@@ -1089,7 +1089,9 @@ def resolve_doc_path(raw: str, index: list[str]) -> str:
 
 def doc_index() -> list[str]:
     out: list[str] = []
-    for path in sorted(DOCS_ROOT.rglob("*.md")):
+    for path in sorted(DOCS_ROOT.rglob("*")):
+        if path.suffix not in (".md", ".mdx"):
+            continue
         rel = path.relative_to(DOCS_ROOT).as_posix()
         if rel.startswith("faq/"):
             continue

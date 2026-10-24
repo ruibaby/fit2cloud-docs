@@ -1,0 +1,187 @@
+---
+title: 数据填报
+---
+
+## 1 概述
+
+【数据填报】模块可以管理填报表单并下发填报任务。可在【权限管理】中【菜单和操作】，给对应的用户开通对应权限。
+
+![告警通知](</img/dataease/xpack/shujutianbaomokuai.png>)
+
+图 1  数据填报模块
+
+数据填报支持移动端支持展示，并支持移动端进行填报数据。
+
+![移动端数据填报](</img/dataease/newimg/yidongduanzhichizhanshishujutianbao-bingzhichiyidongduantianbaoshuju1.png>)
+
+图 2  移动端数据填报
+
+![移动端展示数据填报](</img/dataease/newimg/yidongduanzhichizhanshishujutianbao-bingzhichiyidongduantianbaoshuju2.png>)
+
+图 3  移动端展示数据填报
+
+## 2 表单管理
+
+### 2.1 创建表单
+
+点击【新建表单】，根据下图所示操作，在目录下自定义表单。
+
+![创建表单](</img/dataease/xpack/xinjianbiaodan.png>)
+
+图 4  新建表单
+
+表单配置：配置表单各个字段。
+
+![创建表单](</img/dataease/xpack/peizhibiaodan.png>)
+
+图 5  配置表单
+
+选择和下拉框组件在绑定数据源时，支持选择添加字段描述和添加筛选条件。
+
+![单选组件关联字段](</img/dataease/newimg/shujutianbiaodanxuanhedanxuankuangzujianzhichiewaiguanlianziduanchaxunyu-5c906e.png>)
+
+图 6  单选组件关联字段
+
+![单选组件关联字段](</img/dataease/newimg/shujutianbiaodanxuanhedanxuankuangzujianzhichiewaiguanlianziduanchaxunyu-5a56ce.png>)
+
+图 7  单选组件关联字段
+
+数据填报的表单中的下拉框和选择组件支持关联所有有效数据源。
+
+![下拉与多选组件](</img/dataease/newimg/shujutianbaodebiaodanzhongdexialakuangheduoxuankuangzujianzhichiguanlian-f78b6b.png>)
+
+图 8  下拉与多选组件
+
+在选择或下拉框中选择选项后，设置的字段描述将显示在下方。如果描述内容超过 6 个，可以点击【查看更多】以查看完整描述。
+
+![单选组件关联字段](</img/dataease/newimg/shujutianbiaodanxuanhedanxuankuangzujianzhichiewaiguanlianziduanchaxunyu-1f3548.png>)
+
+图 9  单选组件关联字段
+
+数据填报的日期组件支持设置默认值，默认填充当前日期时间。
+
+![数据填报的日期组件设置默认值](</img/dataease/newimg/shujutianbaoderiqizujianzhichishezhimorenzhi-morentianchongdangqianriqishijian.png>)
+
+图 10  数据填报的日期组件设置默认值
+
+数据填报表单可绑定现有数据库表，表单字段可选择与数据库表字段绑定，系统将自动匹配字段类型。对于未绑定的新增字段，系统将在目标数据表中创建对应的数据库字段，填报数据也将同步插入原数据表。
+
+![数据填报绑定已有数据表](</img/dataease/newimg/shujutianbaozhichibangdingyiyoushujubiao.png>)
+
+图 11  数据填报绑定已有数据表
+
+**注意：若需要将数据存储在其他数据库，需先创建数据源并开启数据填报。**
+
+![创建表单](</img/dataease/xpack/shujuyuankaiqishujutianbao.png>)
+
+图 12  数据源开启数据填报
+
+支持对已经创建的表单进行复制操作。
+
+![创建表单](</img/dataease/xpack/biaodanfuzhi.png>)
+
+图 13  表单复制
+
+### 2.2 表单数据
+
+选择对应对表单，可以查看表单的填报数据以及对应的填报时间、填报人，并且可对表单记录进行修改、查看、删除。  
+支持下载表单模板、通过 Excel 批量上传数据。
+
+![创建表单](</img/dataease/xpack/biaodanshuju.png>)
+
+图 14  表单数据
+
+数据填报的表单数据支持按字段过滤查询。
+
+![数据填报的表单数据按字段过滤查询](</img/dataease/newimg/shujutianbaodebiaodanshujuzhichianziduanguolvchaxun1.png>)
+
+图 15  数据填报的表单数据按字段过滤查询
+
+![数据填报的表单数据按字段过滤查询](</img/dataease/newimg/shujutianbaodebiaodanshujuzhichianziduanguolvchaxun2.png>)
+
+图 16  数据填报的表单数据按字段过滤查询
+
+数据填报的表单数据支持一键清空。一键清空时会弹出删除确认，确认后成功删除数据。
+
+![数据填报的表单数据一键清空](</img/dataease/newimg/shujutianbaodebiaodanshujuzhichiyijianqingkong1.png>)
+
+图 17  数据填报的表单数据一键清空
+
+![数据填报的表单数据一键清空](</img/dataease/newimg/shujutianbaodebiaodanshujuzhichiyijianqingkong2.png>)
+
+图 18  数据填报的表单数据一键清空
+
+![数据填报的表单数据一键清空](</img/dataease/newimg/shujutianbaodebiaodanshujuzhichiyijianqingkong3.png>)
+
+图 19  数据填报的表单数据一键清空
+
+切换至【提交记录】，可查看对应提交人的操作动作。同时，支持提交记录日志支持清理。
+
+![数据填报的提交记录日志清理](</img/dataease/newimg/shujutianbaodetijiaojilurizhizhichiqingli.png>)
+
+图 20  数据填报的提交记录日志清理
+
+![数据填报的提交记录日志清理](</img/dataease/newimg/shujutianbaodetijiaojilurizhizhichiqingli2.png>)
+
+图 21  数据填报的提交记录日志清理
+
+### 2.3 表单修改
+
+支持【编辑】对历史表单修改。但需要注意:        
+数字不能切换为其他类型，其他格式类型也不允许切换为数字。
+
+![创建表单](</img/dataease/xpack/biaodanxiugai1.png>)
+
+图 22  表单修改
+
+![创建表单](</img/dataease/xpack/biaodanxiugaishuzileixing.png>)
+
+图 23  表单修改数字类型
+
+原组件若允许多选，在编辑时无法修改为非允许多选，该选项为置灰状态。
+
+![创建表单](</img/dataease/xpack/yunxuxiugaibunengbianji.png>)
+
+图 24  允许修改不能编辑
+
+下拉框、单选、多选框组件的选项值允许编辑，表单的历史数据不做处理，如果历史数据该字段内容不在选项值范围内，那么可以对该数据编辑时，按照最新的选项值选择后，点击「确定」，完成对该条数据的修改。
+
+将组件从当前表单中删除后，后台数据表中的物理字段会保留。表单预览数据时，均按照表单中的组件展示，被删除的组件不做展示。
+
+### 2.4 任务管理
+
+切换至任务管理页面，可设置表单任务。支持对历史对表单任务进行编辑、启动和删除。
+
+![创建表单](</img/dataease/xpack/chuangjianrenwu.png>)
+
+图 25  创建任务
+
+表单任务可设置数据提交方式为数据追加或者数据更新。接收对象支持按照用户、角色选择。当数据提交方式为“数据更新”时，会出现【表单模板设置】，【表单过滤设置】选项。
+
+![创建表单](</img/dataease/xpack/biaodanmubanshezhi.png>)
+
+图 26  表单模板设置
+
+【表单模板设置】可以设置表单中的表单项是否允许被修改。
+
+![任务校验字段](</img/dataease/newimg/shujutianbaotianjiarenwushizhichishezhijiaoyanziduanjixiangyingdeguize2.png>)
+
+图 27  任务校验字段
+
+【表单过滤设置】可以对字段内容进行过滤。
+
+![任务管理过滤条件](</img/dataease/newimg/renwuguanliguolvtiaojian.png>)
+
+图 28  任务管理过滤条件
+
+当用户在界面中填写数据时，系统会实时检查每个字段的输入是否符合已设置的校验规则。如果发现不符合要求的输入，系统会进行提示。
+
+![校验成功](</img/dataease/newimg/shujutianbaotianjiarenwushizhichishezhijiaoyanziduanjixiangyingdeguize3.png>)
+
+图 29  校验成功
+
+用户可以在同一界面填写多条记录并提交，增加每条记录的状态标签。可通过“快速确认完成”按钮，快速修改单条记录状态或批量设置为完成。
+
+![快速确认完成](</img/dataease/newimg/shujutianbaozhichiduotiaolurubingxinzeng-kuaisuquerenwancheng-anniu.png>)
+
+图 30  快速确认完成

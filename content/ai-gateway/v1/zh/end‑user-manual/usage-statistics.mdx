@@ -1,0 +1,134 @@
+---
+title: 用量统计
+---
+
+## 1 用量统计是什么
+
+**用量统计**页汇总展示了网关在指定时间范围内的 **模型调用总量与分布**。它主要回答三个问题：
+
+- 这个月/周/天**总共用了多少**？（看指标卡）
+- **哪个模型 / 哪个供应商**最烧 Token？（看分布表）
+- 某一次异常调用是**哪个 Key / 哪个用户**产生的？（筛选 + 分布表定位）
+
+> 💡 **类比**：用量统计就像手机的「**屏幕使用时间**」——告诉你每个 App 各用了多久、什么时候用的最多，方便你控制预算和优化使用习惯。
+
+## 2 页面概览
+
+页面从**上到下**分三块：
+
+1. **顶部筛选区**：用下拉框选时间范围、用户、供应商、API 类型、模型。
+2. **总览指标卡（5 个）**：一眼看到所选范围内的核心数字。
+3. **Token 用量趋势图 + 分布表格**：按维度拆分用量细节。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/usage-statistics/image1-usage.png"} alt="用量统计页"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  用量统计页（筛选区 + 总览卡 + 趋势图）</div>
+
+## 3 使用说明
+
+页面顶部有 **6 个筛选项**，所有筛选都是「**组合生效**」的——多选条件会同时应用，互不影响。
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  筛选项说明</div>
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'20%', padding:'8px'}}>筛选项</th><th style={{width:'20%', padding:'8px'}}>作用</th><th style={{width:'15%', padding:'8px'}}>默认值</th><th style={{width:'45%', padding:'8px'}}>典型用法</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}><strong>用户</strong></td><td style={{padding:'8px'}}>按指定用户过滤</td><td style={{padding:'8px'}}>全部</td><td style={{padding:'8px'}}>想看「小李这个月用了多少」时选他</td></tr>
+<tr><td style={{padding:'8px'}}><strong>供应商</strong></td><td style={{padding:'8px'}}>按上游供应商过滤</td><td style={{padding:'8px'}}>全部</td><td style={{padding:'8px'}}>想知道「DeepSeek 类模型 vs OpenAI 类」哪个用得多</td></tr>
+<tr><td style={{padding:'8px'}}><strong>API 类型</strong></td><td style={{padding:'8px'}}>按 API 类型过滤</td><td style={{padding:'8px'}}>全部</td><td style={{padding:'8px'}}>对比「聊天接口 vs Embedding 接口」的消耗</td></tr>
+<tr><td style={{padding:'8px'}}><strong>时间维度</strong></td><td style={{padding:'8px'}}>选择时间范围</td><td style={{padding:'8px'}}>近 30 天</td><td style={{padding:'8px'}}>「近 7 天 / 近 30 天 / 自定义」三档</td></tr>
+<tr><td style={{padding:'8px'}}><strong>请求模型</strong></td><td style={{padding:'8px'}}>输入模型名精确过滤</td><td style={{padding:'8px'}}>空</td><td style={{padding:'8px'}}>排查某个具体模型的调用情况</td></tr>
+<tr><td style={{padding:'8px'}}><strong>API Key</strong></td><td style={{padding:'8px'}}>按 API Key 过滤</td><td style={{padding:'8px'}}>全部</td><td style={{padding:'8px'}}>按业务/团队核算成本时用</td></tr>
+</tbody>
+</table>
+
+> ✅ **预期结果**：任意筛选项变化后，下面的指标卡和趋势图会**立即刷新**，所有数字只反映「所有筛选条件同时满足」的请求。
+
+### 3.1 使用流程
+
+按下面的步骤查「**上个月各模型消耗**」：
+
+1. 进入用量统计页，默认显示**近 30 天**数据。
+2. 在「**时间维度**」下拉中选择「**近 30 天**」（或自定义范围）。
+3. 顶部 5 张卡显示这个时间段的**汇总数据**。
+4. 往下滚动到「**按模型分布**」表格，按「总 Token」从大到小排序，找到消耗最高的模型。
+5. 如需更细粒度，单击该模型行进入二级页面或用「请求模型」筛选框锁定该模型。
+
+> ✅ **预期结果**：表格会按你筛选的维度实时刷新，所有数字都反映「**同时满足所有筛选条件**」的子集。
+
+### 3.2 总览指标卡
+
+筛选区下方是 **5 张指标卡**，每张卡显示一个核心数字。
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 2  核心指标卡说明</div>
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'20%', padding:'8px'}}>指标</th><th style={{width:'30%', padding:'8px'}}>含义</th><th style={{width:'20%', padding:'8px'}}>单位说明</th><th style={{width:'30%', padding:'8px'}}>怎么用</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}><strong>请求量</strong></td><td style={{padding:'8px'}}>所选范围内的<strong>模型调用总次数</strong></td><td style={{padding:'8px'}}>整数次</td><td style={{padding:'8px'}}>衡量调用频次，1 次问答 = 1 次请求</td></tr>
+<tr><td style={{padding:'8px'}}><strong>输入 Token</strong></td><td style={{padding:'8px'}}>所有请求里<strong>用户输入</strong>累计的 Token 数</td><td style={{padding:'8px'}}>K = 千，M = 百万</td><td style={{padding:'8px'}}>用户发问累计消耗</td></tr>
+<tr><td style={{padding:'8px'}}><strong>输出 Token</strong></td><td style={{padding:'8px'}}>所有请求里<strong>模型回复</strong>累计的 Token 数</td><td style={{padding:'8px'}}>K = 千，M = 百万</td><td style={{padding:'8px'}}>模型生成累计消耗，通常输出比输入贵</td></tr>
+<tr><td style={{padding:'8px'}}><strong>总 Token</strong></td><td style={{padding:'8px'}}>输入 + 输出 Token 之和</td><td style={{padding:'8px'}}>K = 千，M = 百万</td><td style={{padding:'8px'}}>总消耗，决定账单金额的核心指标</td></tr>
+<tr><td style={{padding:'8px'}}><strong>缓存 Token</strong></td><td style={{padding:'8px'}}>命中<strong>缓存</strong>的 Token 数</td><td style={{padding:'8px'}}>K = 千，M = 百万</td><td style={{padding:'8px'}}>越高代表成本越低（缓存命中走优惠计费）</td></tr>
+</tbody>
+</table>
+
+> 💡 **Token 单位怎么看？** 系统会自动用 K（千）和 M（百万）显示大数字：`25.5K` = 25,500，`2.5M` = 2,500,000。
+
+## 4 Token 用量趋势图
+
+指标卡下方是**柱状趋势图**，展示所选范围内「**每天 Token 消耗**」的走势：
+
+- **X 轴**：日期（按天）。
+- **Y 轴**：Token 数量。
+- **颜色**：不同颜色代表不同模型（颜色对照图例）。
+- **图例切换**：右上角「模型 / API Key」切换按钮可换一种拆分维度。
+
+**怎么看？**
+
+- 看到**某一天柱子特别高**：那天可能有大量调用或异常请求，结合调用日志查来源。
+- 看到**柱子长期为 0**：可能是 Key 失效、应用没在调用、或筛选条件过滤掉了所有数据。
+- 看到**多种颜色混杂**：表示当天有多个模型被同时调用。
+
+## 5 分布表格
+
+趋势图下方按**多个维度**展示用量分布，方便你从不同角度「下钻」数据。
+
+每个分布表格都有 3 列固定指标：
+
+- **请求量**：该维度对应的请求次数
+- **总 Token**：该维度的 Token 消耗
+- **缓存 Token**：该维度命中缓存的 Token 数
+
+可用的分布维度有 **6 个**：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 3  分布维度说明</div>
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'30%', padding:'8px'}}>分布维度</th><th style={{width:'30%', padding:'8px'}}>看什么</th><th style={{width:'40%', padding:'8px'}}>典型场景</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}><strong>按供应商分布</strong></td><td style={{padding:'8px'}}>哪个上游厂商用得最多</td><td style={{padding:'8px'}}>评估「用 DeepSeek 还是 OpenAI 更划算」</td></tr>
+<tr><td style={{padding:'8px'}}><strong>按模型分布</strong></td><td style={{padding:'8px'}}>哪个具体模型最烧 Token</td><td style={{padding:'8px'}}>发现「某个模型用得特别多」时考虑换更便宜的</td></tr>
+<tr><td style={{padding:'8px'}}><strong>按模型组分布</strong></td><td style={{padding:'8px'}}>哪个模型组的总消耗</td><td style={{padding:'8px'}}>模型组是后台对模型的归类汇总</td></tr>
+<tr><td style={{padding:'8px'}}><strong>按上游账号分布</strong></td><td style={{padding:'8px'}}>哪个供应商账号产生的调用</td><td style={{padding:'8px'}}>排查某个供应商账号的异常用量</td></tr>
+<tr><td style={{padding:'8px'}}><strong>按用户组分布</strong></td><td style={{padding:'8px'}}>哪个用户组消耗最多</td><td style={{padding:'8px'}}>团队成本核算</td></tr>
+<tr><td style={{padding:'8px'}}><strong>按用户分布</strong></td><td style={{padding:'8px'}}>哪个用户用得最多</td><td style={{padding:'8px'}}>个人用量追踪、识别滥用</td></tr>
+</tbody>
+</table>
+
+:::tip[快速对比两个模型]
+
+想比较「模型 A」和「模型 B」的消耗？方法：保持其他筛选不变，把**请求模型**筛选分别设为 A 和 B，对比两次的「总 Token」即可。
+
+
+:::
+
+
+## 6 注意事项
+
+- 各项指标均为 0 时，表示当前筛选条件下未产生过调用，可将「时间维度」切换为「近 30 天」，并将「用户」「供应商」「API 类型」均选为「全部」后再次查看。
+- 用量统计展示的是调用发生时的实时计数
+- 控制台当前以可视化展示为主，如需导出原始数据，请联系管理员从后端日志导出。

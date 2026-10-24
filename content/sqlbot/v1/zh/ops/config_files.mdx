@@ -1,0 +1,80 @@
+---
+title: 配置文件说明
+description: 介绍 SQLBot 配置文件位置，以及修改后如何生效。
+---
+
+## 1 功能简介
+
+SQLBot 的运行参数保存在 `.env` 与 `conf/sqlbot.conf`。调整跨域、默认密码、数据库、MCP 图片地址等，一般两处一并修改后重启。
+
+## 2 配置文件位置
+
+默认运行目录为 `/opt/sqlbot`（`SQLBOT_BASE=/opt`）。主要文件如下：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  主要配置文件</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'28%', padding:'8px', textAlign:'left'}}>文件</th><th style={{width:'42%', padding:'8px', textAlign:'left'}}>默认路径</th><th style={{width:'30%', padding:'8px', textAlign:'left'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}><code>.env</code></td><td style={{padding:'8px'}}><code>/opt/sqlbot/.env</code></td><td style={{padding:'8px'}}>安装生成的 <code>SQLBOT_*</code> 变量</td></tr>
+<tr><td style={{padding:'8px'}}><code>sqlbot.conf</code></td><td style={{padding:'8px'}}><code>/opt/sqlbot/conf/sqlbot.conf</code></td><td style={{padding:'8px'}}>应用运行配置</td></tr>
+<tr><td style={{padding:'8px'}}><code>docker-compose.yml</code></td><td style={{padding:'8px'}}><code>/opt/sqlbot/docker-compose.yml</code></td><td style={{padding:'8px'}}>容器编排</td></tr>
+</tbody>
+</table>
+
+:::note[.env 与 sqlbot.conf]
+安装时由 `.env` 渲染生成 `sqlbot.conf`（如 `SQLBOT_SERVER_IMAGE_HOST` → `SERVER_IMAGE_HOST`）。安装后改参请两处保持一致。
+
+:::
+
+
+## 3 修改与生效
+
+修改前先备份：
+
+```sh
+cp /opt/sqlbot/.env /opt/sqlbot/.env.bak.$(date +%F)
+cp /opt/sqlbot/conf/sqlbot.conf /opt/sqlbot/conf/sqlbot.conf.bak.$(date +%F)
+vi /opt/sqlbot/.env
+vi /opt/sqlbot/conf/sqlbot.conf
+```
+
+保存后重启：
+
+```sh
+sctl restart
+```
+
+:::warning[修改后需重启]
+须执行 `sctl restart` 才会生效；`sctl reload` 不能替代重启。见 [命令行工具](../installation/cli.mdx)。
+
+:::
+
+
+## 4 参数说明
+
+`.env` / `sqlbot.conf` 中常见参数如下（安装后请两处保持一致）：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 2  参数说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'30%', padding:'8px', textAlign:'left'}}>参数名称</th><th style={{width:'18%', padding:'8px', textAlign:'left'}}>默认值</th><th style={{width:'12%', padding:'8px', textAlign:'left'}}>可选项</th><th style={{width:'40%', padding:'8px', textAlign:'left'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>SQLBOT_SERVER_IMAGE_HOST<br />（SERVER_IMAGE_HOST）</td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>MCP 图片地址，IP 为 SQLBot 服务器地址，端口为 MCP 端口（默认 8001）；见 <a href="../mcp_server">MCP Server</a></td></tr>
+<tr><td style={{padding:'8px'}}>SQLBOT_CORS_ORIGINS<br />（BACKEND_CORS_ORIGINS）</td><td style={{padding:'8px'}}>http://localhost,http://localhost:5173,...</td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>跨域白名单，多个来源以逗号分隔</td></tr>
+<tr><td style={{padding:'8px'}}>SQLBOT_DEFAULT_PWD<br />（DEFAULT_PWD）</td><td style={{padding:'8px'}}>SQLBot@123456</td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>普通用户默认密码</td></tr>
+<tr><td style={{padding:'8px'}}>SQLBOT_SECRET_KEY<br />（SECRET_KEY）</td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>JWT 签名密钥；备份与迁移须保留原值，见 <a href="../installation/backup">备份</a></td></tr>
+<tr><td style={{padding:'8px'}}>SQLBOT_LOG_LEVEL</td><td style={{padding:'8px'}}>INFO</td><td style={{padding:'8px'}}>DEBUG <br /> INFO <br /> WARNING <br /> ERROR</td><td style={{padding:'8px'}}>日志级别</td></tr>
+<tr><td style={{padding:'8px'}}>POSTGRES_HOST / PORT / DB / USER / PASSWORD</td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>数据库连接信息（以 <code>sqlbot.conf</code> 为准）</td></tr>
+</tbody>
+</table>
+
+## 5 后续操作
+
+- [命令行工具](../installation/cli.mdx)
+- [查看系统日志](./system_logs.mdx)
+- [MCP Server](../mcp_server.mdx)

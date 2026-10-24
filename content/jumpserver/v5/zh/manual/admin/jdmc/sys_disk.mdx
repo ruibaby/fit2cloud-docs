@@ -1,0 +1,58 @@
+---
+title: 磁盘管理
+description: 介绍 JDMC 磁盘管理中为数据盘扩容的操作流程与磁盘挂载点容量详情。
+---
+
+## 1 功能概述
+
+磁盘管理用于为数据盘执行扩容，并查看各挂载点的容量占用情况，包含 **磁盘扩容** 与 **磁盘详情** 两个页签。
+
+路径：登录后选择 **系统设置 > 设备管理**，进入 JDMC 控制台后，在左侧菜单选择 **磁盘管理**。
+
+## 2 磁盘扩容
+
+**扩容方式** 当前为 **扩展当前磁盘**。选择 **目标挂载点** 后，页面会显示该挂载点的 **当前容量**，确认无误后点击 **执行扩容**，完成后可点击 **查看结果** 查看执行输出。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_jdmc_disk_01.png"} alt="图 1  磁盘扩容" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  磁盘扩容</div>
+
+**候选磁盘** 区块列出可用于扩容的磁盘，顶部显示 **可用候选磁盘** 数量与候选列表的采集时间。磁盘行首可勾选，已勾选的磁盘标记为 **已选**。
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  候选磁盘列表字段说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>列</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>候选磁盘</td><td style={{padding:'8px'}}>磁盘设备名，如 /dev/sda</td></tr>
+<tr><td style={{padding:'8px'}}>容量</td><td style={{padding:'8px'}}>磁盘总容量</td></tr>
+<tr><td style={{padding:'8px'}}>接口类型</td><td style={{padding:'8px'}}>磁盘接口类型，未识别时显示 --</td></tr>
+<tr><td style={{padding:'8px'}}>状态</td><td style={{padding:'8px'}}>是否可作为扩容目标，如不符合条件</td></tr>
+<tr><td style={{padding:'8px'}}>限制原因</td><td style={{padding:'8px'}}>不可用的具体原因，如已有分区、已有文件系统、已挂载、系统盘</td></tr>
+</tbody>
+</table>
+
+## 3 磁盘详情
+
+磁盘详情用于查看磁盘挂载点、文件系统与容量占用情况，支持按文件系统筛选。
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 2  磁盘详情列表字段说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>列</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>挂载点</td><td style={{padding:'8px'}}>分区挂载路径，如 /、/boot</td></tr>
+<tr><td style={{padding:'8px'}}>文件系统</td><td style={{padding:'8px'}}>文件系统类型，如 ext4</td></tr>
+<tr><td style={{padding:'8px'}}>设备</td><td style={{padding:'8px'}}>对应的块设备</td></tr>
+<tr><td style={{padding:'8px'}}>总量</td><td style={{padding:'8px'}}>该分区总容量</td></tr>
+<tr><td style={{padding:'8px'}}>已用</td><td style={{padding:'8px'}}>已使用容量</td></tr>
+<tr><td style={{padding:'8px'}}>可用</td><td style={{padding:'8px'}}>剩余可用容量</td></tr>
+<tr><td style={{padding:'8px'}}>使用率</td><td style={{padding:'8px'}}>已用容量占比</td></tr>
+</tbody>
+</table>
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_jdmc_disk_02.png"} alt="图 2  磁盘详情" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  磁盘详情</div>

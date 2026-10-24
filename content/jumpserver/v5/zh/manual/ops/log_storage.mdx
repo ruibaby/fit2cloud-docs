@@ -1,0 +1,70 @@
+---
+title: 日志存储配置
+description: 介绍 JumpServer 应用日志、Syslog、会话命令与录像存储的配置方式。
+---
+
+## 1 功能简介
+
+JumpServer 的日志与审计数据分几类存放，运维时需分开配置：
+
+- **应用日志**： Core 等组件运行日志，由 `LOG_DIR`、`LOG_LEVEL` 控制，也可用 `jmsctl tail` 查看。
+- **Syslog**： 将应用日志送到外部 Syslog 服务器。
+- **会话命令**： 用户在资产上执行的命令记录，默认证数据库，可改为 Elasticsearch。
+- **会话录像**： 图形/字符会话回放文件，默认本地，可改为对象存储。
+- **操作日志变更字段**： 可通过 `OPERATE_LOG_ELASTICSEARCH_CONFIG` 写入 Elasticsearch。
+
+## 2 前提条件
+
+- 修改 `config.txt` 前，请先停止 JumpServer 服务，见 [系统参数设置](./system_params.mdx)。
+- 配置外部 Elasticsearch 或对象存储时，网络须能访问对应服务。
+- 调整界面存储后，须在 **系统设置 > 组件设置** 中为相关组件选择新的存储并更新，会话才会写入新位置。
+
+## 3 应用日志
+
+默认日志目录为 `/data/jumpserver/core/data/logs`，级别由 `LOG_LEVEL` 控制（如 `INFO`、`DEBUG`）。
+
+在安装目录查看指定组件日志：
+
+```sh
+./jmsctl.sh tail
+./jmsctl.sh tail core
+```
+
+:::note[本地清理范围]
+**系统设置 > 系统任务 > 定期清理** 只清理本地保存的登录、操作、上传下载等记录。录像和命令若已写到外部存储，不受该页周期影响。
+
+:::
+
+
+## 4 Syslog
+
+在 `/opt/jumpserver/config/config.txt` 中配置：
+
+- **SYSLOG_ADDR**： Syslog 服务地址。
+- **SYSLOG_FACILITY**： 默认为 `user`。
+- **SYSLOG_SOCKTYPE**： 默认为 `2`。
+
+保存后执行 `./jmsctl.sh restart`。完整参数表见 [系统参数设置](./system_params.mdx)。
+
+## 5 会话命令与录像
+
+在页面中配置：
+
+1. 单击右上角齿轮，进入 **系统设置 > 存储设置**。
+2. **对象存储** 用于会话录像。支持 S3、Ceph、Swift、OSS、Azure、OBS、COS 等；SFTP 仅用于账号备份。
+3. **命令存储** 用于会话命令。默认在 JumpServer 数据库；外部存储目前为 Elasticsearch。
+4. Elasticsearch 主机格式为 `http://es_user:es_password@es_host:es_port`。若开启按日期建索引，所填名称作为索引前缀。
+5. 在 **组件设置** 中为组件指定命令存储与录像存储并更新。选择 **null** 表示不保存。
+
+界面字段与截图见 [存储设置](../admin/system_settings/storage.mdx)。
+
+也可在 `config.txt` 中配置 `SERVER_REPLAY_STORAGE`，由 Core 将组件上传的录像转到对象存储。
+
+## 6 操作日志 Elasticsearch
+
+操作日志中「变更字段」可写入 Elasticsearch，在 `config.txt` 配置 `OPERATE_LOG_ELASTICSEARCH_CONFIG`，例如索引名、HOSTS、是否按日期索引、是否忽略证书校验等。修改后须重启服务。
+
+## 7 后续操作
+
+- 启停与看日志命令见 [命令行工具](./cli_tools.mdx)。
+- 定期清理周期见 [系统任务](../admin/system_settings/system_tasks.mdx)。

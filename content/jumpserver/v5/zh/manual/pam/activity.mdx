@@ -1,0 +1,40 @@
+---
+title: 活动管理
+description: 介绍 JumpServer PAM 中的活动管理。
+---
+
+## 1 功能概述
+
+- 进入 **PAM** 页面，单击 **PAM &gt; 活动 &gt; 账号会话 / 账号活动** 进入对应页面。活动管理用于查看 PAM 上的账号会话与账号活动记录。
+- 活动管理包含账号会话与账号活动两类记录，用于查看 PAM 账号的会话记录与操作日志，辅助会话审计与问题排查。
+
+## 2 账号会话
+
+- 账号会话用于查看 PAM 账号的会话记录，包含"在线会话"和"历史会话"两个页签，默认展示"在线会话"页签。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/V4_pam_sessions1.png"} alt="图 1  账号会话" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  账号会话</div>
+
+### 2.1 在线会话
+
+- "在线会话"页签展示当前正在进行的 PAM 账号会话，列表包含序号、用户、目标、账号、协议、开始日期、操作等列。
+- 当当前没有正在进行的会话时，列表显示"暂无数据"。
+
+### 2.2 历史会话
+
+- "历史会话"页签展示已结束的 PAM 账号会话记录，列表包含序号、用户、目标、账号、协议、开始日期、操作等列。
+- 通过该页签可以回溯历史会话情况，辅助会话审计与问题排查。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/V4_pam_sessions2.png"} alt="图 2  历史会话" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  历史会话</div>
+
+## 3 账号活动
+
+- 账号活动用于记录 PAM 账号相关的操作日志，列表包含用户、资源、远端地址、日期、动作、操作等列。
+- "动作"列展示操作类型，包括创建、删除、查看等；"资源"列展示操作所针对的资产或账号。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/V4_pam_activity1.png"} alt="图 3  账号活动" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 3  账号活动</div>

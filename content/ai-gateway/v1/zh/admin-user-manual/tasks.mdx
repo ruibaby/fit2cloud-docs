@@ -1,0 +1,68 @@
+---
+title: 任务中心
+description: 介绍 1Panel AI 网关（Gateway）任务中心页的作用、任务类型、筛选项与任务详情，用于查看网关后台任务的执行状态与结果。
+slug: /user_manual/ai_gateway/tasks
+---
+
+## 1 概述
+
+网关在执行部分操作时（如按策略自动清理日志、导出调用日志等），会以后台任务的形式异步执行。**任务中心**集中记录这些任务的类型、触发方式、状态与处理进度，便于管理员确认任务是否顺利执行、排查异常，并查看导出结果。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/tasks/image1-Tasks.png"} alt="任务中心列表"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  任务中心列表</div>
+
+## 2 列表字段
+
+列表每行对应一次任务执行记录，主要字段说明如下。
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  任务中心列表字段</div>
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>字段</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>ID</td><td style={{padding:'8px'}}>任务序号，随任务创建递增。</td></tr>
+<tr><td style={{padding:'8px'}}>任务类型</td><td style={{padding:'8px'}}>任务的类别，如「自动日志清理」「日志导出」。</td></tr>
+<tr><td style={{padding:'8px'}}>触发方式</td><td style={{padding:'8px'}}>任务的发起方式，如「自动触发」。</td></tr>
+<tr><td style={{padding:'8px'}}>状态</td><td style={{padding:'8px'}}>任务的执行结果，如「执行成功」「执行中」「执行失败」。</td></tr>
+<tr><td style={{padding:'8px'}}>创建时间</td><td style={{padding:'8px'}}>任务发起的时间。</td></tr>
+<tr><td style={{padding:'8px'}}>处理进度</td><td style={{padding:'8px'}}>任务当前的处理进度，形如「8 / — 记录」。</td></tr>
+<tr><td style={{padding:'8px'}}>操作</td><td style={{padding:'8px'}}>单击 <strong>详情</strong> 查看任务的详细信息。</td></tr>
+</tbody>
+</table>
+
+## 3 任务筛查
+
+任务会随使用不断累积，通过筛查可快速定位目标任务。页面顶部提供以下筛查方式：
+
+- **按触发方式筛选**：仅显示指定触发方式（如自动触发）的任务。
+
+- **按任务类型筛选**：仅显示指定类型（如自动日志清理、日志导出）的任务。
+
+- **按状态筛选**：仅显示指定状态（如执行成功、执行失败）的任务。
+
+- **按时间维度筛选**：选择查看全部时间或指定时间范围内的任务。
+
+## 4 查看任务详情
+
+单击某行记录的「**详情**」，可打开该任务的详情，查看任务类型、触发方式、状态、创建时间、处理进度以及执行记录等信息，用于确认任务结果或定位失败原因。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/tasks/image2-Task-Details.png"} alt="任务详情"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  任务详情</div>
+
+## 5 保留策略
+
+任务记录与导出文件均为临时数据，其保留时长由「**系统设置** → **基础设置** → **任务保留设置**」统一控制，参见[系统设置](./system_settings)：
+
+- **任务记录保留天数**：任务记录在被清理前的保留时长。
+- **导出文件保留天数**：日志导出等任务所生成文件的保留时长。
+
+调整后对**后续完成**的任务生效，不会缩短已有任务的到期时间；此外，记录期限须覆盖文件期限。
+
+## 6 注意事项
+
+- **任务中心为只读视图**：用于查看任务的执行情况，不支持在此手动发起或终止任务。
+
+- **结合详情排查异常**：任务长期处于执行中或反复失败时，请结合任务详情与系统日志定位原因。

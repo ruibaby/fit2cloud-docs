@@ -1,0 +1,105 @@
+---
+title: Windows 下安装
+---
+
+## 1 环境要求
+
+
+**部署服务器要求：**
+
+* CPU/内存: 4 核 8 G
+* 磁盘空间: 100G
+* 服务器架构: amd64 或 arm64
+
+
+## 2 端口要求
+
+
+在线部署 SQLBot 需要开通的访问端口说明如下：
+
+
+表 1 Windows 部署端口要求
+
+| 端口   | 作用       | 说明                        |
+|------|:---------|:--------------------------|
+| 8000 | Web 服务端口 | 默认 Web 服务访问端口，可根据实际情况进行更改 |
+| 8001 | MCP 服务端口 | 默认 MCP 服务访问端口，可根据实际情况进行更改 |    
+
+## 3 Docker desktop 安装
+
+
+网络上有很多 Docker desktop 的详细安装教程，大家可以根据不同的操作系统版本，去查询不同的安装教程。这里例举几个写的比较详细的主流操作系统的链接：
+
+- [Windows Docker 安装](https://www.runoob.com/docker/windows-docker-install.html)
+- [【2025 最新版】Win11 安装 Docker Desktop 超详细图文教程（小白也能学会）](https://blog.csdn.net/Little_Carter/article/details/155263711)
+- [Docker安装（Windows/Windows Server）](https://blog.csdn.net/qq_23095607/article/details/153900900)
+
+
+## 4 安装部署
+
+
+安装完 docker 环境之后，进行以下操作：
+
+```
+docker run -d \
+    --name sqlbot \
+    --restart unless-stopped \
+    -p 8000:8000 \
+    -p 8001:8001 \
+    -v D:\data\sqlbot\excel:/opt/sqlbot/data/excel \
+    -v D:\data\sqlbot\file:/opt/sqlbot/data/file \
+    -v D:\data\sqlbot\images:/opt/sqlbot/images \
+    -v D:\data\sqlbot\logs:/opt/sqlbot/logs \
+    -v D:\data\postgresql:/var/lib/postgresql/data \
+    --privileged=true \
+    dataease/sqlbot
+```
+
+如果执行过程中遇到镜像无法拉取的情况，可以替换一下镜像地址：
+```
+docker run -d \
+    --name sqlbot \
+    --restart unless-stopped \
+    -p 8000:8000 \
+    -p 8001:8001 \
+    -v D:\data\sqlbot\excel:/opt/sqlbot/data/excel \
+    -v D:\data\sqlbot\file:/opt/sqlbot/data/file \
+    -v D:\data\sqlbot\images:/opt/sqlbot/images \
+    -v D:\data\sqlbot\logs:/opt/sqlbot/logs \
+    -v D:\data\postgresql:/var/lib/postgresql/data \
+    --privileged=true \
+    registry.cn-qingdao.aliyuncs.com/dataease/sqlbot
+```
+
+如果需要使用 MCP 功能的话，在启动命令中加上 SERVER_IMAGE_HOST 参数，注意将 IP 和端口替换成自己的实际 IP 和端口：
+```
+docker run -d \
+    --name sqlbot \
+    --restart unless-stopped \
+    -p 8000:8000 \
+    -p 8001:8001 \
+    -e SERVER_IMAGE_HOST=http://47.92.75.231:8001/images/ \
+    -v D:\data\sqlbot\excel:/opt/sqlbot/data/excel \
+    -v D:\data\sqlbot\file:/opt/sqlbot/data/file \
+    -v D:\data\sqlbot\images:/opt/sqlbot/images \
+    -v D:\data\sqlbot\logs:/opt/sqlbot/logs \
+    -v D:\data\postgresql:/var/lib/postgresql/data \
+    --privileged=true \
+    dataease/sqlbot
+```
+
+
+# 4 登录访问
+
+
+安装成功后即可通过浏览器访问地址 `http://目标服务器 IP 地址:8000`，并使用默认的管理员用户和密码登录 SQLBot。
+
+```
+用户名：admin
+
+默认密码：SQLBot@123456
+```
+
+![访问SQLBot](</img/sqlbot/installation/login_sqlbot.png>)
+
+图 1 访问 SQLBot

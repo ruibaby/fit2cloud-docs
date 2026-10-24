@@ -1,0 +1,356 @@
+
+
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  column-gap: 36px;
+  row-gap: 0;
+  align-items: start;
+  padding: 8px 0 36px;
+  border-bottom: 1px solid var(--rp-c-divider-light);
+}
+
+
+.heroBody {
+  grid-column: 1;
+  min-width: 0;
+}
+
+:global(.rp-doc):has(.landing) > h1 {
+  grid-column: 1 / -1;
+  
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 14px;
+  color: var(--rp-c-text-1);
+}
+
+.heroDesc {
+  
+  font-size: 1em;
+  line-height: 1.9;
+  color: var(--rp-c-text-2);
+  margin: 0 0 24px;
+  max-width: 720px;
+}
+
+.heroBtns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+
+.heroBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 24px;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 500;
+  color: #0966ba;
+  border: 1px solid rgba(12, 123, 224, 0.12);
+  background-color: #f0f6ff;
+  text-decoration: none;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.heroBtn:hover {
+  background-color: #e6f0ff;
+  border-color: rgba(12, 123, 224, 0.24);
+  color: #08549a;
+  text-decoration: none;
+}
+
+
+.videoCard {
+  grid-column: 2;
+  align-self: start;
+  width: 200px;
+  display: block;
+  border: 1px solid var(--rp-c-divider-light);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--rp-c-bg);
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.videoCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(12, 123, 224, 0.24);
+  box-shadow: 0 8px 20px rgba(28, 75, 170, 0.12);
+  text-decoration: none;
+}
+
+
+.videoCover {
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 111px;
+  overflow: hidden;
+  background: #5a54f9;
+}
+
+
+.videoCoverLogo {
+  display: block;
+  width: 139px;
+  height: auto;
+}
+
+.videoCoverText {
+  padding: 0 8px;
+  
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.6px;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+}
+
+
+.videoCoverPlay {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5a54f9;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.videoCoverPlay svg {
+  display: block;
+  width: 15px;
+  height: 15px; 
+}
+
+.videoCard:hover .videoCoverPlay {
+  transform: scale(1.08);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.28);
+}
+
+
+.videoHint {
+  display: block;
+  padding: 8px 10px 9px;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--rp-c-text-2);
+}
+
+
+.section {
+  display: flex;
+  gap: 24px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--rp-c-divider-light);
+}
+
+.section:last-child {
+  border-bottom: none;
+  padding-bottom: 8px;
+}
+
+
+.sectionHead {
+  flex: 0 0 168px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+
+.sectionIcon {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  color: #fff;
+  background: linear-gradient(90deg, rgba(12, 123, 224, 1) 0%, rgba(51, 61, 255, 1) 100%);
+}
+
+.sectionIcon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.sectionLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--rp-c-text-1);
+  white-space: nowrap;
+}
+
+
+.sectionHead h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--rp-c-text-1);
+  margin: 0;
+  line-height: 1.5;
+  text-align: left;
+  white-space: nowrap;
+}
+
+
+.sectionHead h2 :global(.hash-link),
+.sectionHead h2 a[href^='#'] {
+  display: none;
+}
+
+
+.sectionBody {
+  flex: 1;
+  min-width: 0;
+  border-left: 1px solid var(--rp-c-divider-light);
+  padding-left: 28px;
+}
+
+
+.linkGridSingle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px 24px;
+}
+
+.linkGroup {
+  min-width: 0;
+}
+
+.groupTitle {
+  display: block;
+  font-size: 1em;
+  font-weight: 600;
+  color: var(--rp-c-text-1);
+  margin-bottom: 8px;
+  text-decoration: none;
+}
+
+.groupTitle:hover {
+  text-decoration: underline;
+}
+
+
+.groupLabel {
+  display: block;
+  font-size: 1em;
+  font-weight: 600;
+  color: var(--rp-c-text-1);
+  margin-bottom: 8px;
+}
+
+.subLink {
+  display: block;
+  font-size: 1em;
+  color: var(--rp-c-text-2);
+  margin: 5px 0;
+  text-decoration: none;
+}
+
+.subLink:hover {
+  color: var(--rp-c-brand);
+  text-decoration: none;
+}
+
+
+.subLinkRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
+  gap: 6px 8px;
+}
+
+.subLinkRow .subLink {
+  margin: 0;
+}
+
+
+.subLinkRowWide {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 6px 8px;
+}
+
+.subLinkRowWide .subLink {
+  margin: 0;
+}
+
+
+@media (max-width: 1400px) {
+  .subLinkRow {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+
+@media (max-width: 996px) {
+  
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .videoCard {
+    grid-column: auto;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .section {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sectionHead {
+    
+    flex: none;
+  }
+
+  .sectionBody {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .linkGridSingle {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Keep the imported design scoped to this page, including native heading UI. */
+.landing { font-size: 14px; line-height: 1.75; }
+/* The Markdown title stays at the root so Rspress detects it without a fallback. */
+:global(.rp-doc):has(.landing) > :global(.rp-llms-container) { display: none; }
+:global(.rp-doc):has(.landing) > h1 { letter-spacing: normal; }
+:global(.rp-doc):has(.landing) > h1 a[href^='#'] { display: none; }
+@media (min-width: 1280px) {
+  :global(.rp-doc-layout__doc):has(.landing) { --rp-content-padding-x: 40px; }
+}
+@media (max-width: 996px) { .videoCard { margin-top: 24px; } }

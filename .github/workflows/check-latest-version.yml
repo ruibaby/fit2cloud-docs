@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     # 每日 20:00 UTC（北京时间凌晨 4 点）检查一次
-    - cron: '0 20 * * *'
+    - cron: "0 20 * * *"
 
 # 允许工作流把 bot 改好的文档 push 回仓库，否则最后一步 git push 会 403
 permissions:
@@ -30,7 +30,7 @@ jobs:
           bare=$(echo "${version}" | sed 's/^v//')
           echo "bare=${bare}" >> $GITHUB_ENV
           grep -q "jumpserver-ce-${bare}-x86_64" \
-            jumpserver-docs/installation/setup_linux_standalone/offline_install.md \
+            content/jumpserver/v5/zh/installation/setup_linux_standalone/offline_install.mdx \
             || echo "update=true" >> $GITHUB_ENV
 
       - name: Update Version in Docs
@@ -39,13 +39,13 @@ jobs:
           # 把两篇离线文档里的 jumpserver-ce-<旧版本>-x86_64 统一改成 <新版本>
           # 版本号段用 [^-]* 非贪婪匹配，避免跨越 -x86_64 误吞表格单元格里的 .tar.gz
           for f in \
-            jumpserver-docs/installation/setup_linux_standalone/offline_install.md \
-            jumpserver-docs/installation/setup_linux_standalone/offline_upgrade.md; do
+            content/jumpserver/v5/zh/installation/setup_linux_standalone/offline_install.mdx \
+            content/jumpserver/v5/zh/installation/setup_linux_standalone/offline_upgrade.mdx; do
             sed -i -E "s@jumpserver-ce-[^-]*-x86_64@jumpserver-ce-${{ env.bare }}-x86_64@g" "$f"
           done
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add jumpserver-docs/installation/setup_linux_standalone/offline_install.md \
-                  jumpserver-docs/installation/setup_linux_standalone/offline_upgrade.md
+          git add content/jumpserver/v5/zh/installation/setup_linux_standalone/offline_install.mdx \
+                  content/jumpserver/v5/zh/installation/setup_linux_standalone/offline_upgrade.mdx
           git commit -m "chore(docs): update offline installer version to ${{ env.bare }}"
           git push

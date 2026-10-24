@@ -1,0 +1,103 @@
+---
+title: 调用日志
+description: 介绍 1Panel AI 网关（Gateway）调用日志页的作用、筛选项、列表字段与调用详情。
+slug: /user_manual/ai_gateway/call_logs
+---
+
+## 1 概述
+
+系统对外提供模型调用能力后，会产生大量调用请求。若无记录，将难以回答"谁在什么时候调用了哪个模型、消耗了多少、成功了没有"等问题。**调用日志**全面记录每一次模型调用的明细，是排查问题、核对用量、分析成本的重要依据。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/call_logs/image1-Call-Logs.png"} alt="调用日志列表"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  调用日志列表</div>
+
+## 2 列表字段
+
+列表每行对应一次调用记录，主要字段说明如下。
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  调用日志列表字段</div>
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'30%', padding:'8px'}}>字段</th><th style={{width:'70%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>Request ID</td><td style={{padding:'8px'}}>本次调用的唯一标识，可单击右侧图标复制。</td></tr>
+<tr><td style={{padding:'8px'}}>供应商 / 账号</td><td style={{padding:'8px'}}>本次调用使用的供应商及上游账号。</td></tr>
+<tr><td style={{padding:'8px'}}>请求模型</td><td style={{padding:'8px'}}>客户端请求的模型名称。</td></tr>
+<tr><td style={{padding:'8px'}}>上游模型</td><td style={{padding:'8px'}}>实际转发到上游的模型名称。</td></tr>
+<tr><td style={{padding:'8px'}}>用户 / 用户组</td><td style={{padding:'8px'}}>发起本次调用的用户及其所属用户组。</td></tr>
+<tr><td style={{padding:'8px'}}>API Key</td><td style={{padding:'8px'}}>本次调用使用的 API Key 名称。</td></tr>
+<tr><td style={{padding:'8px'}}>来源 IP</td><td style={{padding:'8px'}}>发起调用的客户端来源 IP（v1.4.0 起提供）。</td></tr>
+<tr><td style={{padding:'8px'}}>输入 Token / 输出 Token / 总 Token / 缓存 Token</td><td style={{padding:'8px'}}>本次调用各阶段的 Token 用量。</td></tr>
+<tr><td style={{padding:'8px'}}>结果</td><td style={{padding:'8px'}}>调用结果，如「成功」「客户端错误」「上游错误」。</td></tr>
+<tr><td style={{padding:'8px'}}>状态码</td><td style={{padding:'8px'}}>本次调用的响应状态码，如 200、403。</td></tr>
+<tr><td style={{padding:'8px'}}>总耗时</td><td style={{padding:'8px'}}>本次调用的整体耗时。</td></tr>
+<tr><td style={{padding:'8px'}}>上游累计耗时</td><td style={{padding:'8px'}}>上游各次尝试的累计耗时。</td></tr>
+<tr><td style={{padding:'8px'}}>调用时间</td><td style={{padding:'8px'}}>本次调用发生的时间。</td></tr>
+<tr><td style={{padding:'8px'}}>操作</td><td style={{padding:'8px'}}>单击 <strong>查看</strong> 打开调用详情。</td></tr>
+</tbody>
+</table>
+
+**数据为空的字段**：部分调用（如上游返回异常）可能无法采集到 Token 用量，对应字段显示「未知」。
+
+## 3 调用日志筛查
+
+调用日志会随请求量增长而快速累积，若不加以筛选，将难以在大量记录中定位目标。通过筛查，可快速聚焦特定用户、供应商、结果或时间段的记录，便于追踪与排查。
+
+页面顶部提供以下筛查方式：
+
+- **按用户筛选**：通过下拉框仅显示指定用户的调用记录。
+
+- **按供应商筛选**：通过下拉框仅显示指定供应商或账号的记录。
+
+- **按 API 类型筛选**：通过下拉框仅显示指定接口类型（如 `openai-completions`、`anthropic-messages`、`rerank`）的调用记录。
+
+- **按状态码筛选**：通过下拉框仅显示指定状态码（或结果）的记录。
+
+- **按时间维度筛选**：通过「时间维度」选择查看近 7 天、近 30 天等时间范围内的记录。
+
+- **按关键词搜索**：在搜索框中输入 **Request ID、模型、上游模型或错误信息**，可快速定位对应记录。
+
+通过组合使用上述筛查条件，可快速缩小范围、定位到目标请求，完成追溯排查或用量核查。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/call_logs/image2_log_scan.png"} alt="调用日志筛查"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  调用日志筛查</div>
+
+## 4 查看调用详情
+
+点击某条记录的「查看」，可打开请求详情。详情按区块呈现该次调用的完整信息：
+
+- **基本信息**：用户、用户组、API Key、来源 IP、模型组、调用时间。
+- **模型详情**：上游账号、请求模型、上游模型、流式类型、上游端点、协议路径。
+- **Token 用量**：总 Token、输入 Token、输出 Token、缓存 Token 及用量来源。
+- **状态**：结果、响应状态码、总耗时、首字节耗时、排队耗时、上游累计耗时与错误码。
+- **调用链路**：本次调用向上游发起的各次尝试及其状态。
+
+当请求出现失败或异常时，可结合详情中的**错误码**与**调用链路**定位原因，例如调用参数错误、上游连接异常或模型未授权（如 `model_not_allowed`），从而有针对性地排查与处理。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/call_logs/image3-Call-Log-Details.png"} alt="调用日志详情"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 3  调用日志详情</div>
+
+## 5 日志导出
+
+调用日志支持将记录导出为文件，便于离线分析、成本对账或长期留存（v1.4.0 起提供）：
+
+- **导出筛选结果**：位于列表顶部。按当前筛选条件导出全部匹配的记录。
+- **导出本条**：位于每行记录的「操作」列。导出该次调用的单条记录。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/call_logs/image4-Log-Export.png"} alt="导出调用日志"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 4  导出调用日志</div>
+
+导出为异步任务，提交后可在[任务中心](./tasks)中查看处理进度与下载结果。导出文件的保留时长由「系统设置 → 基础设置 → 任务保留设置」中的**导出文件保留天数**决定。
+
+## 6 注意事项
+
+- **结合时间维度排查**：定位历史请求时，请先选对时间范围，超范围记录将不会显示。
+
+- **关注 Token 消耗**：总 Token 与缓存 Token 反映调用成本，用量较大时可结合日志分析是否需要优化。
+
+- **善用筛查快速定位**：记录量大时，建议先按用户、供应商或状态码筛选，再结合搜索精确定位。

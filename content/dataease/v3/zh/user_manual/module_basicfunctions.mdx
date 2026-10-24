@@ -1,0 +1,228 @@
+---
+title: 组件基础功能
+---
+
+## 1 编辑
+
+创建一个新的图表组件后，仪表板右侧会默认展开该图表的配置界面，点击【收回】也可将右侧图表编辑区、数据集编辑区隐藏靠边。  
+**提示：** 切换其他图表，右侧配置项也会跟随变动为新图表的内容。
+
+![组建编辑_基础功能](</img/dataease/dashboard_generation/zujianbianjijichugongneng.png>)
+
+图 1  组建编辑基础
+
+## 2 复制
+
+点击下图中所示的位置，复制组件。
+
+![组件复制_基础功能](</img/dataease/dashboard_generation/shitufuzhi.png>)
+
+图 2  视图复制
+
+## 3 删除
+
+点击下图所示的位置，删除组件。
+
+![组件删除_基础功能](</img/dataease/dashboard_generation/shitushanchu.png>)
+
+图 3  视图删除
+
+## 4 组件位置及大小调整
+
+仪表板为矩阵模式，组件支持通过拖拽进行位置移动和大小设置。
+
+![组件位置及大小](</img/dataease/dashboard_generation/yibiaobanshitushezhidaxiao.png>)
+
+图 4  仪表板视图设置大小
+
+## 5 事件设置
+
+图片、富文本、指标卡、图形、图标组件支持事件设置。仪表板中支持的事件：
+
+- 跳转：跳转到指定 URL
+- 刷新：刷新整个仪表板
+- 下载：将当前仪表板导出为图片
+- 分享 ：弹出仪表板分享弹窗
+- 全屏：点击后数据大屏全屏展示
+
+**注意：事件绑定需退出编辑模式后生效，富文本开启绑定事件则内部点击事件失效。**
+
+![组件位置及大小](</img/dataease/dashboard_generation/shijianshezhi.png>)
+
+图 5  事件设置
+
+## 6 联动设置
+
+如下图，切换到 Tab 【高级】，打开【联动设置】开关。  
+**提示：** 仪表盘、水波图、富文本不支持联动设置。
+
+![联动设置](</img/dataease/dashboard_generation/yibiaobanshituliandong.png>)
+
+图 6  仪表板视图联动
+
+如下图，当设置两个图表联动时，设置相对应的图表的联动字段，设置完成后，点击【确定】，联动设置完成。
+
+![设置联动字段](</img/dataease/dashboard_generation/yibiaobanjinxingliandongshezhi.png>)
+
+图 7  仪表板进行联动设置
+
+![设置联动字段](</img/dataease/dashboard_generation/yibiaobanjinxingliandongshezhi2.png>)
+
+图 8  仪表板进行联动设置
+
+第一步，点击【东南亚】，并选择【联动】。
+
+如果图表同时设置了联动和钻取，那么当点击时由用户选择执行联动或者钻取，当只设置了联动时，默认执行联动；当只设置了钻取时，默认执行钻取。
+
+![联动展示](</img/dataease/dashboard_generation/dianjiliandonganniu.png>)
+
+图 9  点击联动按钮
+
+第二步，联动结果展示，如下图，设置了联动的图表，只展示浙江省的数据，图表联动时，支持联动部分高亮显示。
+
+![联动展示](</img/dataease/dashboard_generation/yibiaobanliandongxiaoguo.png>)
+
+图 10  仪表板联动效果
+
+联动按钮始终固定在页面右上角，不随页面滚动而上移。
+
+![联动按钮固定悬浮在页面右上角](</img/dataease/newimg/liandonganniugudingxuanfuzaiyemianyoushangjiao.gif>)
+
+图 11  联动按钮固定悬浮在页面右上角
+
+第三步，可点击下图所示位置，清除局部联动和所有联动。
+
+![地图联动](</img/dataease/dashboard_generation/yibiaobanliandongxiaoguoqingchu.png>)
+
+图 12  仪表板联动效果清除
+
+## 7 跳转设置
+
+如下图，切换到 Tab 【高级】，打开【跳转设置】开关。
+**提示：** 仪表盘、水波图不支持跳转。
+
+![跳转设置入口](</img/dataease/dashboard_generation/yibiaobanjinxingtiaozhuanshezhi.png>)
+
+图 13  跳转设置
+
+跳转设置的弹窗页面为内嵌式 DIV 弹窗样式。
+
+![跳转设置内嵌弹窗](</img/dataease/newimg/yibiaobantiaozhuanshezhidedanchuangyemianyangshibiangengweineiqianshidanchuang.gif>)
+
+图 14  跳转设置内嵌弹窗
+
+**第一种，仪表板间跳转，如下图所示，设置原图表与目标仪表板的跳转：**  
+第一步：设置启用字段；  
+第二步：选择跳转的类型；  
+第三步：选择打开方式；  
+第四步：选定跳转的仪表板（系统默认会追加一个字段选择），选择关联图表和联动字段；  
+第五步：配置联动字段，点击【确定】，完成跳转设置。  
+**注意：** 当前用户至少拥有目标仪表板的查看权限，跳转时，若启用字段是指标字段，则提示”未获取跳转信息“。
+
+![开启跳转设置](</img/dataease/newimg/kaiqitiaozhuanshezhiyijishezhineirong.png>)
+
+图 15  开启跳转设置
+
+跳转支持携带查询组件的过滤值并传递给外部参数。
+在目标仪表板上创建外部参数，添加所需的外部参数，并选择与其关联的查询组件或图表。
+
+![跳转携带查询过滤值](</img/dataease/newimg/tubiaotiaozhuanzhichixiedaichaxunzujiandeguolvzhibingchuandigeiwaibucanshu1.png>)
+
+图 16  跳转携带查询过滤值
+
+在跳转仪表板上配置跳转设置，选择需要支持跳转功能的图表进入跳转配置界面。
+
+如果目标仪表板中有多个图表需要联动，可在【联动图表】中进行字段关联设置。
+
+![图表跳转支持携带查询组件的过滤值并传递给外部参数2](</img/dataease/newimg/tubiaotiaozhuanzhichixiedaichaxunzujiandeguolvzhibingchuandigeiwaibucanshu2.png>)
+
+图 17  跳转携带查询过滤值
+
+切换【携带查询条件】，将源仪表板的查询组件值绑定到目标仪表板的外部参数。
+
+![跳转携带查询过滤值](</img/dataease/newimg/20tubiaotiaozhuanzhichixiedaichaxunzujiandeguolvzhibingchuandigeiwaibucanshu3.png>)
+
+图 18  跳转携带查询过滤值
+
+可将源仪表板上的查询条件动态传递至目标仪表板，实现跨仪表板的图表联动。
+
+![图表跳转支持携带查询组件的过滤值并传递给外部参数](</img/dataease/newimg/tubiaotiaozhuanzhichixiedaichaxunzujiandeguolvzhibingchuandigeiwaibucanshu.gif>)
+
+图 19  跳转携带查询过滤值
+
+**第二种，外部链接跳转，支持将图表的点击值作为参数传递给第三方公共链接，作为第三方链接的参数：**  
+第一步：设置启用字段；  
+第二步：选择外部链接链接类型；  
+第三步：填写外部链接地址，同时支持点击字段用来拼接 URL 或者参数；  
+第四步：点击【确定】，完成跳转设置。  
+**注意：** 跳转时，若启用字段是指标字段，则提示”未获取跳转信息“。
+
+![跳转设置](</img/dataease/dashboard_generation/yibiaobanshezhiwaibulianjietiaozhuan.png>)
+
+图 20  仪表板设置外部连接跳转
+
+点击图表中的维度字段，即可触发跳转。
+
+![跳转展示](</img/dataease/dashboard_generation/dianjitiaozhuananniu.png>)
+
+图 21  点击跳转按钮
+
+如果选择的是外部链接跳转，那么跳转至第三方平台，同时点击值传递给第三方链接。
+
+![跳转设置](</img/dataease/dashboard_generation/tiaozhuanjieguo-waibulianjie.png>)
+
+图 22  跳转结果 外部链接
+
+当一个图表同时配置了【下钻】与【联动】时，可以选择单独触发，如下图所示，根据提示选择当前执行下钻还是联动。  
+也可以选择在配置联动设置时，选择“同时触发联动和下钻”，这样当点击该图表时将同时执行下钻与联动动作。
+
+![下钻和联动支持配置同时触发2](</img/dataease/newimg/xiazuanheliandongzhichipeizhitongshichufa2.png>)
+
+图 23  下钻和联动配置同时触发
+
+![下钻和联动支持配置同时触发3](</img/dataease/newimg/xiazuanheliandongzhichipeizhitongshichufa3.gif>)
+
+图 24  下钻和联动配置同时触发
+
+## 8 组件样式
+
+所有组件均支持通过双击组件编辑区域的名称进行改名操作。
+
+![仪表板更多组件修改名称](</img/dataease/newimg/yibiaobanzhichigengduozujianxiugaimingcheng.gif>)
+
+图 25  仪表板更多组件修改名称
+
+如下图，切换到 【样式】，在【背景】和【基础样式】进行组件样式设置。
+
+![组件样式入口](</img/dataease/dashboard_generation/yibiaobanzujianyangshi.png>)
+
+图 26  仪表板组件样式
+
+支持设置组件的内边距，边框半径与组件背景，背景支持颜色类背景、图片类背景与边框类背景；  
+以下图为示例，勾选【背景】，上传背景图片，或者勾选【边框】，选择边框样式，点击【确定】，完成背景设置。
+
+![组件背景设置](</img/dataease/dashboard_generation/yibiaobanzujiantupianbiankuang.png>)
+
+图 27  仪表板组件图片边框
+
+![组件样式](</img/dataease/dashboard_generation/yibiaobanzujianbiankuangxuanze.png>)
+
+图 28  仪表板组件边框选择
+
+查询组件支持标题颜色、表情颜色、边框颜色、提示文字颜色、自定义背景颜色设置，如下图所示。
+
+![组件样式](</img/dataease/dashboard_generation/chaxunzujianyangshishezhi.png>)
+
+图 29  查询组件样式设置
+
+支持设置组件背景模糊，该效果能够透过组件展示并模糊下层内容，透明区域也将应用模糊处理。若为图片，需确保其具有透明背景以生效。
+
+![仪表板组件背景模糊-毛玻璃效果](</img/dataease/newimg/yibiaobanzhichizujianbeijingmohu-maobolixiaoguo.png>)
+
+图 30  仪表板组件背景模糊-毛玻璃效果
+
+图片等其他组件同样支持设置组件样式；以下图为示例，图片组件可选择边框样式以及设置背景。
+
+![仪表板组件样式设置](</img/dataease/dashboard_generation/yibiaobanzujianyangshishezhi.png>)
+
+图 31  仪表板组件样式设置

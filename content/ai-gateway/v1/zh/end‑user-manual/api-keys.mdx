@@ -1,0 +1,146 @@
+---
+title: API Keys
+---
+
+## 1 什么是 API Key
+
+**API Key** 是调用网关接口的「**门禁卡**」。每次业务应用请求模型时，必须在请求头里携带 API Key，网关才会放行。
+
+> 💡 **类比**：模型广场是「公司大门」，API Key 就是「你的工牌」。工牌没带或工牌被吊销，门卫（网关）就不让你进。
+
+**几个关键点**：
+
+- **每个 API Key 独立计量**。在 [用量统计](pathname:///ai-gateway/end‑user-manual/usage-statistics) 页面，可以按 Key 查看各自消耗了多少 Token，便于按团队、项目核算成本。
+- **建议为不同业务/项目创建独立的 Key**。例如给「智能客服小程序」一个 Key，给「内部数据分析脚本」另一个 Key——这样一旦某个 Key 泄露，只需要删它一个，不影响其他业务。
+- **API Key 仅在创建时完整可见一次**。之后列表里只会显示脱敏后的前缀+后缀（如 `sk-vfnR...oBKs`），所以创建时一定要**立即复制保存**。
+
+## 2 功能入口
+
+在左侧导航栏单击 **「API Keys」**，进入 API Keys 列表页。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/api-keys/image1-api-keys.png"} alt="API Keys 列表"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  API Keys 列表</div>
+
+## 3 API Key 管理
+
+### 3.1 列表字段说明
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  API Keys 列表字段说明</div>
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'15%', padding:'8px'}}>字段</th><th style={{width:'25%', padding:'8px'}}>说明</th><th style={{width:'60%', padding:'8px'}}>详细描述</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}><strong>名称</strong></td><td style={{padding:'8px'}}>API Key 的自定义名称</td><td style={{padding:'8px'}}>给这把「工牌」起个方便你辨认的名字，如「智能客服小程序」</td></tr>
+<tr><td style={{padding:'8px'}}><strong>API Key</strong></td><td style={{padding:'8px'}}>密钥内容</td><td style={{padding:'8px'}}>列表中<strong>默认脱敏</strong>，只显示前 4 位 + 后 4 位。完整内容仅创建时可见</td></tr>
+<tr><td style={{padding:'8px'}}><strong>创建时间</strong></td><td style={{padding:'8px'}}>该密钥的创建时间</td><td style={{padding:'8px'}}>用来判断这把 Key 用了多久</td></tr>
+<tr><td style={{padding:'8px'}}><strong>最新使用日期</strong></td><td style={{padding:'8px'}}>最近一次被调用的时间</td><td style={{padding:'8px'}}>长期没动静的 Key 可以考虑删掉。从未使用过则显示「-」</td></tr>
+<tr><td style={{padding:'8px'}}><strong>操作</strong></td><td style={{padding:'8px'}}>该行的可执行动作</td><td style={{padding:'8px'}}>支持<strong>启用/禁用开关</strong>（暂停或恢复调用）、<strong>编辑</strong>（改名称）和<strong>删除</strong>（彻底移除）</td></tr>
+</tbody>
+</table>
+
+
+
+### 3.2 创建 API Key
+
+按下面的步骤创建你的第一把 Key：
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/api-keys/image2-create-api-key.png"} alt="创建 API Key"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  创建 API Key 抽屉（仅需填写名称）</div>
+
+1. 在 API Keys 列表页，单击左上角的蓝色「**创建 API Key**」按钮。
+2. 页面右侧会**滑出抽屉**（弹窗）。
+3. 在「**名称**」输入框中填一个**易辨认的名字**（必填项，不能为空）。例如「测试用-小李」。
+4. 单击抽屉右下角的「**创建**」按钮——Key 就创建完成了。
+5. **立刻**复制弹出的完整 Key，保存到密码管理器或发给对应开发人员。**这一步至关重要**——一旦关掉弹窗就再也看不到完整 Key 了。
+
+> ✅ **预期结果**：抽屉里会显示一长串以 `sk-` 开头的字符串（如 `sk-vfnRUCYo...oBKs`），同时列表里多出一行。
+
+:::warning[API Key 仅创建时可见]
+
+创建成功后页面会**一次性**展示完整 Key。**关掉弹窗后无法再查看完整内容**，只能看到脱敏后的前缀+后缀。所以请在创建时**立刻**把完整 Key 复制保存到安全的地方（密码管理器、加密文档等）。如果忘了保存，只能删除重建。
+
+
+:::
+
+
+:::tip[创建时想放弃？]
+
+单击抽屉右下角的「**取消**」按钮，或按 **Esc** 键，抽屉关闭，**不会创建任何 Key**。
+
+
+:::
+
+
+### 3.3 编辑 API Key
+
+「编辑」操作只能改 Key 的**名称**（方便管理），不能修改 Key 本身（因为 Key 是密钥字符串）。
+
+1. 在目标 Key 所在行最右侧的「**操作**」列，单击蓝色的「**编辑**」链接。
+2. 弹出抽屉，**只显示名称输入框**（其他字段不可改）。
+3. 改完名称后，单击「**确定**」保存；或单击「**取消**」放弃修改。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/api-keys/image3-edit-api-key.png"} alt="编辑 API Key"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 3  编辑 API Key 抽屉（仅可修改名称）</div>
+
+### 3.4 启用与禁用 API Key
+
+如果只是想「暂停」某把 Key（例如排查问题、应用临时下线），不需要删除，可以直接禁用它。
+
+1. 在目标 Key 所在行最右侧的「**操作**」列，单击开关将其**关闭**。
+2. 禁用后页面顶部提示「API Key 已禁用」，该 Key 的调用会立即被网关拒绝，但 Key 本身保留在列表里。
+3. 需要恢复使用时，再次单击同一开关打开即可，无需重新创建。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/api-keys/image4-disable-api-key.png"} alt="禁用 API Key"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 4  关闭开关后 API Key 被禁用</div>
+
+### 3.5 删除 API Key
+
+当你不再需要某把 Key 时，可以删除它（例如服务下线、人员离职、Key 误发等场景）。
+
+1. 在目标 Key 所在行最右侧的「**操作**」列，单击红色的「**删除**」链接。
+2. 弹出**二次确认**对话框，问你是否确认删除。
+3. 确认后该 Key 立即从列表消失，**所有正在使用它的业务调用会立刻失败**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/api-keys/image5-delete-api-key.png"} alt="删除 API Key"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 5  删除 API Key 二次确认对话框</div>
+
+:::warning[删除不可恢复]
+
+删除 API Key **不可恢复**。删除前请确认：
+
+- 没有业务应用仍在使用这把 Key（可通过「最新使用日期」字段判断最后一次调用时间）
+- 业务方已切到新 Key
+- 如果只是想「暂停」使用，建议改用[禁用](#34-启用与禁用-api-key)，随时可以重新启用，无需删除
+
+  :::
+
+## 4 快速开始：拿到 Key 后怎么用
+
+在 [模型广场](pathname:///ai-gateway/end‑user-manual/model-square) 拿到接入地址、创建好 API Key 后，把下面命令里的 `sk-xxx` 替换成你刚创建的真实 Key，`model` 替换成想用的模型名，就能直接调用：
+
+```bash
+curl https://1router.1panel.cn/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-你的APIKey" \
+  -d '{
+    "model": "deepseek-v4-flash",
+    "messages": [
+      {"role": "user", "content": "你好"}
+    ]
+  }'
+```
+
+如果返回了一段模型的回复文字，说明 Key 和接入地址都配置正确，可以把这段 curl 改造到自己的代码里了。
+
+## 5 注意事项
+
+- API Key 泄露时，请立即删除泄露的 Key 并重新创建，同时排查代码仓库、文档、聊天记录等位置，确认密钥未被再次扩散。
+- 同一业务可创建多个 API Key，常见做法是「生产一把 + 测试一把」，互不影响。
+- API Key 默认无过期时间，可通过列表中「最新使用日期」字段查看最近调用时间，及时清理长期未使用的 Key。
+- 不建议在不同业务或团队之间共享同一把 Key，否则泄露时影响面大且无法区分用量归属，建议按业务或团队独立分配，并配合用量统计进行成本核算。

@@ -1,0 +1,69 @@
+---
+title: 查看系统日志
+description: 介绍 1Panel Core / Agent 系统日志的存放目录，以及通过日志文件与面板查看日志的方法。
+---
+
+## 1 功能简介
+
+1Panel 以系统服务方式运行（Core、Agent），运行日志写入安装目录下的 `1panel/log`。当面板无法访问、任务下发失败或服务异常时，可通过查看系统日志定位原因。本文介绍系统日志的存放位置，以及通过日志文件与面板界面查看日志的方法。
+
+## 2 前提条件
+
+- 已使用具备服务器权限的账号登录 1Panel 所在主机。
+- 已确认 1Panel 的安装目录。默认 `install_dir` / `base_dir` 为 `/opt`，日志位于 `/opt/1panel/log`；如安装时修改了安装目录，请按实际路径替换本文示例。
+
+## 3 日志文件目录
+
+源码中 Core 将日志写入 `{install_dir}/1panel/log`，Agent 同样使用该日志目录。默认情况下对应关系如下：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  各组件日志目录</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'22%', padding:'8px', textAlign:'left'}}>组件</th><th style={{width:'28%', padding:'8px', textAlign:'left'}}>日志文件名前缀</th><th style={{width:'50%', padding:'8px', textAlign:'left'}}>日志目录（默认）</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>Core</td><td style={{padding:'8px'}}><code>1Panel-Core</code></td><td style={{padding:'8px'}}><code>/opt/1panel/log</code></td></tr>
+<tr><td style={{padding:'8px'}}>Agent</td><td style={{padding:'8px'}}><code>1Panel</code></td><td style={{padding:'8px'}}><code>/opt/1panel/log</code></td></tr>
+</tbody>
+</table>
+
+- **Core / Agent**： 日志同时写入文件与标准输出；文件按日期滚动，保留份数由配置中的 `max_backup` 控制（默认 10）。
+- **任务 / SSL 等子目录**： 同目录下还可能存在 `task`、`ssl` 等子目录，用于存放任务执行、证书申请等相关日志。
+
+:::note[面板内查看]
+也可在 1Panel 控制台 **日志审计 → 系统日志** 中按级别筛选、查看和下载运行日志，见 [日志审计](../user_manual/logs.mdx)。
+
+:::
+
+
+## 4 查看日志文件
+
+1. 查看日志目录下的文件列表：
+
+```sh
+ls -lh /opt/1panel/log
+```
+
+2. 实时跟踪 Core 日志（文件名含日期后缀，请以目录中实际文件为准），按 `Ctrl + C` 结束：
+
+```sh
+tail -f /opt/1panel/log/1Panel-Core*.log
+```
+
+3. 实时跟踪 Agent 日志：
+
+```sh
+tail -f /opt/1panel/log/1Panel*.log
+```
+
+:::warning[及时留存日志]
+日志会按策略滚动并可能被清理工具清理。排查重要问题时，请先将相关日志复制到其他目录留存。
+
+:::
+
+
+## 5 后续操作
+
+- 使用 `1pctl` 查看状态、启停服务见 [1pctl 命令行工具](../installation/cli.mdx)。
+- 操作日志、访问日志、网站日志等见 [日志审计](../user_manual/logs.mdx)。

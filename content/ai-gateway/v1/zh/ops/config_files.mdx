@@ -1,0 +1,76 @@
+---
+title: 配置文件说明
+description: 介绍 1Panel AI 网关数据目录与部署参数，以及修改后如何生效。
+---
+
+## 1 功能简介
+
+AI 网关的业务配置（上游账号、模型组、密钥等）在管理界面维护；部署参数（端口、初始密码、代理等）通过 `docker run` 的环境变量与数据目录指定。
+
+## 2 配置与数据目录
+
+默认数据目录为 `/opt/ai-gateway`，容器名示例为 `1panel-ai-gateway`。主要路径如下：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  主要文件与目录</div>
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'28%', padding:'8px', textAlign:'left'}}>文件 / 目录</th><th style={{width:'42%', padding:'8px', textAlign:'left'}}>默认路径</th><th style={{width:'30%', padding:'8px', textAlign:'left'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>数据目录</td><td style={{padding:'8px'}}><code>/opt/ai-gateway</code></td><td style={{padding:'8px'}}>持久化数据；重建容器须保留</td></tr>
+<tr><td style={{padding:'8px'}}>SQLite 库</td><td style={{padding:'8px'}}><code>/opt/ai-gateway/data/db/ai-gateway.db</code></td><td style={{padding:'8px'}}>默认单机数据库</td></tr>
+<tr><td style={{padding:'8px'}}>凭据密钥</td><td style={{padding:'8px'}}><code>/opt/ai-gateway/data/security/credential.key</code></td><td style={{padding:'8px'}}>丢失后已存凭据无法解密</td></tr>
+</tbody>
+</table>
+
+## 3 修改与生效
+
+修改前先备份数据目录：
+
+```sh
+cp -a /opt/ai-gateway /opt/ai-gateway.bak.$(date +%F)
+```
+
+变更端口或环境变量时，先停删旧容器（**不要删除** `/opt/ai-gateway`），再按新参数重建并继续挂载原目录：
+
+```sh
+docker stop 1panel-ai-gateway
+docker rm 1panel-ai-gateway
+docker run --pull always -d \
+  --name 1panel-ai-gateway \
+  --restart unless-stopped \
+  -p 8080:8080 \
+  -v /opt/ai-gateway:/opt/ai-gateway \
+  1panel/ai-gateway
+```
+
+:::warning[保留数据目录]
+重建容器时必须继续挂载 `/opt/ai-gateway`。删除该目录或丢失 `credential.key` 会导致数据或凭据不可用。
+
+:::
+
+
+## 4 参数说明
+
+部署相关参数如下（业务侧配置在管理界面维护）：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 2  参数说明</div>
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'32%', padding:'8px', textAlign:'left'}}>参数名称</th><th style={{width:'14%', padding:'8px', textAlign:'left'}}>默认值</th><th style={{width:'14%', padding:'8px', textAlign:'left'}}>可选项</th><th style={{width:'40%', padding:'8px', textAlign:'left'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>AI_GATEWAY_INITIAL_ADMIN_PASSWORD</td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>初始管理员密码；显式传入时不会写入启动日志，见 <a href="../installation/online_installation">在线安装</a></td></tr>
+<tr><td style={{padding:'8px'}}>-p 主机端口:8080</td><td style={{padding:'8px'}}>8080</td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>容器内端口为 8080，通过端口映射对外暴露</td></tr>
+<tr><td style={{padding:'8px'}}>-v /opt/ai-gateway:/opt/ai-gateway</td><td style={{padding:'8px'}}>/opt/ai-gateway</td><td style={{padding:'8px'}}>—</td><td style={{padding:'8px'}}>数据目录挂载；重建容器须保留</td></tr>
+<tr><td style={{padding:'8px'}}>数据库模式</td><td style={{padding:'8px'}}>SQLite</td><td style={{padding:'8px'}}>SQLite <br /> PostgreSQL</td><td style={{padding:'8px'}}>默认单机 SQLite；其他模式见 <a href="../installation/deployment_instructions">部署说明</a></td></tr>
+</tbody>
+</table>
+
+忘记管理员密码时，自 v1.0.1 起可使用 `reset-admin-password`，见 [重置管理员密码](../faq/reset-admin-password.mdx)。
+
+## 5 后续操作
+
+- [在线安装](../installation/online_installation.mdx)
+- [部署说明](../installation/deployment_instructions.mdx)
+- [查看系统日志](./system_logs.mdx)

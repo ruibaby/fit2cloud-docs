@@ -1,0 +1,108 @@
+---
+title: 网络配置
+description: 介绍 JDMC 网络配置中的网卡管理、路由与网关、DNS 管理与 Docker 网络。
+---
+
+## 1 功能概述
+
+网络配置用于管理 JDMC 所在服务器的网络，包含 **网卡管理**、**路由与网关**、**DNS 管理**、**Docker 网络** 四个页签。
+
+路径：登录后选择 **系统设置 > 设备管理**，进入 JDMC 控制台后，在左侧菜单选择 **网络配置**。
+
+## 2 网卡管理
+
+左侧列出服务器全部网卡，支持按网卡名、MAC 地址搜索，每项显示地址数量与管理状态。选中网卡后，右侧展示该网卡详情：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  网卡详情字段说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>字段</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>网卡 ID</td><td style={{padding:'8px'}}>网卡编号</td></tr>
+<tr><td style={{padding:'8px'}}>管理状态</td><td style={{padding:'8px'}}>网卡管理状态，如 UP</td></tr>
+<tr><td style={{padding:'8px'}}>链路状态</td><td style={{padding:'8px'}}>链路层状态，如 LINK UP</td></tr>
+<tr><td style={{padding:'8px'}}>硬件地址</td><td style={{padding:'8px'}}>网卡 MAC 地址</td></tr>
+<tr><td style={{padding:'8px'}}>MTU</td><td style={{padding:'8px'}}>最大传输单元</td></tr>
+<tr><td style={{padding:'8px'}}>标记</td><td style={{padding:'8px'}}>网卡标记，如 broadcast、lower_up、multicast、up</td></tr>
+<tr><td style={{padding:'8px'}}>IP 数</td><td style={{padding:'8px'}}>该网卡已配置的 IP 数量</td></tr>
+<tr><td style={{padding:'8px'}}>地址列表</td><td style={{padding:'8px'}}>该网卡全部 IP 地址</td></tr>
+</tbody>
+</table>
+
+**IP 地址列表** 展示该网卡的每条地址，列为 **地址**、**类型**（IPv4 / IPv6）、**范围**（global / link）、**操作**，点击 **添加 IP** 可新增地址。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_jdmc_network_01.png"} alt="图 1  网卡管理" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  网卡管理</div>
+
+## 3 路由与网关
+
+用于查看当前生效路由、目标网段与网关信息，并执行新增、删除和可达性校验。页面右上角提供搜索框（**搜索目标、网关或设备**）、**列表偏好**、**路由可达性校验** 与 **新增路由** 操作入口。
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 2  路由列表字段说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>列</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>序号</td><td style={{padding:'8px'}}>路由序号</td></tr>
+<tr><td style={{padding:'8px'}}>目标</td><td style={{padding:'8px'}}>目标网段，默认路由显示为 default</td></tr>
+<tr><td style={{padding:'8px'}}>网关</td><td style={{padding:'8px'}}>该路由的网关地址，未指定时显示 --</td></tr>
+<tr><td style={{padding:'8px'}}>设备</td><td style={{padding:'8px'}}>生效网卡</td></tr>
+<tr><td style={{padding:'8px'}}>可达性</td><td style={{padding:'8px'}}>校验结论，如可达</td></tr>
+<tr><td style={{padding:'8px'}}>操作</td><td style={{padding:'8px'}}>校验、移除</td></tr>
+</tbody>
+</table>
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_jdmc_network_02.png"} alt="图 2  路由与网关" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  路由与网关</div>
+
+## 4 DNS 管理
+
+**DNS 列表** 展示当前配置的 DNS 记录条数与 **首选 DNS** 地址，点击 **修改** 可调整 DNS 配置。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_jdmc_network_03.png"} alt="图 3  DNS 管理" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 3  DNS 管理</div>
+
+## 5 Docker 网络
+
+用于查看 Docker 桥接网络、地址范围、已连接容器及网段冲突，点击 **刷新** 重新采集。页面顶部展示四项桥接配置状态：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 3  桥接配置状态字段说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>字段</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>当前桥接 IP</td><td style={{padding:'8px'}}>Docker 当前实际使用的桥接地址</td></tr>
+<tr><td style={{padding:'8px'}}>已配置桥接 IP</td><td style={{padding:'8px'}}>在配置文件中指定的桥接地址，未配置时显示 --</td></tr>
+<tr><td style={{padding:'8px'}}>生效状态</td><td style={{padding:'8px'}}>配置与当前运行状态是否一致</td></tr>
+<tr><td style={{padding:'8px'}}>Daemon 配置文件</td><td style={{padding:'8px'}}>Docker 守护进程配置文件路径，如 <code>/etc/docker/daemon.json</code></td></tr>
+</tbody>
+</table>
+
+下方列表展示各 Docker 网络：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 4  Docker 网络列表字段说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>列</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>网络名称</td><td style={{padding:'8px'}}>Docker 网络名称</td></tr>
+<tr><td style={{padding:'8px'}}>桥接网卡</td><td style={{padding:'8px'}}>对应的宿主机网桥设备</td></tr>
+<tr><td style={{padding:'8px'}}>驱动</td><td style={{padding:'8px'}}>网络驱动，如 bridge、host、null</td></tr>
+<tr><td style={{padding:'8px'}}>子网</td><td style={{padding:'8px'}}>该网络的子网网段</td></tr>
+<tr><td style={{padding:'8px'}}>网关</td><td style={{padding:'8px'}}>该网络的网关地址</td></tr>
+<tr><td style={{padding:'8px'}}>容器数</td><td style={{padding:'8px'}}>加入该网络的容器数量</td></tr>
+<tr><td style={{padding:'8px'}}>冲突状态</td><td style={{padding:'8px'}}>与其他网络的网段冲突检测结论</td></tr>
+<tr><td style={{padding:'8px'}}>操作</td><td style={{padding:'8px'}}>默认桥接网络可 <strong>编辑桥接 IP</strong>，其余网络只读</td></tr>
+</tbody>
+</table>
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_jdmc_network_04.png"} alt="图 4  Docker 网络" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 4  Docker 网络</div>

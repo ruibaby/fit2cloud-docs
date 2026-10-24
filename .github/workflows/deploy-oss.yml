@@ -1,4 +1,4 @@
-# 构建 Docusaurus 站点并部署到阿里云 OSS(CDN 前置)
+# 构建 Rspress 站点并部署到阿里云 OSS(CDN 前置)
 #
 # 触发: 仅手动触发(workflow_dispatch)。去 GitHub -> Actions -> "Deploy to Aliyun OSS"
 #       -> "Run workflow" 按钮, 每次由你决定是否部署。push 不会自动触发。
@@ -11,7 +11,7 @@
 #   ALIYUN_CDN_DOMAIN           CDN 加速域名, 如 docs.fit2cloud.com
 #
 # 流程:
-#   1. npm run build 生成静态站点到 build/
+#   1. pnpm build 生成静态站点到 build/（门户在 build/ 根，各产品在 build/<产品>/）
 #   2. 用 ossutil sync 同步到 Bucket(--job 20 并发上传; --delete 清理本地已不存在的文件)
 #   3. 用 aliyun-cli 调用 CDN RefreshObjectCaches 刷新(目录或批量URL, 见 cdn_refresh_mode 输入)
 #      (需要 RAM 子账号具备 cdn:RefreshObjectCaches 权限, 否则该步会 Forbidden.RAM)
@@ -22,14 +22,14 @@ on:
   workflow_dispatch:
     inputs:
       purge_cdn:
-        description: '是否刷新 CDN 缓存(默认 true)'
+        description: "是否刷新 CDN 缓存(默认 true)"
         required: false
-        default: 'true'
+        default: "true"
         type: boolean
       cdn_refresh_mode:
-        description: 'CDN 刷新方式: directory=整站目录刷新(1次配额,100/天); url-all=批量URL刷新本次所有HTML(2000/天)'
+        description: "CDN 刷新方式: directory=整站目录刷新(1次配额,100/天); url-all=批量URL刷新本次所有HTML(2000/天)"
         required: false
-        default: 'directory'
+        default: "directory"
         type: choice
         options:
           - directory
@@ -52,17 +52,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node 20
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 12
+
+      - name: Setup Node 24
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: "24"
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci --no-audit --no-fund
+        run: pnpm install --frozen-lockfile
 
       - name: Build site
-        run: npm run build
+        run: pnpm build
 
       - name: Download ossutil
         run: |
@@ -129,7 +133,7 @@ jobs:
           if [ "$MODE" = "url-all" ]; then
             # 批量 URL 刷新: 收集 build 下所有 HTML -> 转成完整 URL, 多行 ObjectPath 一次提交(算 1 次配额)
             # 规则: index.html -> 目录路径(带尾斜杠); 其余 xxx.html -> 去掉 .html
-            # zh-Hans 在 build 根, en 在 build/en 子目录, 各自映射到对应 URL 路径。
+            # 门户在 build 根，各产品在 build/<产品>/ 与 build/<产品>/<版本>/ 子目录，按 index.html 规则统一映射。
             URLS=""
             while IFS= read -r f; do
               rel="${f#build/}"                 # 去掉 build/ 前缀

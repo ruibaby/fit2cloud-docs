@@ -1,0 +1,11 @@
+[
+  { "type": "file", "name": "index", "label": "概览" },
+  { "type": "file", "name": "product-intro", "label": "产品介绍" },
+  { "type": "dir", "name": "guide", "label": "使用指南", "collapsed": false },
+  {
+    "type": "dir",
+    "name": "developer-guide",
+    "label": "开发者指南",
+    "collapsed": true
+  }
+]

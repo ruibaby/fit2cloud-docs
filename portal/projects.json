@@ -1,0 +1,101 @@
+[
+  {
+    "id": "1panel",
+    "name": "1Panel 面板",
+    "desc": "现代化、开源的 Linux 面板",
+    "logo": "1panel-07-蓝色.png",
+    "description": "1Panel 是一个现代化、开源的 Linux 服务器运维管理面板，帮助你轻松部署和管理网站、数据库与容器等应用。",
+    "href": "/1panel/",
+    "versions": ["v2", "v1"],
+    "locales": ["zh"],
+    "website": "https://1panel.cn/"
+  },
+  {
+    "id": "ai-gateway",
+    "name": "1Panel AI 网关",
+    "desc": "企业级 AI 统一接入与治理平台",
+    "logo": "1panel-07-蓝色.png",
+    "description": "1Panel AI 网关提供从统一接入、智能路由到合规审计的全链条管控，让企业 AI 落地更安全、更高效、更可控。",
+    "href": "/ai-gateway/",
+    "versions": ["v1"],
+    "locales": ["zh"],
+    "website": "https://1panel.cn/ai-gateway.html"
+  },
+  {
+    "id": "jumpserver",
+    "name": "JumpServer",
+    "desc": "广受欢迎的开源堡垒机",
+    "logo": "JumpServer-辅助图形-绿色.png",
+    "description": "JumpServer 是广受欢迎的开源堡垒机，是符合 4A 规范的运维安全审计系统，广受企业用户喜爱。",
+    "href": "/jumpserver/",
+    "versions": ["v5", "v4", "v3"],
+    "locales": ["zh"],
+    "website": "https://www.jumpserver.org/"
+  },
+  {
+    "id": "maxkb",
+    "name": "MaxKB",
+    "desc": "强大易用的企业级智能体平台",
+    "logo": "MaxKB-03.png",
+    "description": "MaxKB 是强大易用的企业级智能体平台，广泛应用于智能客服、知识库问答、员工 AI 助手等场景。",
+    "href": "/maxkb/",
+    "versions": ["v2", "v1"],
+    "locales": ["zh"],
+    "website": "https://maxkb.cn/"
+  },
+  {
+    "id": "dataease",
+    "name": "DataEase",
+    "desc": "人人可用的开源 BI 工具",
+    "logo": "DataEase-07-蓝色.png",
+    "description": "DataEase 是人人可用的开源 BI 工具，帮助用户快速分析数据并洞察业务趋势，实现业务的改进与优化。",
+    "href": "/dataease/",
+    "versions": ["v3", "v2"],
+    "locales": ["zh"],
+    "website": "https://dataease.cn/"
+  },
+  {
+    "id": "sqlbot",
+    "name": "SQLBot",
+    "desc": "基于大模型的智能问数系统",
+    "logo": "【辅助图形】SQLBot.png",
+    "description": "SQLBot 是基于大模型和 RAG 的智能问数系统，让各类应用快速拥有智能问数能力。",
+    "href": "/sqlbot/",
+    "versions": ["v1"],
+    "locales": ["zh"],
+    "website": "https://sqlbot.org/"
+  },
+  {
+    "id": "metersphere",
+    "name": "MeterSphere",
+    "desc": "新一代的开源持续测试工具",
+    "logo": "MeterSphere-辅助图形-紫色.png",
+    "description": "MeterSphere 是新一代的开源持续测试工具，让测试工作更简单、更高效，不再成为持续交付的瓶颈。",
+    "href": "https://metersphere.io/docs/v3.x/",
+    "versions": ["v1"],
+    "locales": ["zh"],
+    "website": "https://metersphere.io/"
+  },
+  {
+    "id": "halo",
+    "name": "Halo",
+    "desc": "强大易用的开源建站工具",
+    "logo": "Halo-03.png",
+    "description": "Halo 是强大易用的开源建站工具，无需太多技术知识就可以快速搭建博客、知识库、企业官网和在线商城。",
+    "href": "/halo/",
+    "versions": ["v2"],
+    "locales": ["zh"],
+    "website": "https://halo.run/"
+  },
+  {
+    "id": "cordys",
+    "name": "Cordys CRM",
+    "desc": "新一代的开源 AI CRM 系统",
+    "logo": "CORDYS-辅助图形.png",
+    "description": "Cordys CRM 是新一代的开源 AI CRM 系统，深度融合信息化、数字化与智能化能力，支持私有化部署。",
+    "href": "/cordys/",
+    "versions": ["v1"],
+    "locales": ["zh"],
+    "website": "https://cordys.cn/"
+  }
+]

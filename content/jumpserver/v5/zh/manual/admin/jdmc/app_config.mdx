@@ -1,0 +1,92 @@
+---
+title: 应用配置
+description: 介绍 JDMC 应用配置中的配置分类、配置项详情与应用修改流程。
+---
+
+## 1 功能概述
+
+应用配置用于通过服务端校验预览和受控应用流程，管理 JumpServer 支持的配置项。这里仅展示 Lina 没有管理入口的部署级配置，已经可以通过 Lina 管理的配置不会在 JDMC 中重复出现。
+
+路径：登录后选择 **系统设置 > 设备管理**，进入 JDMC 控制台后，在左侧菜单选择 **应用配置**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_jdmc_appconfig_01.png"} alt="图 1  应用配置" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  应用配置</div>
+
+## 2 配置历史
+
+**JumpServer 配置** 区右上角提供 **配置历史** 按钮，并显示当前 **配置版本**（版本哈希值），点击 **刷新** 重新读取。配置项按业务域分类，可通过左侧分类列表过滤，也可使用搜索框（**搜索配置名称、变量名或说明**）与筛选下拉快速定位。
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  配置历史分类说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>分类</th><th style={{width:'75%', padding:'8px'}}>配置项数量</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>全部配置</td><td style={{padding:'8px'}}>34</td></tr>
+<tr><td style={{padding:'8px'}}>Web 与反向代理</td><td style={{padding:'8px'}}>7</td></tr>
+<tr><td style={{padding:'8px'}}>后台任务</td><td style={{padding:'8px'}}>1</td></tr>
+<tr><td style={{padding:'8px'}}>自动化执行</td><td style={{padding:'8px'}}>6</td></tr>
+<tr><td style={{padding:'8px'}}>远程会话</td><td style={{padding:'8px'}}>8</td></tr>
+<tr><td style={{padding:'8px'}}>诊断与排障</td><td style={{padding:'8px'}}>5</td></tr>
+<tr><td style={{padding:'8px'}}>安全与访问</td><td style={{padding:'8px'}}>7</td></tr>
+</tbody>
+</table>
+
+## 3 配置项
+
+每个配置项以卡片形式展示，包含名称、所属分类、风险等级与对应的环境变量名，点击 **打开详细说明** 可展开功能说明。
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 2  配置项卡片说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>区域</th><th style={{width:'75%', padding:'8px'}}>内容</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>当前值</td><td style={{padding:'8px'}}>该配置项当前生效的值</td></tr>
+<tr><td style={{padding:'8px'}}>取值来源</td><td style={{padding:'8px'}}>当前值的来源，如显式配置、内置默认值</td></tr>
+<tr><td style={{padding:'8px'}}>默认值</td><td style={{padding:'8px'}}>该配置项的默认值</td></tr>
+<tr><td style={{padding:'8px'}}>受影响容器</td><td style={{padding:'8px'}}>修改后需要重启的容器</td></tr>
+<tr><td style={{padding:'8px'}}>生效方式</td><td style={{padding:'8px'}}>配置的生效方式，如精确重启</td></tr>
+<tr><td style={{padding:'8px'}}>新值</td><td style={{padding:'8px'}}>修改后的取值，输入框下方给出必填要求、取值范围、单位与示例</td></tr>
+</tbody>
+</table>
+
+常见配置项举例：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 3  常见配置项举例</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'40%', padding:'8px'}}>配置项</th><th style={{width:'35%', padding:'8px'}}>变量名</th><th style={{width:'25%', padding:'8px'}}>分类</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>Web 空闲会话有效期</td><td style={{padding:'8px'}}>SESSION_COOKIE_AGE</td><td style={{padding:'8px'}}>Web 与反向代理</td></tr>
+<tr><td style={{padding:'8px'}}>请求体内存上限</td><td style={{padding:'8px'}}>DATA_UPLOAD_MAX_MEMORY_SIZE</td><td style={{padding:'8px'}}>Web 与反向代理</td></tr>
+<tr><td style={{padding:'8px'}}>匿名 API 限流</td><td style={{padding:'8px'}}>THROTTLE_RATES_ANON</td><td style={{padding:'8px'}}>Web 与反向代理</td></tr>
+<tr><td style={{padding:'8px'}}>认证用户 API 限流</td><td style={{padding:'8px'}}>THROTTLE_RATES_USER</td><td style={{padding:'8px'}}>Web 与反向代理</td></tr>
+<tr><td style={{padding:'8px'}}>服务账号 API 限流</td><td style={{padding:'8px'}}>THROTTLE_RATES_SERVICE_ACCOUNT</td><td style={{padding:'8px'}}>Web 与反向代理</td></tr>
+<tr><td style={{padding:'8px'}}>导出与报表最大记录数</td><td style={{padding:'8px'}}>MAX_LIMIT_PER_PAGE</td><td style={{padding:'8px'}}>Web 与反向代理</td></tr>
+<tr><td style={{padding:'8px'}}>后台任务并发数</td><td style={{padding:'8px'}}>CELERY_WORKER_COUNT</td><td style={{padding:'8px'}}>后台任务</td></tr>
+<tr><td style={{padding:'8px'}}>Ansible Runner 批次超时</td><td style={{padding:'8px'}}>ANSIBLE_RUNNER_JOB_TIMEOUT</td><td style={{padding:'8px'}}>自动化执行</td></tr>
+<tr><td style={{padding:'8px'}}>Ansible Runner 空闲超时</td><td style={{padding:'8px'}}>ANSIBLE_RUNNER_IDLE_TIMEOUT</td><td style={{padding:'8px'}}>自动化执行</td></tr>
+<tr><td style={{padding:'8px'}}>账号改密计划安全模式</td><td style={{padding:'8px'}}>CHANGE_AUTH_PLAN_SECURE_MODE_ENABLED</td><td style={{padding:'8px'}}>自动化执行</td></tr>
+<tr><td style={{padding:'8px'}}>传输文件留存大小上限</td><td style={{padding:'8px'}}>FTP_FILE_MAX_STORE</td><td style={{padding:'8px'}}>远程会话</td></tr>
+<tr><td style={{padding:'8px'}}>会话共享房间后端</td><td style={{padding:'8px'}}>SHARE_ROOM_TYPE</td><td style={{padding:'8px'}}>远程会话</td></tr>
+<tr><td style={{padding:'8px'}}>SSH 本地端口转发</td><td style={{padding:'8px'}}>ENABLE_LOCAL_PORT_FORWARD</td><td style={{padding:'8px'}}>远程会话</td></tr>
+<tr><td style={{padding:'8px'}}>SSH 反向端口转发</td><td style={{padding:'8px'}}>ENABLE_REVERSE_PORT_FORWARD</td><td style={{padding:'8px'}}>远程会话</td></tr>
+<tr><td style={{padding:'8px'}}>外置视频工作进程</td><td style={{padding:'8px'}}>ENABLE_VIDEO_WORKER</td><td style={{padding:'8px'}}>远程会话</td></tr>
+<tr><td style={{padding:'8px'}}>应用日志级别</td><td style={{padding:'8px'}}>LOG_LEVEL</td><td style={{padding:'8px'}}>诊断与排障</td></tr>
+<tr><td style={{padding:'8px'}}>Syslog 目标地址</td><td style={{padding:'8px'}}>SYSLOG_ADDR</td><td style={{padding:'8px'}}>诊断与排障</td></tr>
+<tr><td style={{padding:'8px'}}>Syslog Facility</td><td style={{padding:'8px'}}>SYSLOG_FACILITY</td><td style={{padding:'8px'}}>诊断与排障</td></tr>
+<tr><td style={{padding:'8px'}}>Syslog 传输套接字类型</td><td style={{padding:'8px'}}>SYSLOG_SOCKTYPE</td><td style={{padding:'8px'}}>诊断与排障</td></tr>
+</tbody>
+</table>
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_jdmc_appconfig_02.png"} alt="图 2  配置项列表" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  配置项列表</div>
+
+## 4 应用修改
+
+修改配置项后，页面底部显示当前 **待应用修改** 的数量。点击 **预览修改** 查看改动内容与服务端校验结果，确认后应用；点击 **丢弃修改** 放弃本次全部改动。

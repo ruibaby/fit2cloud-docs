@@ -1,0 +1,54 @@
+---
+title: 线索管理
+description: 介绍 Cordys CRM 线索的新建、导入与转换为客户或商机。
+---
+
+线索管理用于跟踪尚未成为正式客户的潜在客户，覆盖从初次接触到转换成客户或商机的过程。转换完成后，后续跟进在客户或商机模块中继续。
+
+## 1 功能简介
+
+线索列表用于查看和推进潜在客户。成员可以新建线索、导入线索，也可以把一条线索转换成客户或商机。转换成客户后，该线索不再出现在线索列表中。
+
+线索表单的字段与布局由管理员在表单设置中维护，成员看到的录入项以当前表单配置为准。
+
+## 2 入口位置
+
+在左侧导航点击**线索**，进入线索管理页面。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/cordys/img/cordys/user_manual/leads-page2.png"} alt="图 1  线索管理页面" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  线索管理页面</div>
+
+## 3 新建线索
+
+在线索列表中点击**新建线索**录入一条潜在客户，也可以通过**导入线索**批量写入。导入步骤见[导入导出](./import_export.mdx)。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/cordys/img/cordys/user_manual/create-lead2.png"} alt="图 2  新建线索" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  新建线索</div>
+
+:::note[说明]
+线索表单可以按企业业务调整。管理员在 **系统 › 模块配置 › 线索表单设置** 中修改字段与布局，具体操作请参见[表单设置](./form_config.mdx)。未分配或已回收的线索在线索池中管理，见[线索池与库容](./lead_pool.mdx)。
+
+:::
+
+
+## 4 转换线索
+
+在线索列表中选中一条线索，点击**转换**，可以把该线索转换成客户或商机。在线索详情中点击**转换**，可以一键转为客户。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/cordys/img/cordys/user_manual/convert-lead2.png"} alt="图 3  线索转换" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 3  线索转换</div>
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/cordys/img/cordys/user_manual/image-202509181146413842.png"} alt="图 4  线索转为客户" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 4  线索转为客户</div>
+
+转为客户后，该线索不再展示在线索列表中，客户资料进入[客户管理](./customer_manage.mdx)。转为商机后，在[商机管理](./opportunity.mdx)中继续跟进。
+
+:::note[说明]
+若希望转换时把线索字段自动填入客户表单，管理员需先在客户表单设置中配置表单联动，见[表单设置](./form_config.mdx)中的**表单联动**。
+
+:::
+

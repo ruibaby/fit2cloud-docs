@@ -1,0 +1,100 @@
+---
+title: 触发器
+---
+
+## 1 触发器概述
+
+
+MaxKB 支持用户根据自身的业务需求，通过配置定时、事件等触发条件，实现智能体自动化触发执行，以满足各种复杂的业务需求。
+
+- 定时触发：可按照每月、每周、每日或间隔时间执行任务。
+- 事件触发：即 Webhook 触发器，创建事件触发器时，系统会自动生成 URL 和 Bearer Token，支持调用方发送 HTTP 请求（Header 带 Token）并携带请求参数，触发相应的工具。
+
+社区版 admin 账号、专业版/企业版的工作空间管理员角色可对工作空间内的所有触发器进行全生命周期配置与管控。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/trigger/trigger.png"} alt="图 1  触发器" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  触发器</div>
+
+## 2 创建触发器
+
+### 2.1 定时触发器
+
+在触发器页面，点击【创建】，填写触发器名称和描述。
+
+选择触发器类型为 **定时触发**，选择触发周期，可按每日、每周、每月或间隔事件执行任务。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/trigger/timer_trigger.png"} alt="图 2  定时触发器周期选择窗口" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  定时触发器周期选择窗口</div>
+
+
+选择该定时触发器执行任务的智能体或工具，并填写智能体或工具的输入参数，以确保触发器能正常执行任务。
+
+创建后的触发器默认为禁用状态，需要手动启动触发器。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/trigger/timer_trigger1.png"} alt="图 3  定时触发任务设置窗口" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 3  定时触发任务设置窗口</div>
+
+### 2.2 事件触发器
+
+在触发器页面，点击【创建】，填写触发器名称和描述。
+
+选择触发器类型为 **事件触发**，复制相应的 URL 和 Bearer Token，调用方可发送 HTTP 请求（Header 带 Token）并携带请求参数，触发相应的智能体或工具。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/trigger/webhook_trigger.png"} alt="图 4  事件触发Webhook地址配置" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 4  事件触发Webhook地址配置</div>
+
+
+选择该定时触发器执行任务的智能体或工具，并填写智能体或工具的输入参数，以确保触发器能正常执行任务。
+
+创建后的触发器默认为禁用状态，需要手动启动触发器。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/trigger/webhook_trigger1.png"} alt="图 5  事件触发请求参数配置" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 5  事件触发请求参数配置</div>
+
+## 3 启用/禁用触发器
+
+触发器页面，可以单独启用/禁用某个触发器，也可批量启用/禁用触发器。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/trigger/active_trigger.png"} alt="图 6  启用/禁用触发器" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 6  启用/禁用触发器</div>
+
+## 4 编辑触发器
+
+在触发器页面，点击【编辑】按钮，可修改触发器的内容。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/trigger/edit_trigger.png"} alt="图 7  触发器列表的编辑操作" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 7  触发器列表的编辑操作</div>
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/trigger/edit_trigger1.png"} alt="图 8  修改触发器信息窗口" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 8  修改触发器信息窗口</div>
+
+## 5 执行记录
+
+在触发器页面，点击【执行记录】按钮，可查看该触发器的执行记录。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/trigger/trigger_run_record.png"} alt="图 9  触发器执行记录列表" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 9  触发器执行记录列表</div>
+
+
+点击【执行详情】，可查看具体执行的智能体的工作流或工具的输入输出。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/trigger/trigger_run_record1.png"} alt="图 10  触发器执行详情窗口" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 10  触发器执行详情窗口</div>
+
+## 6 删除触发器
+
+触发器页面，可以单独删除某个触发器，也可批量删除触发器。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/trigger/delete_trigger.png"} alt="图 11  删除触发器" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 11  删除触发器</div>

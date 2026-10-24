@@ -1,0 +1,278 @@
+---
+title: 系统设置
+description: 介绍 1Panel AI 网关系统设置页的开放 API 凭证管理与企业认证配置，支持通过 API 凭证维护网关资源，以及钉钉、飞书、企业微信、LDAP 与 OIDC 企业账号登录。
+slug: /user_manual/ai_gateway/system_settings
+---
+
+## 1 概述
+
+系统设置用于管理网关的平台级配置，页面以标签页划分为**基础设置**、**开放 API** 与**企业认证**三个标签：
+
+- **基础设置**：配置登录会话、多因素认证（MFA）与任务数据保留策略等全局选项。
+- **开放 API**（v1.3.0 起）：管理 API 凭证，让外部系统以凭证拥有者的管理员身份维护网关资源，并记录管理 API 的操作审计。
+- **企业认证**（v1.1.0 起）：接入**钉钉、飞书、企业微信、LDAP 与 OIDC** 五种企业登录方式。启用后，登录页下方会出现「企业账号登录」区块，成员单击对应按钮即可使用企业身份登录网关。
+
+## 2 基础设置
+
+基础设置用于配置网关的全局登录与数据保留策略，包括会话空闲超时、多因素认证（MFA）以及任务数据的保留时长。
+
+### 2.1 会话设置
+
+- **会话空闲超时时间**：用户在指定时间内没有发起会续期的认证请求时，会话将失效，单位为分钟。自动状态轮询不会续期，活动时间最多每分钟记录一次，会话最长有效 24 小时。
+
+### 2.2 MFA
+
+- **全局策略**：多因素认证的全局策略，如「用户自行选择」。策略从每个用户的下一次交互式登录开始生效。
+- **企业登录后继续验证 MFA**：开启后，通过企业账号登录的用户在登录后仍需完成 MFA 验证。
+
+### 2.3 任务保留设置
+
+用于控制任务数据（任务中心的记录与导出文件）的保留时长，避免历史数据长期堆积：
+
+- **任务记录保留天数**：任务中心记录在被清理前的保留时长。
+- **导出文件保留天数**：日志导出等任务所生成文件的保留时长。
+
+记录期限须覆盖文件期限。新设置作用于后续完成的任务，不缩短已有到期时间。任务中心的使用参见[任务中心](./tasks)。
+
+## 3 开放 API
+
+开放 API 用于让外部系统（如计费、运维自动化平台）以编程方式维护网关资源。管理 API 凭证让外部系统以**凭证拥有者的管理员身份**维护网关资源，因此凭证权限等同于创建者的管理权限，需妥善保管。
+
+页面顶部提供两个操作：**创建凭证**（新建一条 API 凭证）与**下载接口文档**（下载管理 API 的接口说明，供外部系统对接时查阅）。
+
+### 3.1 创建凭证
+
+单击「**创建凭证**」，在右侧抽屉中填写：
+
+- **名称**：凭证的用途标识，例如"CI/CD 流水线""计费自动化"，便于区分不同外部系统。
+- **有效期**：从签发时间起按天有效（可设置 **1~365 天**），设置为 **0 时永不过期**，也可随时撤销。
+- **允许的来源地址**：可选。每行填写一个 **IPv4/IPv6 地址或网段**，最多 **32 项**；留空表示不限制来源。配置后仅允许列表内的地址使用该凭证调用。
+
+保存后生成以 `agw_at_` 为前缀的凭证串（形如 `agw_at_xxxxxxxx`），仅在创建时完整展示一次，供外部系统在调用管理 API 时使用。
+
+:::caution[凭证即管理员身份]
+凭证可调用除「开放 API 凭证管理」外的**全部管理接口**（开放 API 凭证本身的增删改仅限浏览器会话）。凭证一旦泄露，等同管理员账号泄露，请务必限制有效期与来源地址，并定期审计使用记录。
+
+:::
+
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image2-Open-API-Create.png"} alt="创建开放 API 凭证"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  创建开放 API 凭证抽屉</div>
+
+### 3.2 凭证列表
+
+凭证列表展示每条凭证的以下信息，可对单条凭证进行**编辑**与**删除**：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  开放 API 凭证列表字段</div>
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'30%', padding:'8px'}}>列</th><th style={{width:'70%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>名称</td><td style={{padding:'8px'}}>凭证用途标识</td></tr>
+<tr><td style={{padding:'8px'}}>凭证</td><td style={{padding:'8px'}}>以 <code>agw_at_</code> 为前缀的凭证串（列表中以省略形式展示）</td></tr>
+<tr><td style={{padding:'8px'}}>来源限制</td><td style={{padding:'8px'}}>允许调用的来源地址范围，未设置时显示"不限来源"</td></tr>
+<tr><td style={{padding:'8px'}}>状态</td><td style={{padding:'8px'}}>有效 / 失效</td></tr>
+<tr><td style={{padding:'8px'}}>有效期</td><td style={{padding:'8px'}}>到期时间，或"永不过期"</td></tr>
+<tr><td style={{padding:'8px'}}>请求次数</td><td style={{padding:'8px'}}>该凭证累计调用次数</td></tr>
+<tr><td style={{padding:'8px'}}>最新使用日期</td><td style={{padding:'8px'}}>最近一次调用的时间与来源 IP</td></tr>
+</tbody>
+</table>
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image1-Open-API.png"} alt="开放 API 凭证列表与操作审计"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  开放 API：凭证列表与操作审计</div>
+
+### 3.3 操作审计
+
+凭证列表下方的「**操作审计**」记录最近 30 天的管理 API **写操作与安全事件**（查询请求不逐条记录）。每条记录包含发生时间、凭证、操作名称、执行结果（如"执行成功""执行失败"）、来源与请求（方法与路径）。可按**凭证、操作名称、执行结果**筛选，用于追溯外部系统对网关的变更行为、排查异常调用。
+
+## 4 企业认证
+
+企业认证页面以卡片形式列出五种认证方式，每张卡片展示当前**启用状态**、**首次登录用户组**与**密钥配置状态**，并提供以下操作：
+
+- **配置 / 更新**：打开该认证方式的配置抽屉，填写企业平台的相关参数。
+- **测试连接**：保存配置后校验认证参数是否可用。
+- **启用 / 禁用**：控制该登录方式是否在登录页展示。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image1-enterprise-auth.png"} alt="企业认证"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 3  企业认证</div>
+
+## 5 钉钉与飞书
+
+### 钉钉
+
+**平台侧配置**
+
+1. 使用钉钉管理员账号登录 [钉钉开放平台](https://open-dev.dingtalk.com/)。
+2. 在「应用开发」中选择企业内部应用，应用类型选择 **H5 微应用**，填写应用名称、描述与图标，单击**创建应用**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image11-dingtalk-create-app.png"} alt="钉钉创建企业内部应用"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 4  钉钉开放平台创建企业内部应用</div>
+
+3. 进入应用详情的「凭证与基础信息」页，获取应用的 **Client ID**（AppKey）与 **Client Secret**（AppSecret）；**企业 ID** 可在钉钉管理后台的「企业信息」页查看。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image12-dingtalk-credential.png"} alt="钉钉应用凭证"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 5  应用凭证页查看 AgentId、AppKey 与 AppSecret</div>
+
+4. 在「安全设置」中配置服务器出口 IP 与回调地址：将网关配置抽屉中显示的**授权回调地址**填入（详见[第 9 节](#9-通用配置说明)）。
+5. 完成配置后**发布应用**，钉钉的配置需在应用发布成功后才生效。
+
+**网关侧配置**
+
+- **企业 ID / Tenant ID**：钉钉管理后台「企业信息」页的企业标识。
+- **应用 ID / Client ID**：自建应用的 Client ID（即 AppKey）。
+- **应用密钥 / Client Secret**：自建应用的 Client Secret（即 AppSecret）。
+- **授权回调地址**：网关生成的回调地址，填写到钉钉应用的回调配置中（格式见[第 9 节](#9-通用配置说明)）。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image2-dingtalk-drawer.png"} alt="钉钉配置"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 6  网关侧钉钉配置抽屉</div>
+
+### 飞书
+
+**平台侧配置**
+
+1. 使用管理员账号登录 [飞书开放平台](https://open.feishu.cn/)，单击**创建企业自建应用**，填写应用名称、描述与图标后创建。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image13-feishu-create-app.png"} alt="飞书创建企业自建应用"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 7  飞书开放平台创建企业自建应用</div>
+
+2. 在「凭证与基础信息」页获取应用的 **App ID**（应用 ID）与 **App Secret**（应用密钥），以及企业的 **Tenant ID**（企业 ID）。
+3. 在「安全设置 → 重定向 URL」中添加回调地址：将网关配置抽屉中显示的**授权回调地址**填入；如企业开启了 IP 白名单，需同时添加网关服务器出口 IP。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image14-feishu-redirect-url.png"} alt="飞书安全设置重定向URL"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 8  「安全设置」中配置重定向 URL 与 IP 白名单</div>
+
+4. 按需开通应用权限，创建版本并**发布应用**。
+
+**网关侧配置**
+
+- **企业 ID / Tenant ID**：飞书开放平台可查看的企业标识。
+- **应用 ID / Client ID**：企业自建应用的 App ID。
+- **应用密钥 / Client Secret**：企业自建应用的 App Secret。
+- **授权回调地址**：网关生成的回调地址，填写到飞书应用的重定向 URL 中（格式见[第 9 节](#9-通用配置说明)）。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image3-feishu-drawer.png"} alt="飞书配置"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 9  网关侧飞书配置抽屉</div>
+
+## 6 企业微信
+
+### 平台侧配置
+
+1. 使用**企业微信管理员账号**（或具有通讯录管理权限的子管理员）登录[企业微信管理后台](https://work.weixin.qq.com/wework_admin/loginpage_wx?from=myhome)，普通成员账号无法创建应用。
+
+2. 在「我的企业 → 企业信息」页查看并记录**企业 ID（CorpID）**，后续填入网关的 CorpID 字段。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image10-wecom-corp-id.png"} alt="查看企业 ID"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 10  在「我的企业 → 企业信息」页查看企业 ID（CorpID）</div>
+
+3. 在「应用管理」页的「自建应用」区块单击**创建应用**，进入应用创建页。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image7-wecom-console.png"} alt="企业微信应用管理"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 11  企业微信管理后台「应用管理」页，单击「创建应用」</div>
+
+4. 填写**应用名称**（如 `AI 网关`）、上传**应用 Logo**、设置**可见范围**（决定哪些成员可使用该应用登录网关），单击**创建应用**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image8-wecom-create-app.png"} alt="创建自建应用"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 12  创建自建应用，填写应用名称、Logo 与可见范围</div>
+
+5. 创建成功后进入应用详情页，获取 **AgentId** 并单击 **Secret** 旁的「查看」获取应用密钥（Secret），分别填入网关的应用 AgentID 与应用密钥字段。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image9-wecom-app-detail.png"} alt="查看 AgentId 与 Secret"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 13  应用详情页查看 AgentId 与 Secret</div>
+
+6. 在该应用的「网页授权及 JS-SDK」中配置**可信域名**（填写网关的访问域名）。配置可信域名前需完成**域名归属认证**：下载企业微信提供的 `WW_verify_xxxxx.txt` 校验文件，将其放置在网关域名的根目录下（或按实际部署方式通过 Nginx 等返回该文件内容），确保可通过 `https://你的域名/WW_verify_xxxxx.txt` 访问。
+
+7. 如部署环境 IP 固定，建议同时在应用的「企业可信 IP」中添加网关服务器出口 IP。
+
+:::warning[企业微信必须使用已备案的 HTTPS 域名]
+企业微信的授权回调域名要求为**已备案的 HTTPS 域名**，不支持纯 IP 或 `http` 地址。若网关以内网 IP 方式部署，无法配置企业微信登录，建议改用钉钉、飞书或 LDAP。
+
+:::
+
+
+### 网关侧配置
+
+- **CorpID**：企业微信「我的企业 → 企业信息」页的企业唯一标识。
+- **应用 AgentID（正整数）**：自建应用的 AgentID。
+- **应用密钥 / Client Secret**：自建应用的应用密钥（Secret）。
+- **授权回调地址**：网关生成的回调地址，对应自建应用的网页授权可信域名配置（格式见[第 9 节](#9-通用配置说明)）。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image4-wecom-drawer.png"} alt="企业微信配置"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 14  企业微信配置</div>
+
+## 7 LDAP
+
+LDAP 用于对接企业已有的目录服务（如 OpenLDAP、Active Directory）。相关参数由企业目录服务的管理员提供，无需在企业微信、钉钉等外部平台创建应用：
+
+- **LDAP 连接地址**：目录服务地址。`ldaps://` 使用 TLS 加密，`ldap://` 可选择启用 StartTLS。
+- **搜索根 Base DN**：用户搜索的起始目录节点。
+- **服务账号 Bind DN**：用于搜索用户的服务账号 DN。
+- **用户搜索过滤器**：检索用户的 LDAP 过滤器，必须包含一个用户名占位符，如 `(uid={username})`。
+- **用户名属性**：登录时匹配用户名的属性，如 `uid`、`sAMAccountName`。
+- **稳定身份属性**：用于唯一标识用户的属性，默认 `entryUUID`；Active Directory 环境选择 `objectGUID`。
+- **LDAP 服务账号密码**：服务账号对应的密码。
+- **附加信任 CA 证书（PEM）**：使用 LDAPS 或 StartTLS 时，如需信任自签名证书可在此上传。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image5-ldap-drawer.png"} alt="LDAP 配置"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 15  LDAP 配置</div>
+
+## 8 OIDC
+
+OIDC 用于对接支持 OpenID Connect 协议的身份认证服务（如 Keycloak、Authing、Okta 等）。配置前需先在身份提供商（IdP）管理界面创建一个客户端（Client），将网关显示的**授权回调地址**登记为该客户端的回调地址，并确认 IdP 的 Issuer 地址可用，再回到网关填写：
+
+- **应用 ID / Client ID**：在身份提供商（IdP）注册的客户端标识。
+- **应用密钥 / Client Secret**：客户端对应的密钥。
+- **授权回调地址**：网关的认证回调地址，需配置到 IdP 的客户端回调设置中（格式见[第 9 节](#9-通用配置说明)）。
+- **OIDC Issuer**：身份提供商的 Issuer 标识地址。
+- **附加信任 CA 证书（PEM）**：IdP 使用自签名证书时上传。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/ai-gateway/img/system_settings/image6-oidc-drawer.png"} alt="OIDC 配置"/>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 16  OIDC 配置</div>
+
+## 9 通用配置说明
+
+以下配置项在各认证方式的抽屉中通用：
+
+- **启用**：该认证方式的总开关，启用并保存后登录页展示对应按钮。
+- **首次登录用户组**：企业账号首次登录后归入的用户组，决定其可用模型与权限；建议提前在「用户组」中规划好目标用户组。
+- **密钥加密保存**：密钥保存后加密存储；编辑时**留空表示保留原值，填写则替换**。更换企业、应用、Issuer 或目录身份范围时须重新填写。
+- **允许查看密钥**：勾选后管理员可查看已保存的密钥明文。
+
+### 授权回调地址
+
+各认证方式的**授权回调地址**由网关根据访问地址自动生成，并在配置抽屉中展示（可单击复制），无需手动拼接。将其原样填入对应平台的回调 / 重定向配置即可。以网关访问地址为 `https://gateway.example.com` 为例，各认证方式的回调地址路径如下：
+
+- **钉钉**：`https://gateway.example.com/api/v1/auth/enterprise/dingtalk/callback`
+- **飞书**：`https://gateway.example.com/api/v1/auth/enterprise/feishu/callback`
+- **企业微信**：`https://gateway.example.com/api/v1/auth/enterprise/wecom/callback`
+- **OIDC**：`https://gateway.example.com/api/v1/auth/enterprise/oidc/callback`
+
+> 填写时须以 `/api/v1/auth/enterprise/<方式>/callback` 结尾，且认证平台登记的地址必须与网关显示的地址**完全一致**，包括协议、主机、端口与路径（若网关显示的地址带末尾斜杠，也须一并保留），不要在地址后附加 `code`、`state` 等参数。
+
+:::warning[回调地址必须与网关访问地址完全一致]
+授权回调地址的协议与主机取自网关的实际访问地址：以 `https://ip:端口` 访问即为 https，以内网 http 访问则为 http。若平台登记的地址与网关显示存在任何差异（多 / 少斜杠、http 与 https 不符、端口不同），登录跳转都会失败。LDAP 为目录服务直连，不涉及回调地址。
+
+:::
+
+
+## 10 注意事项
+
+- 启用任一认证方式前，请先在对应平台完成应用创建，并正确配置授权回调地址，否则登录跳转会失败。
+- 多种认证方式可同时启用，登录页将并列展示已启用的企业登录方式，用户可任选其一。
+- 配置保存后建议先使用「测试连接」验证可用性，再对团队成员开放企业登录方式。

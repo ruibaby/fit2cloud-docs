@@ -1,0 +1,195 @@
+---
+title: 用户列表
+description: 介绍 JumpServer 控制台中用户的创建、邀请、导入导出、详情、登录规则及批量操作。
+---
+
+## 1 功能简介
+
+用户列表用于管理 JumpServer 中的账号，包括创建、邀请、导入导出、编辑、克隆、移除和删除。管理员还可按状态筛选用户，并在详情中查看授权资产、登录规则与会话活动。
+
+路径：登录后选择 **控制台 > 用户管理 > 用户列表**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_admin_users_01.png"} alt="图 1  用户列表" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  用户列表</div>
+
+列表上方提供：
+
+- **快速过滤**： 无效、已禁用、过期时间、永不登录。
+- **认证设置**： 密码已过期、未启用 MFA、登录被阻止。
+- **未登录超过**： 30 天、60 天、90 天、180 天。
+
+列字段包括名称、用户名、邮箱、用户组、是否有效及操作。
+
+## 2 前提条件
+
+- 已使用具备用户管理权限的账号登录 JumpServer（如系统管理员或组织管理员）。
+- 通过邮件下发重置密码链接时，须先在 **系统设置 > 通知设置** 中配置邮件服务。
+
+:::important[组织范围]
+当前列表只显示本组织内的用户。系统中已有、但尚未加入本组织的用户，须使用 **邀请用户**。
+
+:::
+
+
+## 3 创建用户
+
+1. 在用户列表单击 **创建**。
+2. 在右侧抽屉 **创建用户** 中填写信息。
+3. 单击 **提交**。若需连续添加，单击 **保存并继续添加**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_admin_users_02.png"} alt="图 2  创建用户" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  创建用户</div>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  创建用户字段说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'18%', padding:'8px', textAlign:'left'}}>分组</th><th style={{width:'22%', padding:'8px', textAlign:'left'}}>字段</th><th style={{width:'60%', padding:'8px', textAlign:'left'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>基本设置</td><td style={{padding:'8px'}}>名称</td><td style={{padding:'8px'}}>用户显示名，允许重复。</td></tr>
+<tr><td style={{padding:'8px'}}>基本设置</td><td style={{padding:'8px'}}>用户名</td><td style={{padding:'8px'}}>登录账号，不可重复。</td></tr>
+<tr><td style={{padding:'8px'}}>基本设置</td><td style={{padding:'8px'}}>邮箱</td><td style={{padding:'8px'}}>登录与通知所用邮箱，不可重复。</td></tr>
+<tr><td style={{padding:'8px'}}>基本设置</td><td style={{padding:'8px'}}>用户组</td><td style={{padding:'8px'}}>按组管理用户，资产授权到组后组内用户继承权限。</td></tr>
+<tr><td style={{padding:'8px'}}>认证</td><td style={{padding:'8px'}}>密码选项</td><td style={{padding:'8px'}}><strong>生成重置密码链接，通过邮件发送给用户</strong> 或 <strong>设置密码</strong>。</td></tr>
+<tr><td style={{padding:'8px'}}>认证</td><td style={{padding:'8px'}}>MFA</td><td style={{padding:'8px'}}><strong>禁用</strong>、<strong>启用</strong> 或 <strong>强制启用</strong>。</td></tr>
+<tr><td style={{padding:'8px'}}>认证</td><td style={{padding:'8px'}}>允许的 MFA 类型</td><td style={{padding:'8px'}}>虚拟 MFA、短信、邮箱、人脸识别、Radius、Passkey、自定义。</td></tr>
+<tr><td style={{padding:'8px'}}>认证</td><td style={{padding:'8px'}}>来源</td><td style={{padding:'8px'}}>手动创建一般为 <strong>数据库</strong>；从 LDAP / AD 导入则为对应目录源。</td></tr>
+<tr><td style={{padding:'8px'}}>安全</td><td style={{padding:'8px'}}>系统角色</td><td style={{padding:'8px'}}>系统级权限，如系统管理员、审计员、用户或自定义角色。</td></tr>
+<tr><td style={{padding:'8px'}}>安全</td><td style={{padding:'8px'}}>组织角色</td><td style={{padding:'8px'}}>组织级权限。可单击 <strong>管理角色</strong> 维护角色。</td></tr>
+<tr><td style={{padding:'8px'}}>安全</td><td style={{padding:'8px'}}>激活</td><td style={{padding:'8px'}}>勾选后允许登录；未激活不可登录。</td></tr>
+<tr><td style={{padding:'8px'}}>安全</td><td style={{padding:'8px'}}>失效日期</td><td style={{padding:'8px'}}>超过该时间后无法登录。</td></tr>
+<tr><td style={{padding:'8px'}}>其它设置</td><td style={{padding:'8px'}}>手机</td><td style={{padding:'8px'}}>选填，用于短信 MFA。</td></tr>
+<tr><td style={{padding:'8px'}}>其它设置</td><td style={{padding:'8px'}}>备注</td><td style={{padding:'8px'}}>选填。</td></tr>
+</tbody>
+</table>
+
+## 4 邀请用户
+
+当用户已存在于 JumpServer 系统、但还不在当前组织时，将其加入本组织。
+
+1. 在用户列表单击 **邀请用户**。
+2. 在 **邀请用户加入此组织** 对话框中选择 **用户** 与 **组织角色**。
+3. 单击 **确认**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_admin_users_03.png"} alt="图 3  邀请用户" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 3  邀请用户</div>
+
+:::note[部分用户列表]
+对话框提示：为安全起见，只显示部分用户，可以搜索更多。
+
+:::
+
+
+## 5 导入与导出
+
+列表右上角工具栏提供列设置、导出、导入和刷新。导入支持创建或更新用户，常用格式为 xlsx 与 csv。首次导入可先导出或下载模板，按提示填写后再导入。
+
+## 6 用户详情
+
+在列表中单击用户 **名称**，打开详情抽屉。页签包括 **基本设置**、**授权的资产**、**资产授权规则**、**用户登录规则**、**用户会话**、**活动**。右上角可 **编辑** 或 **删除**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_admin_users_04.png"} alt="图 4  用户详情" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 4  用户详情</div>
+
+### 6.1 基本设置
+
+左侧 **基本信息** 展示 ID、名称、用户名、邮箱、手机、系统角色、组织角色、第三方绑定、MFA、来源、标签、创建者、加入日期、失效日期、最后更新密码日期、上次登录、备注等。
+
+右侧 **快速更新**：
+
+- **激活中**： 打开或关闭登录资格。
+- **重置密码**： 单击 **发送**，向用户邮箱发送重置邮件。
+- **重置 SSH 密钥**： 单击 **发送**，向用户邮箱发送设置密钥的邮件。
+- **重置 MFA**： 单击 **还原**，用户下次登录需重新绑定。
+- **解锁用户**： 因多次输错密码被锁定时，单击 **解锁**。
+
+**用户组** 区域可选择组后单击 **新增**。
+
+### 6.2 授权的资产
+
+展示当前组织下已授权给该用户的资产，左侧为授权树，右侧为资产列表（名称、地址、平台、账号）。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_admin_users_08.png"} alt="图 5  授权的资产" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 5  授权的资产</div>
+
+### 6.3 用户登录规则
+
+限制该用户的登录 IP 与时间段。单击 **创建** 添加规则。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_admin_users_05.png"} alt="图 6  用户登录规则" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 6  用户登录规则</div>
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 2  登录规则字段说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px', textAlign:'left'}}>字段</th><th style={{width:'75%', padding:'8px', textAlign:'left'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>名称</td><td style={{padding:'8px'}}>规则名称。</td></tr>
+<tr><td style={{padding:'8px'}}>优先级</td><td style={{padding:'8px'}}>数字越小优先级越高。</td></tr>
+<tr><td style={{padding:'8px'}}>IP 组</td><td style={{padding:'8px'}}>限制登录来源 IP，逗号分隔；<code>*</code> 表示全部。支持单 IP、网段、范围及 IPv6。</td></tr>
+<tr><td style={{padding:'8px'}}>时段</td><td style={{padding:'8px'}}>允许或限制登录的时间段。</td></tr>
+<tr><td style={{padding:'8px'}}>动作</td><td style={{padding:'8px'}}><strong>拒绝</strong>、<strong>允许</strong> 或 <strong>登录复核</strong>（需审批通过后登录）。</td></tr>
+<tr><td style={{padding:'8px'}}>激活中</td><td style={{padding:'8px'}}>规则是否生效。</td></tr>
+</tbody>
+</table>
+
+### 6.4 用户会话与活动
+
+**用户会话** 查看该用户的会话记录；**活动** 查看登录等活动记录。
+
+## 7 编辑用户
+
+在列表操作列单击编辑图标，或在详情右上角单击 **编辑**，修改后提交。
+
+## 8 克隆用户
+
+当多名用户信息相近时，在操作列单击 **…**，选择 **副本**，修改差异项后提交。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_admin_users_06.png"} alt="图 7  行内更多操作" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 7  行内更多操作</div>
+
+行内更多菜单包括：
+
+- **删除**： 从整个系统删除该用户，不可逆。
+- **副本**： 克隆为新用户。
+- **移除**： 仅从当前组织移除，之后可用 **邀请用户** 重新加入。
+
+## 9 批量操作
+
+勾选用户前的复选框，单击 **更多操作**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_admin_users_07.png"} alt="图 8  批量更多操作" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 8  批量更多操作</div>
+
+可选：
+
+- **移除所选**
+- **禁用所选**
+- **激活所选**
+- **删除所选**
+- **编辑所选**
+
+## 10 注意事项
+
+:::warning[删除不可恢复]
+**删除** 会从数据库移除用户数据，操作不可逆。只需退出当前组织时请用 **移除**。
+
+:::
+
+
+:::note[邮件依赖]
+重置密码、重置 SSH 密钥依赖邮件通知。未配置邮件服务时，相关 **发送** 不会送达用户。
+
+:::
+

@@ -1,0 +1,43 @@
+---
+title: 应用市场
+---
+
+应用市场是 JumpServer 远程应用的应用包分发入口，由飞致云在线托管。管理员在 **远程应用** 页面单击 **应用市场**，即可在新窗口打开应用商店站点，获取远程应用的应用包。
+
+## 1 页面结构
+
+应用商店站点页面分为三个区域：
+
+- **产品选择**：左上角产品下拉框默认选中 **JumpServer**，可切换其他飞致云产品。
+- **分类与统计**：左侧栏为分类筛选，包含 **全部**、**Web**、**Remote**、**Database**、**Virtual App**、**Tools**，括号内为对应类别的应用数量；下方为 **下载趋势** 与 **下载排名** 两个统计入口。
+- **应用列表**：主区域以卡片形式展示应用，每张卡片包含应用名称、版本号、功能描述、分类标签与下载量，部分应用标注 **企业版**。列表右上角支持 **下载量** 与 **名称** 两种排序方式，上方搜索框支持按 **应用名称/描述/标签** 检索。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_admin_appmarket_01.png"} alt="图 1  应用商店站点首页" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  应用商店站点首页</div>
+
+## 2 应用详情
+
+单击应用卡片进入该应用的详情页，页面包含应用描述、版本信息与依赖说明三部分内容。
+
+- **应用描述**：应用功能的文字说明与分类标签。
+- **版本信息**：提供 **查看所有版本** 与 **下载最新版本** 两个操作，并显示该应用当前的下载量。
+- **依赖说明**：部分应用附有运行环境要求，例如 selenium 版本要求、Driver 下载地址与 **ChangeLog** 更新记录链接。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_admin_appmarket_02.png"} alt="图 2  应用详情页" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  应用详情页</div>
+
+单击 **查看所有版本**，页面右侧展开版本信息面板，列出该应用的全部历史版本及其发布时间，选择版本后可 **下载当前版本**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_admin_appmarket_03.png"} alt="图 3  版本信息面板" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 3  版本信息面板</div>
+
+## 3 获取应用
+
+在应用商店站点下载应用包后，回到 JumpServer 的 **远程应用** 页面，单击 **上传** 将应用包纳入到当前的远程应用列表。在上传过程中，如果应用不存在，则创建该应用；如果已存在，则进行应用更新。
+
+**路径：** 登录后选择 **系统设置** > **远程应用** > **远程应用**，单击 **上传**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_admin_appmarket_04.png"} alt="图 4  离线上传对话框" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 4  离线上传对话框</div>
+
+应用纳入后，需要在应用发布机上完成部署，用户才能通过远程应用连接使用该应用。部署方式参见 [远程应用](remote_apps.mdx) 的「部署应用发布机」一节。

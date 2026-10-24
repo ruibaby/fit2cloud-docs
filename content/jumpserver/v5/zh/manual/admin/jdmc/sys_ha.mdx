@@ -1,0 +1,63 @@
+---
+title: 主备管理
+description: 介绍 JDMC 主备管理中的运行概览、生产操作入口与双节点高可用节点配置。
+---
+
+## 1 功能概述
+
+主备管理用于配置与运维双节点高可用集群，包含 **运行概览** 与 **节点配置** 两个页签。集群管理双节点 VIP、PostgreSQL 16 / MySQL 8 / MariaDB 10.6 数据库复制、Redis 和文件同步，其中 PostgreSQL 支持异步与同步流复制。
+
+路径：登录后选择 **系统设置 > 设备管理**，进入 JDMC 控制台后，在左侧菜单选择 **主备管理**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_jdmc_ha_01.png"} alt="图 1  运行概览" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  运行概览</div>
+
+## 2 运行概览
+
+尚未配置高可用时，页面提示「尚未配置高可用，请先完成节点配置。」**集群状态** 区按以下卡片展示集群状态，区标题右侧显示当前数据库引擎摘要，点击 **刷新状态** 重新获取：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  集群状态卡片说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>卡片</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>VIP / Keepalived</td><td style={{padding:'8px'}}>虚拟 IP 的配置与持有状态</td></tr>
+<tr><td style={{padding:'8px'}}>数据库</td><td style={{padding:'8px'}}>数据库复制配置，并显示当前引擎</td></tr>
+<tr><td style={{padding:'8px'}}>Redis</td><td style={{padding:'8px'}}>Redis 运行状态</td></tr>
+<tr><td style={{padding:'8px'}}>文件同步</td><td style={{padding:'8px'}}>业务文件同步状态</td></tr>
+<tr><td style={{padding:'8px'}}>应用写服务</td><td style={{padding:'8px'}}>应用写服务状态</td></tr>
+</tbody>
+</table>
+
+**生产操作** 区提供高可用全流程操作入口：环境预检、安装 HA、回滚未完成安装、激活 HA、启动 HA、停止 HA、重启 HA、计划切换、重建备用节点、检查动作状态、卸载 HA。
+
+## 3 节点配置
+
+节点配置用于设置双节点高可用的节点信息与同步策略。页面顶部标注支持范围：**PostgreSQL 16 · 异步/同步**、**MySQL 8 / MariaDB 10.6 · 异步**。
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 2  节点配置字段说明</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>字段</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>角色</td><td style={{padding:'8px'}}>本节点的角色，可选 <strong>首选主节点</strong> 或 <strong>备用节点</strong></td></tr>
+<tr><td style={{padding:'8px'}}>本机 IP</td><td style={{padding:'8px'}}>本节点的 IP 地址</td></tr>
+<tr><td style={{padding:'8px'}}>对端 IP</td><td style={{padding:'8px'}}>对端节点的 IP 地址</td></tr>
+<tr><td style={{padding:'8px'}}>虚拟 IP</td><td style={{padding:'8px'}}>集群对外提供服务的虚拟 IP</td></tr>
+<tr><td style={{padding:'8px'}}>网卡</td><td style={{padding:'8px'}}>VIP 绑定的网卡</td></tr>
+<tr><td style={{padding:'8px'}}>VRRP ID</td><td style={{padding:'8px'}}>Keepalived 的 VRRP 实例编号</td></tr>
+<tr><td style={{padding:'8px'}}>网关 IP（可选）</td><td style={{padding:'8px'}}>可选填写的网关地址</td></tr>
+<tr><td style={{padding:'8px'}}>集群共享密钥</td><td style={{padding:'8px'}}>节点间通信的共享密钥</td></tr>
+<tr><td style={{padding:'8px'}}>复制模式</td><td style={{padding:'8px'}}>可选 <strong>异步（优先可用性）</strong> 或 <strong>同步（优先数据一致性）</strong></td></tr>
+<tr><td style={{padding:'8px'}}>外部 fencing 脚本（可选）</td><td style={{padding:'8px'}}>必须为 root 所有且不可被组/其他用户写入；无 fencing 时硬故障不会自动升主</td></tr>
+</tbody>
+</table>
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_jdmc_ha_02.png"} alt="图 2  节点配置" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  节点配置</div>
+
+页面提供 **自动将恢复节点重建为备用节点** 与 **启用 SSH 文件同步** 两个开关。启用 SSH 文件同步后，SSH 用户必须为 root，私钥和 known_hosts 始终用于双节点控制面安全校验，关闭此开关只会停用业务文件同步。启用后需要填写 **SSH 用户**、**SSH 私钥绝对路径** 与 **known_hosts 绝对路径**，确认后点击 **保存配置**。

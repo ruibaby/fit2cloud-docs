@@ -1,0 +1,222 @@
+---
+title: 连接资产
+description: 介绍 JumpServer Web 终端中资产的连接流程、连接配置项与连接方式，以及各类型资产的连接说明与会话管理。
+---
+
+## 1 连接流程
+
+Web 终端的核心功能是连接资产。在左侧资产树中单击目标资产后，会打开该资产的连接配置对话框，完整的连接流程如下：
+
+1. 在资产树中单击目标资产，加载该资产的连接配置。
+2. 在 **协议** 页签中选择要使用的协议。同一资产配置了多个协议时，各协议以页签形式并列显示。
+3. 在 **账号** 中选择要使用的资产账号。账号下拉中列出管理员已授权给当前用户的账号，选择 **手动输入** 时可自行填写账号与密码。
+4. 在 **连接方式** 中选择要使用的方式，可用的方式按分类以页签形式分组显示。
+5. 按需展开 **高级选项**，设置字符集、终端快捷键等参数。
+6. 单击 **连接** 建立会话；选择 **应用** 类方式时，按钮显示为 **客户端打开**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_user_wb_luna_04.png"} alt="图 1  连接配置" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  连接配置</div>
+
+## 2 连接配置项
+
+连接配置中的各字段说明如下。
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  连接配置项</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>配置项</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>协议</td><td style={{padding:'8px'}}>为该资产配置的连接协议，在连接配置顶部以页签形式并列显示，选择不同协议后，可选的连接方式会相应变化</td></tr>
+<tr><td style={{padding:'8px'}}>账号</td><td style={{padding:'8px'}}>管理员授权给当前用户的资产账号，其中 <strong>同名账号</strong> 指与当前登录用户同名的账号，<strong>手动输入</strong> 需自行填写账号与密码</td></tr>
+<tr><td style={{padding:'8px'}}>连接方式</td><td style={{padding:'8px'}}>按分类分组展示，切换分类页签即可查看该类下的连接方式，可用的分类取决于资产的协议、管理员启用的组件以及分配给当前用户的连接方式</td></tr>
+<tr><td style={{padding:'8px'}}>高级选项</td><td style={{padding:'8px'}}>可折叠区域，常见的配置项包括 <strong>字符集</strong>、<strong>字符终端 Backspace As Ctrl + H</strong>、<strong>分辨率</strong> 和 <strong>远程应用连接方式</strong> 等，不同协议下可配置的项不同</td></tr>
+<tr><td style={{padding:'8px'}}>下次自动连接</td><td style={{padding:'8px'}}>勾选框，勾选后再次单击该资产会直接复用本次的连接信息建立会话；如需重新选择连接方式与账号，可在资产树中右键该资产并选择 <strong>连接</strong></td></tr>
+</tbody>
+</table>
+
+资产可用的协议范围由所属平台决定：管理员在 **系统设置 > 平台列表** 中配置各平台支持的协议，创建资产时再从所属平台的协议中为该资产选择实际要启用的协议。因此同一类型的不同资产，连接配置中出现的协议可能不同，例如同为 Linux 主机，有的资产只配置了 SSH，有的同时配置了 SSH 与 SFTP。
+
+各类型平台默认提供的协议如下。
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 2  各类型平台默认提供的协议</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'20%', padding:'8px'}}>资产类型</th><th style={{width:'30%', padding:'8px'}}>平台</th><th style={{width:'50%', padding:'8px'}}>默认提供的协议</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>主机</td><td style={{padding:'8px'}}>Linux</td><td style={{padding:'8px'}}>SSH、SFTP、Telnet、VNC、RDP</td></tr>
+<tr><td style={{padding:'8px'}}>主机</td><td style={{padding:'8px'}}>Windows</td><td style={{padding:'8px'}}>SSH、SFTP、VNC、WinRM、RDP</td></tr>
+<tr><td style={{padding:'8px'}}>主机</td><td style={{padding:'8px'}}>Unix</td><td style={{padding:'8px'}}>SSH、SFTP、Telnet、VNC、RDP</td></tr>
+<tr><td style={{padding:'8px'}}>网络设备</td><td style={{padding:'8px'}}>Cisco、H3C、Huawei</td><td style={{padding:'8px'}}>SSH、SFTP、Telnet</td></tr>
+<tr><td style={{padding:'8px'}}>数据库</td><td style={{padding:'8px'}}>各数据库平台</td><td style={{padding:'8px'}}>与平台名称一致的协议，如 MySQL 平台提供 MySQL 协议</td></tr>
+<tr><td style={{padding:'8px'}}>Web 应用</td><td style={{padding:'8px'}}>网站</td><td style={{padding:'8px'}}>HTTP，URL 以 https:// 开头时显示为 HTTPS</td></tr>
+<tr><td style={{padding:'8px'}}>云服务</td><td style={{padding:'8px'}}>Kubernetes</td><td style={{padding:'8px'}}>K8S</td></tr>
+<tr><td style={{padding:'8px'}}>云服务</td><td style={{padding:'8px'}}>Vmware-vSphere</td><td style={{padding:'8px'}}>HTTP</td></tr>
+<tr><td style={{padding:'8px'}}>目录服务</td><td style={{padding:'8px'}}>General</td><td style={{padding:'8px'}}>SSH</td></tr>
+<tr><td style={{padding:'8px'}}>目录服务</td><td style={{padding:'8px'}}>Windows Active Directory</td><td style={{padding:'8px'}}>RDP、SSH、VNC、WinRM</td></tr>
+</tbody>
+</table>
+
+## 3 连接方式
+
+连接配置中的可选方式按来源分为 **内置**、**应用**、**远程应用** 与 **虚拟应用** 四类，各类方式只在满足条件时才会出现，因此同一资产在不同环境下可选的分类与具体方式可能不同。
+
+**内置** 指由 JumpServer 在浏览器中直接呈现会话，无需安装本地程序，例如字符终端下的 **内置终端**、图形终端下的 **远程桌面**、SFTP 协议下的 **文件管理** 与 **文件编辑器** 等。该类方式由 JumpServer 的终端组件提供，随对应组件的启用而出现。选择该类方式时，连接按钮显示为 **连接**。
+
+**应用** 指借助本地客户端程序建立连接，例如 **SSH Client**、**SFTP 客户端**、**远程桌面客户端**，以及用于生成客户端连接信息的 **SSH 向导**。该类方式由 JumpServer 客户端在本地调用对应的客户端程序并代填账号等信息，使用前需先下载并安装 JumpServer 客户端，并完成连接设置（例如本地应用启动路径），详见 [客户端概览](../../client/overview.mdx)；其中 **远程桌面客户端**、**数据库客户端** 等还需已获得 X-Pack 授权。选择该类方式时，连接按钮显示为 **客户端打开**。
+
+**远程应用** 指由管理员预先发布的远程应用，例如数据库连接中发布的 DBeaver、Web 资产中内置的 JumpServer WebLite。该类方式需要管理员先部署应用发布机并在其上发布应用，连接配置中才会出现对应选项，详见 [远程应用](../../admin/app_management/remote_apps.mdx)。远程应用的连接方式可在 **高级选项** 的 **远程应用连接方式** 中设置。
+
+**虚拟应用** 指由管理员通过虚拟应用功能发布的 Linux 图形化应用，可用于发布 Web、数据库等资产，列表中可选的项即管理员已发布的虚拟应用名称。该方式需要管理员先在 **系统设置 > 功能设置 > 虚拟应用** 中开启该功能并完成发布，连接配置中才会出现对应选项，详见 [虚拟应用](../../admin/app_management/virtual_apps.mdx)。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_user_wb_luna_15.png"} alt="图 2  连接方式" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  连接方式</div>
+
+:::note[连接方式以实际显示为准]
+同一资产可用的连接方式取决于资产的协议、管理员启用的组件、企业版授权以及分配给用户的连接方式，不同用户看到的内容可能不同。以下各类型资产的说明中列举的为常见情况，具体请以连接配置中的显示为准。
+
+:::
+
+
+## 4 主机连接
+
+主机类资产包括 Linux、Windows 等操作系统主机。Linux 类平台默认提供 SSH、SFTP、Telnet、VNC 与 RDP 协议，Windows 类平台默认提供 SSH、SFTP、VNC、WinRM 与 RDP 协议，创建资产时可从中选择该资产实际启用的协议。
+
+### Linux 主机
+
+Linux 主机常见的配置是启用 **SSH** 与 **SFTP** 两个协议，二者在连接配置顶部以页签形式并列显示，切换页签即可切换协议。
+
+**SSH 协议** 的连接方式通常有 **内置** 与 **应用** 两类。**内置** 下提供 **内置终端**，在浏览器中直接打开命令行终端；**应用** 下提供 **SSH Client** 与 **SSH 向导**，**SSH Client** 调用本地 SSH 客户端并代填连接信息，**SSH 向导** 生成连接所需的信息，复制到任意命令行执行即可连接对应资产。
+
+**SFTP 协议** 的连接方式通常也有 **内置** 与 **应用** 两类。**内置** 下提供 **文件管理** 与 **文件编辑器**，可在浏览器中浏览目录、上传下载文件，并直接编辑远程文本文件；**应用** 下提供 **SFTP 客户端**，调用本地客户端建立 SFTP 连接。
+
+SSH 协议的高级选项中提供 **字符集** 与 **字符终端 Backspace As Ctrl + H**，后者用于把字符终端的删除键设置为 Ctrl + H。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_user_wb_luna_07.png"} alt="图 3  Linux 主机连接配置" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 3  Linux 主机连接配置</div>
+
+### Windows 主机
+
+Windows 主机通常使用 **RDP** 协议连接。连接方式通常有 **内置** 与 **应用** 两类，**内置** 下提供 **远程桌面**，在浏览器中直接呈现远程桌面；**应用** 下提供 **远程桌面客户端**，调用本地远程桌面客户端连接，此时连接按钮显示为 **客户端打开**。
+
+RDP 协议的高级选项中提供 **分辨率**，用于设置远程桌面的显示分辨率。Windows 资产的连接按钮上会显示当前已连接该资产的用户数量，例如 **连接 (当前在线: 0)**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_user_wb_luna_08.png"} alt="图 4  Windows 主机连接配置" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 4  Windows 主机连接配置</div>
+
+## 5 网络设备连接
+
+网络设备资产（如 Cisco、H3C、Huawei）在左侧资产树中与主机资产并列展示，一般使用 **SSH** 或 **Telnet** 协议连接，连接方式与主机类似。以 SSH 协议为例，连接方式通常有 **内置** 与 **应用** 两类，**内置** 下提供 **内置终端**，**应用** 下提供 **SSH Client** 与 **SSH 向导**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_user_wb_luna_09.png"} alt="图 5  网络设备连接配置" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 5  网络设备连接配置</div>
+
+## 6 数据库连接
+
+数据库资产在左侧资产树中与主机资产并列展示。JumpServer 支持通过命令行、图形化界面、数据库客户端以及远程应用等方式连接数据库，常见的数据库平台包括 MySQL、MariaDB、PostgreSQL、Oracle、SQLServer、Redis、MongoDB、ClickHouse、Dameng 和 DB2，对应的协议与平台名称一致。
+
+数据库资产的连接方式包括 **内置**、**应用**、**远程应用** 等类别，切换对应页签即可查看该类下可用的方式；其中 **远程应用** 需管理员先部署应用发布机并完成发布后才会出现。
+
+**内置** 类别下通常提供两种方式：**内置终端** 以命令行方式连接数据库，适合执行 SQL 语句与查看执行结果；**数据库工作台** 以图形化方式连接数据库，在浏览器中提供表结构浏览与数据查询界面。
+
+**应用** 与 **远程应用** 类别下提供管理员已发布的远程应用，例如 **DBeaver 社区版**。选择该类方式时，可在 **高级选项** 的 **远程应用连接方式** 中选择远程应用的打开方式，连接按钮显示为 **连接** 或 **客户端打开**。
+
+数据库协议的 **高级选项** 中提供 **字符终端 Backspace As Ctrl + H** 与 **Disable auto completion**，后者用于关闭命令行方式下的自动补全。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_user_wb_luna_10.png"} alt="图 6  数据库连接配置" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 6  数据库连接配置</div>
+
+使用数据库连接前，需确认管理员已为该数据库资产创建并授权可用账号，账号在连接配置的 **账号** 中选择，选择 **手动输入** 时需自行填写账号与密码。
+
+不同数据库类型支持的连接方式如下：
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 3  数据库连接方式支持情况</div>
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'24%', padding:'8px'}}>数据库类型</th><th style={{width:'12%', padding:'8px'}}>Web GUI</th><th style={{width:'12%', padding:'8px'}}>Web CLI</th><th style={{width:'18%', padding:'8px'}}>数据库客户端（X-Pack）</th><th style={{width:'18%', padding:'8px'}}>DB 连接向导（X-Pack）</th><th style={{width:'16%', padding:'8px'}}>远程应用方式</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>MySQL</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td></tr>
+<tr><td style={{padding:'8px'}}>MariaDB</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td></tr>
+<tr><td style={{padding:'8px'}}>PostgreSQL</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td></tr>
+<tr><td style={{padding:'8px'}}>Oracle（X-Pack）</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td></tr>
+<tr><td style={{padding:'8px'}}>SQLServer（X-Pack）</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td></tr>
+<tr><td style={{padding:'8px'}}>Redis</td><td style={{padding:'8px'}}>✗</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td></tr>
+<tr><td style={{padding:'8px'}}>MongoDB</td><td style={{padding:'8px'}}>✗</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✓</td></tr>
+<tr><td style={{padding:'8px'}}>ClickHouse（X-Pack）</td><td style={{padding:'8px'}}>✗</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✗</td><td style={{padding:'8px'}}>✗</td><td style={{padding:'8px'}}>✓</td></tr>
+<tr><td style={{padding:'8px'}}>Dameng（X-Pack）</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✗</td><td style={{padding:'8px'}}>✗</td><td style={{padding:'8px'}}>✗</td><td style={{padding:'8px'}}>✓</td></tr>
+<tr><td style={{padding:'8px'}}>DB2（X-Pack）</td><td style={{padding:'8px'}}>✓</td><td style={{padding:'8px'}}>✗</td><td style={{padding:'8px'}}>✗</td><td style={{padding:'8px'}}>✗</td><td style={{padding:'8px'}}>✓</td></tr>
+</tbody>
+</table>
+
+说明：✓ 表示支持该连接方式，✗ 表示不支持；表中未列出的数据库类型以实际显示为准。
+
+## 7 Web 应用连接
+
+Web 资产用于把站点纳入 JumpServer 统一管理，用户经授权后可以在 Web 终端中打开目标站点，访问过程由 JumpServer 记录与审计。Web 资产的平台类型为 **网站**，协议在连接配置顶部以页签形式显示，取值为 **HTTP** 或 **HTTPS**，由资产 URL 决定：URL 以 https:// 开头时为 **HTTPS**，否则为 **HTTP**。
+
+Web 资产的连接方式通常归属 **远程应用** 类别，由 JumpServer 内置的 **JumpServer WebLite** 应用提供。选中 **JumpServer WebLite** 后，可在 **高级选项** 的 **远程应用连接方式** 中选择打开方式，确认后单击底部的连接按钮即可在浏览器中打开目标站点，打开方式为 **内置** 时按钮显示为 **连接**，为 **客户端** 时显示为 **客户端打开**。
+
+站点地址与账号信息由管理员在创建 Web 资产时配置，Web 终端中不提供修改入口。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_user_wb_luna_12.png"} alt="图 7  Web 应用连接配置" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 7  Web 应用连接配置</div>
+
+## 8 云服务连接
+
+云服务资产用于把公有云、私有云与 Kubernetes 集群纳入 JumpServer 统一管理，用户经授权后可以在 Web 终端中直接连接并操作相应资源。云服务资产按平台类型分为三类，各自对应不同的协议：**Kubernetes** 集群对应 **K8S** 协议；**Vmware-vSphere** 等私有云平台对应 **HTTP** 协议；公有云平台同样使用 **HTTP** 协议。协议在连接配置顶部以页签形式显示。
+
+**Kubernetes** 资产的连接方式归属 **内置** 类别，提供 **Kubernetes** 一项，选中后单击 **连接** 即可在浏览器中打开集群连接。Kubernetes 协议的高级选项中提供 **字符终端 Backspace As Ctrl + H**，用于把字符终端的删除键设置为 Ctrl + H。
+
+私有云与公有云资产的连接方式以实际显示为准，可选的分类与方式取决于管理员启用的组件以及分配给当前用户的连接方式。
+
+连接云服务资产前，需确认管理员已为该资产创建并授权可用账号，账号在连接配置的 **账号** 中选择。Kubernetes 集群的访问凭证由管理员在创建资产时配置，Web 终端中不提供修改入口。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_user_wb_luna_11.png"} alt="图 8  Kubernetes 连接配置" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 8  Kubernetes 连接配置</div>
+
+## 9 目录服务连接
+
+目录服务资产用于把目录服务器纳入 JumpServer 统一管理，其主要作用是作为域账号的来源：其他资产关联目录服务后，即可直接复用该目录服务上的域账号，登录时账号会自动补全为 `用户名@域名` 形式。目录服务资产本身也可以在 Web 终端中连接，用户经授权后即可连接并操作相应的目录服务资源。
+
+目录服务资产按平台类型分为 **General** 与 **Windows Active Directory** 两类，各自支持不同的协议：**General** 对应 **SSH** 协议；**Windows Active Directory** 对应 **RDP**、**SSH**、**VNC** 与 **WinRM** 协议。资产配置了多个协议时，各协议在连接配置顶部以页签形式并列显示。
+
+目录服务资产的连接方式取决于所选协议。以 **SSH** 协议为例，连接方式通常有 **内置** 与 **应用** 两类，**内置** 下提供 **内置终端**，**应用** 下提供 **SSH Client** 与 **SSH 向导**；以 **RDP** 协议为例，**内置** 下提供 **远程桌面**，**应用** 下提供 **远程桌面客户端**。各协议的连接方式与主机资产一致，具体说明可参考上文的主机连接。
+
+连接目录服务资产前，需确认管理员已为该资产创建并授权可用账号，账号在连接配置的 **账号** 中选择，选择 **手动输入** 时需自行填写账号与密码。
+
+## 10 自定义类型连接
+
+自定义类型用于接入产品内置平台未覆盖的资产类型。管理员可以通过新增自定义平台的方式扩展支持的资产类型，扩展后的资产与内置类型的资产一样，出现在左侧资产树中并对已授权的用户可见。
+
+自定义类型资产的协议由对应的自定义平台决定。管理员创建自定义平台时，会为该平台配置支持的协议，资产创建后即可选择这些协议进行连接，常见取值包括 **ssh**、**sftp**、**telnet**、**rdp**、**vnc** 等，具体以管理员配置的平台为准。
+
+自定义类型资产的连接方式取决于所选协议，以及该协议下管理员已启用的组件与分配给当前用户的连接方式。以 **SSH** 协议为例，连接方式通常有 **内置** 与 **应用** 两类，**内置** 下提供 **内置终端**，**应用** 下提供 **SSH Client** 与 **SSH 向导**，与主机资产的 SSH 协议一致。
+
+使用自定义类型资产前，需确认管理员已完成自定义平台的创建，并为该资产配置了协议与可用账号，同时将该资产授权给当前用户。
+
+## 11 会话管理
+
+连接建立后，会话以标签页形式显示在会话区顶部的标签栏中。单击顶部工具栏的 **新建连接** 按钮会展开 **最近连接** 列表，列出最近连接过的资产，选择其中一项可快速发起新的连接。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_user_wb_luna_16.png"} alt="图 9  会话标签栏" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 9  会话标签栏</div>
+
+**切换会话** 可使用快捷键 `ALT + SHIFT + ← / →` 切换到上一个或下一个会话，也可以使用 `CTRL + 数字键` 直接切换到对应序号的会话。
+
+**调整标签顺序** 可通过拖拽标签页调整会话的排列位置。
+
+**关闭会话** 单击标签页上的关闭按钮即可关闭对应会话。右键单击标签页还可以打开会话操作菜单，其中提供 **纯净模式**、**全屏模式**、**复制窗口**、**重新连接**、**重命名标签**、**垂直分屏** 与 **水平分屏**，以及 **关闭当前标签**、**关闭全部标签**、**关闭其他标签**、**关闭左侧标签** 和 **关闭右侧标签** 等关闭方式。

@@ -1,0 +1,45 @@
+---
+title: 系统变量
+---
+
+## 1 系统变量
+
+系统管理员可以使用【系统变量】模块，在该模块中为全局添加自定义变量。
+
+![系统变量页面](</img/dataease/newimg/xitongbianliangyemian.png>)
+
+图 1  系统变量页面
+
+变量分为三种类型：
+
+- 文本
+- 数值
+- 日期
+
+![添加系统变量](</img/dataease/newimg/tianjiaxitongbianliang.png>)
+
+图 2  添加系统变量
+
+系统管理员可以为文本型变量添加可选值，为数值和日期类型变量设置范围值。
+
+![用户添加参数](</img/dataease/newimg/yonghutianjiacanshu.png>)
+
+图 3  用户添加参数
+
+系统管理员设置好系统变量后，组织管理员可以为组织内成员配置这些系统变量。
+
+![用户配置多个参数](</img/dataease/newimg/yonghupeizhiduogecanshu.png>)
+
+图 4  用户配置多个参数
+
+在配置数据集的行权限时，除了系统内置的变量外，可以使用这些自定义的系统变量。行权限配置见 [数据集](./dataset)。
+
+![数据集权限匹配参数](</img/dataease/newimg/shujujiquanxianpipeicanshu.png>)
+
+图 5  数据集权限匹配参数
+
+数据集自定义 SQL 时支持选择系统变量作为查询条件。在 SQL 查询中可以使用系统变量，实现行权限的效果。该条件在数据集预览和仪表板/数据大屏展示中均会生效。
+
+![数据集自定义 SQL 时支持选择系统变量作为查询条件（XPack）](</img/dataease/newimg/shujujizidingyi-sql-shizhichixuanzexitongbianliangzuoweichaxuntiaojian-xpack.png>)
+
+图 6  SQL 中选择系统变量

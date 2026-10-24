@@ -1,0 +1,103 @@
+---
+title: 命令行工具
+description: 介绍 JumpServer 命令行运维工具 jmsctl 的常用命令与配置子命令。
+---
+
+## 1 功能简介
+
+JumpServer 安装目录内置命令行运维工具 `jmsctl`，用于安装、启停、备份恢复、查看日志和调整配置。默认在安装目录执行 `./jmsctl.sh`。
+
+## 2 前提条件
+
+- 已使用具备服务器权限的账号登录 JumpServer 所在主机。
+- 当前目录为 JumpServer 安装目录（常见为 `/opt/jumpserver`）。
+
+## 3 查看帮助
+
+在安装目录执行：
+
+```sh
+./jmsctl.sh --help
+```
+
+输出示例：
+
+```sh
+JumpServer 部署管理脚本
+
+Usage:
+  ./jmsctl.sh [COMMAND] [ARGS...]
+  ./jmsctl.sh --help
+
+Installation Commands:
+  install           安装 JumpServer 服务
+
+Management Commands:
+  config            配置工具，执行 jmsctl config --help，查看帮助
+  start             启动 JumpServer 服务
+  stop              停止 JumpServer 服务
+  restart           重启 JumpServer 服务
+  status            查看 JumpServer 服务运行状态
+  down              脱机 JumpServer 服务
+  uninstall         卸载 JumpServer 服务
+
+More Commands:
+  load_image        加载 Docker 镜像
+  backup_db         备份 JumpServer 数据库
+  restore_db [file] 通过数据库备份文件恢复数据
+  raw               执行原始 docker compose 命令
+  tail [service]    查看 Service 日志
+```
+
+## 4 常用运维命令
+
+- **启动服务**： `./jmsctl.sh start`
+- **停止服务**： `./jmsctl.sh stop`
+- **重启服务**： `./jmsctl.sh restart`
+- **查看状态**： `./jmsctl.sh status`
+- **脱机服务**： `./jmsctl.sh down`
+- **备份数据库**： `./jmsctl.sh backup_db`
+- **恢复数据库**： `./jmsctl.sh restore_db` 后接备份文件路径
+- **查看组件日志**： `./jmsctl.sh tail [service]`
+
+:::warning[停机影响]
+`stop`、`down`、`restart`、`uninstall` 会使正在进行的会话中断。生产环境请在维护窗口执行，并提前通知用户。
+
+:::
+
+
+数据备份与恢复的完整步骤见 [数据备份以及恢复指南](../../installation/backup_recovery.mdx)。
+
+## 5 配置工具
+
+`jmsctl config` 用于初始化配置文件、调整端口、SSL 和环境变量。
+
+```sh
+./jmsctl.sh config --help
+```
+
+输出示例：
+
+```sh
+Usage:
+  ./jmsctl.sh config [ARGS...]
+  -h, --help
+
+Args:
+  ntp              配置 NTP 同步
+  init             初始化 config 配置文件
+  port             配置 JumpServer 服务端口
+  ssl              配置 Web SSL
+  env              配置 JumpServer 环境变量
+```
+
+:::important[改配置后重启]
+通过 `config env` 或直接编辑 `config.txt` 后，须执行 `./jmsctl.sh restart` 才会生效。修改前请先停止或在维护窗口重启，见 [系统参数设置](./system_params.mdx)。
+
+:::
+
+
+## 6 后续操作
+
+- 配置项含义见 [系统参数设置](./system_params.mdx)。
+- 应用日志目录、会话命令与录像存储见 [日志存储配置](./log_storage.mdx)。

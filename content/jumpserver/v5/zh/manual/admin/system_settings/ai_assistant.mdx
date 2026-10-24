@@ -1,0 +1,73 @@
+---
+title: AI 助手
+description: 介绍 JumpServer 系统设置中 AI 助手的启用方式、模型连接参数与配置状态检查。
+---
+
+## 1 功能概述
+
+AI 助手用于配置 JumpServer 使用的大模型服务，支持 **内置 API** 与 **iframe 嵌入** 两种接入方式，并提供配置状态检查。
+
+路径：登录后选择 **系统设置 > AI 助手**。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_ai_assistant_01.png"} alt="图 1  AI 助手配置页面" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  AI 助手配置页面</div>
+
+## 2 启用 AI 助手
+
+卡片右上角提供启用开关，开关左侧显示当前状态。未启用时显示 **小助手未启用**，开启开关后显示 **小助手已启用**。
+
+## 3 模型连接
+
+**模型连接** 用于统一配置模型服务，模型列表将直接从服务商动态获取。
+
+### 3.1 接入方式
+
+**接入方式** 提供 **内置 API** 与 **iframe 嵌入** 两个选项，默认选中 **内置 API**。内置 API 使用当前模型配置；iframe 嵌入会在隔离面板中加载外部助手页面。
+
+### 3.2 内置 API 参数
+
+选择 **内置 API** 后，表单包含以下参数：
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>参数</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>服务地址</td><td style={{padding:'8px'}}>填写兼容 OpenAI API 的服务地址，通常以 /v1 结尾。界面提示「例如：<code>https://api.openai.com/v1</code>」，字段前有红色星号表示必填。</td></tr>
+<tr><td style={{padding:'8px'}}>API 密钥</td><td style={{padding:'8px'}}>密钥只在 JumpServer 后端保存；留空不会覆盖已经保存的密钥。输入框提示「输入新的 API 密钥」。</td></tr>
+<tr><td style={{padding:'8px'}}>网络代理（可选）</td><td style={{padding:'8px'}}>仅由 JumpServer 后端访问模型服务时使用。输入框提示「例如：<code>http://127.0.0.1:7890</code>」。</td></tr>
+<tr><td style={{padding:'8px'}}>模型</td><td style={{padding:'8px'}}>模型来自服务商 /models 接口；也可以直接输入模型 ID。下拉框右侧提供 <strong>获取模型</strong> 按钮，下拉框下方显示已发现的模型数量。</td></tr>
+</tbody>
+</table>
+
+### 3.3 iframe 嵌入参数
+
+选择 **iframe 嵌入** 后，表单只保留 **iframe 页面地址** 一项。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/jumpserver/img/jumpserver/v5_ai_assistant_02.png"} alt="图 2  iframe 嵌入接入方式" />
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  iframe 嵌入接入方式</div>
+
+该字段用于填写外部助手页面地址。输入框下方提示「请填写允许 iframe 嵌入的 HTTP 或 HTTPS 页面地址；外部页面无法直接访问 JumpServer 页面数据。」
+
+## 4 保存与测试
+
+表单底部显示当前状态与操作按钮。内置 API 方式下提供 **测试** 与 **提交** 两个按钮，初始状态提示 **保存前建议执行测试**；执行测试后状态行显示测试结果，连通时提示 **连接成功，模型支持工具调用**。
+
+iframe 嵌入方式下只提供 **提交** 按钮，未填写页面地址时状态提示 **等待填写有效的 iframe 页面地址**。
+
+## 5 配置状态
+
+页面右侧的 **配置状态** 显示 READY CHECK 检查结果。内置 API 方式下包含三项检查：
+
+<table style={{display:'table', width:'100%', maxWidth:'100%', tableLayout:'fixed', borderCollapse:'collapse', borderSpacing:'0', border:'1px solid #d9dee8'}}>
+<thead>
+<tr><th style={{width:'25%', padding:'8px'}}>检查项</th><th style={{width:'75%', padding:'8px'}}>说明</th></tr>
+</thead>
+<tbody>
+<tr><td style={{padding:'8px'}}>模型服务地址</td><td style={{padding:'8px'}}>已填写时显示 <strong>已配置</strong>。</td></tr>
+<tr><td style={{padding:'8px'}}>对话模型</td><td style={{padding:'8px'}}>显示当前选定的对话模型名称。</td></tr>
+<tr><td style={{padding:'8px'}}>工具调用能力</td><td style={{padding:'8px'}}>未执行测试时显示 <strong>保存前建议执行测试</strong>。</td></tr>
+</tbody>
+</table>
+
+标题右侧显示已完成数量，形如 **2/3**。选择 **iframe 嵌入** 后，检查项只有 **iframe 页面地址** 一项。

@@ -1,0 +1,124 @@
+---
+title: 工具操作
+---
+
+## 1 复制工具
+
+
+点击工具面板的【复制】，打开复制工具对话框，对原工具内容进行编辑修改后点击【创建】即可快速创建一个新工具。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/copy_tool.png"} alt="图 1  复制工具对话框" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 1  复制工具对话框</div>
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/copy_tool1.png"} alt="图 2  工具复制编辑" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 2  工具复制编辑</div>
+
+## 2 资源授权
+
+点击工具面板的【资源授权】，可以将该工具授权给相应的用户。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/resource_tool.png"} alt="图 3  资源授权" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 3  资源授权</div>
+
+## 3 触发器
+
+点击工具面板的【触发器】，可以为该工具添加定时或事件触发的触发器。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/add_trigger_tool.png"} alt="图 4  触发器" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 4  触发器</div>
+
+
+创建触发器：点击【添加】，进行创建触发器。
+
+- 触发器名称：触发器的名称，便于识别不同触发器及其触发条件。
+- 描述：触发器详细说明以及使用注意事项。
+- 类型：
+    - 定时触发：可按照每月、每周、每日或间隔时间执行任务，支持 Cron 表达式。
+    - 事件触发：即 Webhook 触发器，创建事件触发器时，系统会自动生成 URL 和 Bearer Token，支持调用方发送 HTTP 请求（Header 带 Token）并携带请求参数，触发相应的工具。
+- 任务执行：触发器执行的任务，需输入相应参数内容。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/trigger_tool.png"} alt="图 5  创建定时触发器" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 5  创建定时触发器</div>
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/webhook_trigger.png"} alt="图 6  创建 Webhook 触发器" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 6  创建 Webhook 触发器</div>
+
+## 4 查看关联资源
+
+点击工具面板的【查看关联资源】，可查看该模型关联资源情况，支持根据名称、创建者和类型进行搜索。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/relate_resource_tool.png"} alt="图 7  查看关联资源" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 7  查看关联资源</div>
+
+## 5 查看执行记录
+
+点击工具面板的【查看执行记录】，可以查看工具的执行记录。可通过筛选触发来源、类型和状态查看相应的执行记录和执行详情。
+
+- 依赖：查看当前资源所依赖的其他资源（智能体、模型、知识库、工具）；
+- 被依赖：查看当前资源被其他资源（智能体、模型、知识库、工具）依赖。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/record_tool.png"} alt="图 8  查看执行记录" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 8  查看执行记录</div>
+
+## 6 转移到
+
+点击工具面板的【转移到】，可以将工具移动到同一工作空间下工具的其他文件夹中。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/move_tool.png"} alt="图 9  转移资源" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 9  转移资源</div>
+
+## 7 工具导出/导入
+
+
+工具支持导出和导入，导出的文件后缀为 `.tool`。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/import_export_dx.png"} alt="图 10  函数导出" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 10  函数导出</div>
+
+
+点击【导入创建】，选择后缀名为 `.tool` 的文件并打开。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/import_fx.png"} alt="图 11  函数导入" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 11  函数导入</div>
+
+
+工具将自动导入，导入的工具默认状态为【已禁用】，可以点击工具，进入编辑工具查看和修改工具。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/import_success_fx.png"} alt="图 12  函数导入成功" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 12  函数导入成功</div>
+
+## 8 删除工具
+
+
+点击工具面板的【删除】按钮，即可对工具进行删除。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/del_tool.png"} alt="图 13  删除工具" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 13  删除工具</div>
+
+
+**注意： 工具删除后，不可恢复。** 如果智能体引用了该工具，在编排页面将显示【该工具不可用】的提示信息。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/use_del_tool.png"} alt="图 14  智能体引用已删除工具" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 14  智能体引用已删除工具</div>
+
+## 9 批量选择
+
+点击批量选择，可以批量选择工具进行移动或删除操作。
+
+<img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/maxkb/img/maxkb/fx/batch_operation_tool.png"} alt="图 15  批量操作" />
+
+<div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 15  批量操作</div>

@@ -2,7 +2,7 @@
 #
 # 来源: 从芝麻会话（社区小助手名下各产品的交流群）提取最近一周的
 #       「客户提问 → 部门同事解答」问答对，由大模型按官方文档核实并改写，
-#       追加到 <product>-docs/faq/community_faq.md，通过 PR 提交，不直接改动 main。
+#       追加到 content/<product>/<version>/zh/faq/community_faq.mdx，通过 PR 提交，不直接改动 main。
 #
 # 支持产品: jumpserver / dataease / maxkb / 1panel / sqlbot / cordys
 #   - 每个产品一个 matrix job，**互不干扰**：独立分支、独立诊断产物、独立 PR；
@@ -97,7 +97,7 @@
 #   - 不直接改 main。
 #
 # 固定分支的维护方式（2026-10-12 修复，务必先读）:
-#   本任务只改一个文件（<product>-docs/faq/community_faq.md），且全程不做 rebase（避免拉完整历史）。
+#   本任务只改一个文件（content/<product>/<version>/zh/faq/community_faq.mdx），且全程不做 rebase（避免拉完整历史）。
 #   做法是：以 origin/main 为基线新建固定分支，**当前页面一律取自 main**，
 #   上期分支只被当作「待续接条目的来源」，由脚本做**条目级**续接（见下）。
 #
@@ -126,7 +126,7 @@
 #     大流量被掐」：实测 curl 226MB 中途 SSL EOF、git fetch 全量 13 分钟后 curl 56 / early EOF。
 #   - 因此 checkout 采用**浅历史 + 部分克隆 + 稀疏检出**（见该步骤注释），且**全程不做 rebase**
 #     —— rebase 需要两个分支的公共祖先，会强迫拉完整历史。
-#   - 稀疏范围从「只含 jumpserver-docs」放宽为「所有 <product>-docs 下的 md」：
+#   - 稀疏范围从「只含 jumpserver-docs」放宽为「所有 content/<product>/<version>/zh 下的 md/mdx」：
 #     6 个产品的 md 合计约 3.1MB，相对全量 1.9GB 仍省掉 99.8%；
 #     之所以一次全量检出而不是按 matrix 变量动态指定产品目录，是因为
 #     actions/checkout 的 sparse-checkout 用的是静态字符串，动态拼 product 会让
@@ -174,36 +174,36 @@ on:
   workflow_dispatch:
     inputs:
       product:
-        description: '产品白名单（逗号分隔，如 dataease,maxkb）；留空=跑 PRODUCTS 表里全部启用产品'
+        description: "产品白名单（逗号分隔，如 dataease,maxkb）；留空=跑 PRODUCTS 表里全部启用产品"
         required: false
-        default: ''
+        default: ""
       days:
-        description: '回看天数（含今天）'
+        description: "回看天数（含今天）"
         required: false
-        default: '8'
+        default: "8"
       max_items:
-        description: '一个 PR 里条目总数的上限（含上期续接，超过 5 会被压到 5）'
+        description: "一个 PR 里条目总数的上限（含上期续接，超过 5 会被压到 5）"
         required: false
-        default: '5'
+        default: "5"
       min_items:
-        description: '引导模型至少选几条（只作引导，不够格时照实少选）'
+        description: "引导模型至少选几条（只作引导，不够格时照实少选）"
         required: false
-        default: '3'
+        default: "3"
       min_count:
-        description: '（已弱化）出现次数仅作参考，选题以长期复用价值为准'
+        description: "（已弱化）出现次数仅作参考，选题以长期复用价值为准"
         required: false
-        default: '2'
+        default: "2"
       dry_run:
-        description: '只预览不提交（仍会调用模型）'
+        description: "只预览不提交（仍会调用模型）"
         type: boolean
         default: false
       draft:
-        description: '以草稿方式创建 PR'
+        description: "以草稿方式创建 PR"
         type: boolean
         default: true
   schedule:
     # 每周一 03:00（北京时间）= 周日 19:00 UTC
-    - cron: '0 19 * * 0'
+    - cron: "0 19 * * 0"
 
 permissions:
   contents: write
@@ -258,7 +258,7 @@ jobs:
       products: ${{ steps.resolve.outputs.products }}
     steps:
       # 该 job 只需脚本本身，但 checkout 的 sparse 输入是静态的：
-      # 写成「所有 <product>-docs 下的 md」即可一次覆盖全部产品（合计约 3.1MB，仍是轻量）。
+      # 写成「所有 content/<product>/<version>/zh 下的 md/mdx」即可一次覆盖全部产品（合计约 3.1MB，仍是轻量）。
       - name: Checkout (script only)
         uses: actions/checkout@v4
         with:
@@ -344,9 +344,11 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/
-            /*-docs/*.md
-            /*-docs/**/*.md
-            /*-docs/faq/community_faq.pending.json
+            /content/*/*/zh/*.md
+            /content/*/*/zh/**/*.md
+            /content/*/*/zh/*.mdx
+            /content/*/*/zh/**/*.mdx
+            /content/*/*/zh/faq/community_faq.pending.json
 
       # 重试循环：actions/checkout 自身没有重试参数，失败后在这里重跑它。
       # 重跑方式：直接执行 runner _tool 目录里已下载的 checkout 入口脚本
@@ -365,9 +367,11 @@ jobs:
           #    否则重试成功后会检出「另一套」文件，第二轮读文档原文时就少文件了。
           INPUT_SPARSE_CHECKOUT: |
             /.github/
-            /*-docs/*.md
-            /*-docs/**/*.md
-            /*-docs/faq/community_faq.pending.json
+            /content/*/*/zh/*.md
+            /content/*/*/zh/**/*.md
+            /content/*/*/zh/*.mdx
+            /content/*/*/zh/**/*.mdx
+            /content/*/*/zh/faq/community_faq.pending.json
         run: |
           set -e
           # 定位已下载的 actions/checkout（尝试 v4 下所有已缓存版本，取最新）
@@ -461,8 +465,8 @@ jobs:
           # （例如 sparse 范围误写成只含 faq/），脚本会静默拿不到依据 —— 这里提前拦下。
           # 阈值取 PRODUCTS[key]['min_md']：各产品文档体量差异很大（jumpserver 198 vs cordys 57），
           # 统一写 50 会让小产品误报（cordys 正常也只有 57）。
-          md_count=$(find "${DOCS_DIR}" -name '*.md' 2>/dev/null | wc -l)
-          echo "检出文档：${DOCS_DIR} 下 ${md_count} 个 md"
+          md_count=$(find "${DOCS_DIR}" \( -name '*.md' -o -name '*.mdx' \) 2>/dev/null | wc -l)
+          echo "检出文档：${DOCS_DIR} 下 ${md_count} 个 md/mdx"
           if [ "${md_count}" -lt "${MIN_MD}" ]; then
             echo "::error::${DOCS_DIR} 只检出 ${md_count} 个 md（该产品下限 ${MIN_MD}）—— 稀疏检出范围可能不对，第二轮读文档原文会失败。"
             exit 1

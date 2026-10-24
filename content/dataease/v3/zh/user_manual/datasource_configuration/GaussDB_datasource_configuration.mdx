@@ -1,0 +1,72 @@
+---
+title: 配置 GaussDB 数据源
+---
+
+## 1 前提条件
+
+链接 GaussDB 数据库之前，请收集以下信息：
+
+- 数据库服务器的 IP 地址和端口号
+- 数据库名称
+- 数据库用户名和密码
+- Schema
+
+## 2 配置数据源链接步骤
+
+步骤一：登入 DataEase 系统。
+
+步骤二：进入【数据准备】，单击新建数据源，在 OLTP 分类中选择 GaussDB 图标。
+
+![GaussDB](</img/dataease/datasource_configuration/GaussDB1.png>)
+
+图 1  选择 GaussDB 数据源
+
+步骤三：填入收集的 IP、端口、数据库等相关信息。
+
+![GaussDB](</img/dataease/datasource_configuration/GaussDB2.png>)
+
+图 2  GaussDB 连接信息
+
+步骤四：单击【+ 获取 Schema】，选择对应 Schema。
+
+![GaussDB](</img/dataease/datasource_configuration/GaussDB_Schema.png>)
+
+图 3  GaussDB Schema
+
+详细说明信息如下：
+
+表 1  基础属性说明
+
+| 基础属性 | 说明 |
+|:---|:---|
+| 显示名称 / 数据源名称 | 数据源界面左侧列表中的显示名称 |
+| 描述 | 填写与此数据源相关的一些附属说明信息 |
+| 驱动 | 系统内置华为 GaussDB JDBC 驱动（`com.huawei.gaussdb.jdbc.Driver`） |
+| 连接方式 | 支持主机名或 JDBC 连接两种方式 |
+| 主机名/IP 地址 | 填写数据库所在服务器的 IP 地址；DataEase 与数据库均在 Docker 且位于同一宿主机时，可填写 Docker 网桥网关（如 `172.17.0.1`）或同一 Docker 网络下的容器名 |
+| 数据库名称 | 连接的数据库的名称 |
+| 用户名 | 数据库对应的用户名 |
+| 密码 | 数据库对应的密码 |
+| 额外的 JDBC 连接字符串 | 填写连接数据库的额外 JDBC 参数（可选） |
+| 端口 | 填写正确的端口，常见默认为 5432；若通过宿主机端口映射访问容器，请填写映射后的宿主机端口 |
+| Schema | 选择对象的集合 |
+
+步骤五：单击【校验】，校验成功后如下图所示，单击【保存】即可。
+
+![GaussDB](</img/dataease/datasource_configuration/GaussDB3.png>)
+
+图 4  GaussDB 校验成功
+
+## 3 说明
+
+GaussDB 连接信息格式说明：
+
+- JDBC 连接地址：`jdbc:gaussdb://主机名:端口/数据库名`
+- 驱动类：`com.huawei.gaussdb.jdbc.Driver`
+- 支持选择 Schema 后加载对应模式下的数据表
+
+:::note[注意]
+若 DataEase 与 GaussDB 分别运行在不同 Docker 容器中，请勿在数据源中填写 `127.0.0.1`（该地址指向 DataEase 容器自身）。可将两者加入同一 Docker 网络后填写容器名并使用容器内端口，或填写宿主机网桥 IP 并使用宿主机映射端口。
+
+:::
+

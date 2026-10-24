@@ -1,0 +1,128 @@
+---
+title: 备份还原
+---
+
+
+SQLBot 的 `sctl` **不提供** backup / restore 命令。升级、迁移前请手动备份；还原须在 **相同版本** 上进行。
+
+先确认当前是内置库还是外置库：
+
+```bash
+grep SQLBOT_EXTERNAL_DB /opt/sqlbot/.env
+grep POSTGRES_SERVER /opt/sqlbot/conf/sqlbot.conf
+```
+
+- `SQLBOT_EXTERNAL_DB=false` 且 `POSTGRES_SERVER=localhost`：内置库（默认）
+- `SQLBOT_EXTERNAL_DB=true`，或 `POSTGRES_SERVER` 指向其他主机：外置库（含多数 1Panel 场景）
+
+
+## 1 需要备份什么
+
+
+默认安装目录为 `/opt/sqlbot`。docker 一键运行时，路径相对执行目录下的 `./data`。
+
+表 1 备份内容清单
+
+| 内容 | 路径 / 对象 | 说明 |
+| ---- | ----------- | ---- |
+| 元数据库 | 内置：`data/postgresql` / 外置：外部 PostgreSQL 的 `sqlbot` 库 | 用户、工作空间、数据源、问数记录、术语、SQL 示例等 |
+| 业务文件 | `data/sqlbot/excel`、`data/sqlbot/file`、`data/sqlbot/images` | 与库中记录对应；日志 `logs` 可不备份 |
+| 配置 | `.env`、`conf/sqlbot.conf`、`docker-compose.yml` | 须与数据库成套还原；尤其保留原 `SECRET_KEY` |
+
+:::warning
+
+外置库时，宿主机 `data/postgresql` **不是** 业务数据，请备份外部 PostgreSQL。外置库需支持向量扩展（pgvector）。
+
+
+:::
+
+
+
+## 2 备份
+
+### 2.1 内置库（推荐）
+
+
+停服后打包运行数据与配置，一致性最好：
+
+```bash
+sctl stop
+
+tar -zcvf /opt/sqlbot-backup-$(date +%F).tar.gz \
+  --exclude='sqlbot/data/sqlbot/logs' \
+  -C /opt sqlbot/data sqlbot/conf sqlbot/.env sqlbot/docker-compose.yml
+
+sctl start
+```
+
+无 `sctl` 时（docker 一键运行）先执行 `docker stop sqlbot`，再打包当前目录下的 `./data`，最后 `docker start sqlbot`。
+
+
+### 2.2 外置库
+
+
+（1）备份外部库（连接信息以 `conf/sqlbot.conf` 为准）：
+
+```bash
+export PGPASSWORD='YourPassword'
+pg_dump -h <DB_HOST> -p 5432 -U root -d sqlbot -Fc -f ./sqlbot-$(date +%F).dump
+```
+
+本机无客户端时：
+
+```bash
+docker run --rm -e PGPASSWORD='YourPassword' \
+  -v $(pwd):/backup pgvector/pgvector:pg17 \
+  pg_dump -h <DB_HOST> -p 5432 -U root -d sqlbot -Fc -f /backup/sqlbot.dump
+```
+
+（2）再打包业务文件与配置：
+
+```bash
+tar -zcvf ./sqlbot-files-$(date +%F).tar.gz \
+  --exclude='sqlbot/data/sqlbot/logs' \
+  -C /opt sqlbot/data/sqlbot sqlbot/conf sqlbot/.env sqlbot/docker-compose.yml
+```
+
+1Panel 也可使用其 PostgreSQL 备份能力，并备份应用持久化目录中的 excel / file / images 及环境变量。
+
+
+## 3 还原
+
+
+还原前：目标环境已安装相同版本；先备份目标侧现有数据；内置库与外置库不要交叉覆盖。
+
+
+### 3.1 内置库
+
+
+```bash
+sctl stop
+mv /opt/sqlbot /opt/sqlbot-$(date +%F)-bak
+# 先安装相同版本后，再覆盖数据与配置
+tar -zxvf /opt/sqlbot-backup-YYYY-MM-DD.tar.gz -C /opt
+sctl start
+```
+
+
+### 3.2 外置库
+
+
+```bash
+export PGPASSWORD='YourPassword'
+psql -h <DB_HOST> -p 5432 -U root -d postgres -c "CREATE DATABASE sqlbot;"
+psql -h <DB_HOST> -p 5432 -U root -d sqlbot -c "CREATE EXTENSION IF NOT EXISTS vector;"
+pg_restore -h <DB_HOST> -p 5432 -U root -d sqlbot --clean --if-exists ./sqlbot-YYYY-MM-DD.dump
+```
+
+再解压文件备份到运行目录，确认 `POSTGRES_*`、`SECRET_KEY` 与备份一致后执行 `sctl restart`。
+
+
+## 4 还原后检查
+
+
+- `sctl status` 或 `docker ps` 正常，可用原管理员账号登录
+- 抽查数据源、Excel、历史问数、术语 / SQL 示例
+- 迁移后若 MCP 无图，按 [数据迁移](./migration) 修改 `SERVER_IMAGE_HOST`
+- 升级场景请先完成本文备份，再执行 [离线升级](./offline_upgrade)
+

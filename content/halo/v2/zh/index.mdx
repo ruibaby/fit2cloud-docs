@@ -1,0 +1,185 @@
+---
+title: Halo
+description: Halo 文档导航页 —— 安装部署、初始化站点，按主题浏览使用指南与开发者指南，以及在线 Demo、常见问题与社区入口。
+footer: false
+---
+
+import { Link } from '@rspress/core/theme';
+import styles from './product_landing.module.css';
+
+# Halo
+
+<div className={`${styles.landing} rp-not-doc`}>
+<div className={styles.hero}>
+
+  <div className={styles.heroBody}>
+    <p className={styles.heroDesc}>
+      Halo 是一款强大易用的开源建站工具，可以通过丰富的主题和插件搭建任何类型的站点，从个人博客、企业官网到内容社区均可覆盖。这里汇集了安装部署、站点初始化、日常内容管理，以及主题与插件开发所需的全部文档。
+    </p>
+    <div className={styles.heroBtns}>
+
+      <Link className={styles.heroBtn} href="https://releases.halo.run/">产品动态</Link>
+      <Link className={styles.heroBtn} href="https://community.fit2cloud.com/#/products/halo/downloads">下载安装</Link>
+      <Link className={styles.heroBtn} href="https://demo.halocms.site">快速体验</Link>
+      <Link className={styles.heroBtn} href="https://www.lxware.cn/halo?code=mcYhwMkn">购买指南</Link>
+    </div>
+  </div>
+
+  <Link className={styles.videoCard} href="https://www.bilibili.com/video/BV15x4y1U7RU/">
+    <span className={styles.videoCover}>
+      <img className={`${styles.videoCoverLogo} no-zoom`} src={"/halo/img/halo/video/halo-logo-white.png"} alt="Halo" />
+      <span className={styles.videoCoverText}>开源建站工具</span>
+      <span className={styles.videoCoverPlay} aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M7 5.8v12.4c0 .5.55.8.97.53l9.9-6.2a.62.62 0 0 0 0-1.06l-9.9-6.2A.62.62 0 0 0 7 5.8z" />
+        </svg>
+      </span>
+    </span>
+    <span className={styles.videoHint}>Halo 官方 · 05:41</span>
+  </Link>
+</div>
+
+<div className={styles.section}>
+  <div className={styles.sectionHead}>
+    <span className={styles.sectionIcon}>
+
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+  <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+  <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+  <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+</svg>
+
+    </span>
+
+## 立即体验
+
+  </div>
+  <div className={styles.sectionBody}>
+    <div className={styles.linkGridSingle}>
+      <div className={styles.linkGroup}>
+        <span className={styles.groupTitle}>在线 Demo 环境</span>
+        <span className={styles.groupDesc}>账号 demo，密码 P@ssw0rd123..，仅供功能体验，请勿上传或填写敏感信息。</span>
+        <div className={styles.subLinkRow}>
+          <Link className={styles.subLink} href="https://demo.halocms.site">演示站点 ↗</Link>
+          <Link className={styles.subLink} href="https://demo.halocms.site/console">管理后台 ↗</Link>
+        </div>
+      </div>
+      <div className={styles.linkGroup}>
+        <span className={styles.groupTitle}>本地 Docker 运行</span>
+        <div className={styles.subLinkRow}>
+          <Link className={styles.subLink} href="/guide/install/docker">Docker 部署</Link>
+          <Link className={styles.subLink} href="/guide/install/docker-compose">Docker Compose 部署</Link>
+          <Link className={styles.subLink} href="/guide/install">完整安装文档</Link>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className={styles.section}>
+  <div className={styles.sectionHead}>
+    <span className={styles.sectionIcon}>
+
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+</svg>
+
+    </span>
+
+## 快速开始
+
+  </div>
+  <div className={styles.sectionBody}>
+    <div className={styles.linkGridSingle}>
+      <div className={styles.linkGroup}>
+        <span className={styles.groupTitle}>安装之后</span>
+        <div className={styles.subLinkRow}>
+          <Link className={styles.subLink} href="/guide/setup">初始化站点</Link>
+          <Link className={styles.subLink} href="/guide/first-post">发布第一篇文章</Link>
+          <Link className={styles.subLink} href="/guide/use/backup">备份与恢复</Link>
+          <Link className={styles.subLink} href="https://www.halo.run/store/apps">应用市场 ↗</Link>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className={styles.section}>
+  <div className={styles.sectionHead}>
+    <span className={styles.sectionIcon}>
+
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <rect x="3" y="3" width="7" height="7" rx="1" />
+  <rect x="14" y="3" width="7" height="7" rx="1" />
+  <rect x="14" y="14" width="7" height="7" rx="1" />
+  <rect x="3" y="14" width="7" height="7" rx="1" />
+</svg>
+
+    </span>
+
+## 按主题浏览
+
+  </div>
+  <div className={styles.sectionBody}>
+    <div className={styles.linkGridSingle}>
+      <div className={styles.linkGroup}>
+        <span className={styles.groupTitle}>使用 Halo</span>
+        <div className={styles.subLinkRow}>
+          <Link className={styles.subLink} href="/guide/use/posts">文章</Link>
+          <Link className={styles.subLink} href="/guide/use/themes">主题</Link>
+          <Link className={styles.subLink} href="/guide/use/attachments">附件</Link>
+          <Link className={styles.subLink} href="/guide/use/plugins">插件</Link>
+          <Link className={styles.subLink} href="/guide/use/settings">站点设置</Link>
+          <Link className={styles.subLink} href="/guide/use/users">用户与权限</Link>
+        </div>
+      </div>
+      <div className={styles.linkGroup}>
+        <span className={styles.groupTitle}>开发与扩展</span>
+        <div className={styles.subLinkRow}>
+          <Link className={styles.subLink} href="/developer-guide/plugin/introduction">插件开发</Link>
+          <Link className={styles.subLink} href="/developer-guide/theme/prepare">主题开发</Link>
+          <Link className={styles.subLink} href="/developer-guide/restful-api/introduction">RESTful API</Link>
+          <Link className={styles.subLink} href="/developer-guide/core/prepare">系统开发</Link>
+          <Link className={styles.subLink} href="/developer-guide/app-store/publish-app">发布应用</Link>
+          <Link className={styles.subLink} href="/developer-guide/form-schema">表单定义</Link>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className={styles.section}>
+  <div className={styles.sectionHead}>
+    <span className={styles.sectionIcon}>
+
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <circle cx="12" cy="12" r="10" />
+  <circle cx="12" cy="12" r="4" />
+  <line x1="4.93" y1="4.93" x2="9.17" y2="9.17" />
+  <line x1="14.83" y1="14.83" x2="19.07" y2="19.07" />
+  <line x1="14.83" y1="9.17" x2="19.07" y2="4.93" />
+  <line x1="4.93" y1="19.07" x2="9.17" y2="14.83" />
+</svg>
+
+    </span>
+
+## 更多帮助
+
+  </div>
+  <div className={styles.sectionBody}>
+    <div className={styles.linkGridSingle}>
+      <div className={styles.linkGroup}>
+        <div className={styles.subLinkRow}>
+          <Link className={styles.subLink} href="/guide/faq">常见问题</Link>
+          <Link className={styles.subLink} href="/guide/install/config">安装配置说明</Link>
+          <Link className={styles.subLink} href="/guide/migrate-from-1.x">从 1.x 迁移</Link>
+          <Link className={styles.subLink} href="https://bbs.halo.run">社区论坛 ↗</Link>
+          <Link className={styles.subLink} href="https://github.com/orgs/halo-dev/discussions">GitHub 讨论区 ↗</Link>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
