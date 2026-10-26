@@ -49,7 +49,7 @@ pnpm check:ci                     # Rslint + Rsfmt 检查（提交前执行）
 
 增加版本时，在 `portal/projects.json` 对应产品的 `versions` 中登记，并添加该版本目录、侧栏和 `content/<产品>/sidebars.json` 条目；版本和语言切换由 Rspress 默认导航提供。版本切换保留当前页面路径；目标版本没有该页面时回到该版本首页。
 
-Halo 文档直接从 [halo-dev/docs](https://github.com/halo-dev/docs) 复制，保留 `_nav.json`、`_meta.json` 和原有内部路径；其首页与其他产品一样使用统一的产品概览风格，位于 `content/halo/v2/zh/index.mdx`。当前内容对应 `halo-dev/docs@49cb3e2`（2026-10-16），来源记录在 `content/halo/source.json`；后续同步以该提交为基线。
+Halo 文档直接从 [halo-dev/docs](https://github.com/halo-dev/docs) 复制，保留 `_nav.json`、`_meta.json` 和原有内部路径；其首页与其他产品一样使用统一的产品概览风格，位于 `content/halo/v2/zh/index.mdx`。当前内容对应 `halo-dev/docs@86465eb`（2026-10-26），来源记录在 `content/halo/source.json`；后续同步以该提交为基线。
 
 参考仓库没有完整的产品英文文档，目前仅导入真实中文内容，没有生成或展示虚假的英文翻译。
 
