@@ -1957,6 +1957,10 @@ def entries_from_page(text: str) -> list[dict]:
     return out
 
 
+# ⚠️ 本模板由 .format(**product_prompt_vars()) 渲染，**模板里的 JSON 示例花括号必须写成双份**
+#    （{{ }}）：单份会被 str.format 当成字段名解析。2026-10-18 / 10-25 两周里 jumpserver 与
+#    cordys 正是因此抛 `KeyError: '"items"'` 整轮失败，还被 workflow 误报成「芝麻取数失败」。
+#    只有 {product} 这类真正的占位符才保留单份 —— 改这段提示词时务必复核花括号。
 REUSE_DEDUP_SYSTEM = """你是 {product} 官方文档的编辑，正在做「入库前查重」。
 
 下面给你两组条目：
@@ -1969,8 +1973,8 @@ REUSE_DEDUP_SYSTEM = """你是 {product} 官方文档的编辑，正在做「入
 残留的 lion 应删除）。反之，问的是不同现象、或结论不同（需要不同处理动作）就算不同的事。
 
 只输出 JSON，不要任何解释文字。格式：
-{"items":[{"title":"原样复制待入库条目的标题","duplicate":true或false,
-"duplicate_of":"若重复，填页面已有条目的标题；否则留空字符串"}]}
+{{"items":[{{"title":"原样复制待入库条目的标题","duplicate":true或false,
+"duplicate_of":"若重复，填页面已有条目的标题；否则留空字符串"}}]}}
 要求：待入库条目**必须逐条给出判断**，条数与输入一致，标题原样复制。"""
 
 

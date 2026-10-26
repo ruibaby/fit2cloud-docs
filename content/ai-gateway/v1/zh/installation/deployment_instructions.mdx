@@ -11,6 +11,8 @@ description: 介绍 1Panel AI 网关安装部署的说明
 
 部署边界：软件通过官方容器镜像交付，并提供部署参考；不负责安装和运维外部负载均衡、PostgreSQL、Redis 或可选的 Elasticsearch 集群。
 
+自 v1.5.0 起，以独立方式（在线 / 离线安装）部署网关时，支持从已安装的 1Panel 网关应用导入数据，便于将原先通过 1Panel 应用商店部署的网关迁移到独立部署形态。
+
 默认运行参数如下：
 
 <div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"16px 0 8px"}}>表 1  1Panel AI 网关默认运行参数</div>
