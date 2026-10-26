@@ -6,3 +6,97 @@
 .portal-nav {
   box-shadow: none;
 }
+
+/* Halo docs keep these content classes from halo-dev/docs, whose custom theme
+   styled them. Mirror those rules so badges sit in one row and image links get
+   their play overlay instead of an external-link arrow. */
+.rp-doc .rp-project-header p {
+  margin-block: 8px;
+}
+
+.rp-doc .rp-project-header__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+.rp-doc .rp-project-header__badges a {
+  flex: none;
+}
+
+.rp-doc .rp-project-header a[target="_blank"]::after {
+  display: none;
+  content: none;
+}
+
+.rp-doc .rp-project-header a:has(img) {
+  display: inline-block;
+  line-height: 0;
+  text-decoration: none;
+}
+
+.rp-doc .rp-project-header img {
+  cursor: pointer;
+}
+
+.rp-doc .rp-image-link {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 6px;
+  cursor: pointer;
+  line-height: 0;
+  vertical-align: top;
+}
+
+.rp-doc .rp-image-link:hover {
+  text-decoration: none;
+}
+
+.rp-doc .rp-image-link[target="_blank"]::after {
+  display: none;
+  content: none;
+}
+
+.rp-doc .rp-image-link__play {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: grid;
+  width: 64px;
+  height: 64px;
+  margin: 0;
+  color: #fff;
+  background: rgb(0 0 0 / 32%);
+  border: 1px solid rgb(255 255 255 / 76%);
+  border-radius: 50%;
+  transform: none;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+  place-items: center;
+  pointer-events: none;
+}
+
+.rp-doc .rp-image-link__play svg {
+  width: 30px;
+  height: 30px;
+}
+
+.rp-doc .rp-image-link:hover .rp-image-link__play {
+  background: rgb(0 0 0 / 44%);
+  transform: scale(1.08);
+}
+
+.rp-doc .rp-image-link:focus-visible {
+  outline: 2px solid var(--rp-c-brand);
+  outline-offset: 3px;
+}
+
+.rp-doc .rp-image-link img {
+  display: block;
+  border-radius: 6px;
+  cursor: pointer;
+}
