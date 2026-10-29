@@ -325,6 +325,68 @@
                   "id": "manual/admin/console/assets/web_assets",
                   "label": "Web资产",
                   "key": "doc:使用手册/管理员手册/控制台/资产管理/Web资产"
+                },
+                {
+                  "type": "category",
+                  "label": "资产要求",
+                  "collapsed": true,
+                  "items": [
+                    {
+                      "type": "doc",
+                      "id": "manual/admin/console/assets/asset_requirements/telnet",
+                      "label": "Telnet",
+                      "key": "doc:使用手册/管理员手册/控制台/资产管理/资产要求/Telnet"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "manual/admin/console/assets/asset_requirements/linux_ssh",
+                      "label": "Linux SSH",
+                      "key": "doc:使用手册/管理员手册/控制台/资产管理/资产要求/Linux SSH"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "manual/admin/console/assets/asset_requirements/linux_vnc",
+                      "label": "Linux VNC",
+                      "key": "doc:使用手册/管理员手册/控制台/资产管理/资产要求/Linux VNC"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "manual/admin/console/assets/asset_requirements/macos_vnc",
+                      "label": "macOS VNC",
+                      "key": "doc:使用手册/管理员手册/控制台/资产管理/资产要求/macOS VNC"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "manual/admin/console/assets/asset_requirements/windows_ssh",
+                      "label": "Windows SSH",
+                      "key": "doc:使用手册/管理员手册/控制台/资产管理/资产要求/Windows SSH"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "manual/admin/console/assets/asset_requirements/windows_vnc",
+                      "label": "Windows VNC",
+                      "key": "doc:使用手册/管理员手册/控制台/资产管理/资产要求/Windows VNC"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "manual/admin/console/assets/asset_requirements/windows_rdp",
+                      "label": "Windows RDP",
+                      "key": "doc:使用手册/管理员手册/控制台/资产管理/资产要求/Windows RDP"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "manual/admin/console/assets/asset_requirements/mysql",
+                      "label": "MySQL",
+                      "key": "doc:使用手册/管理员手册/控制台/资产管理/资产要求/MySQL"
+                    },
+                    {
+                      "type": "doc",
+                      "id": "manual/admin/console/assets/asset_requirements/kubernetes",
+                      "label": "Kubernetes",
+                      "key": "doc:使用手册/管理员手册/控制台/资产管理/资产要求/Kubernetes"
+                    }
+                  ],
+                  "key": "cat:使用手册/管理员手册/控制台/资产管理/资产要求"
                 }
               ],
               "key": "cat:使用手册/管理员手册/资产管理"

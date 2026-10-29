@@ -71,8 +71,8 @@
     "desc": "新一代的开源持续测试工具",
     "logo": "MeterSphere-辅助图形-紫色.png",
     "description": "MeterSphere 是新一代的开源持续测试工具，让测试工作更简单、更高效，不再成为持续交付的瓶颈。",
-    "href": "https://metersphere.io/docs/v3.x/",
-    "versions": ["v1"],
+    "href": "/metersphere/",
+    "versions": ["v3", "v2"],
     "locales": ["zh"],
     "website": "https://metersphere.io/"
   },

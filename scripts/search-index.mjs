@@ -20,7 +20,7 @@ export async function generateSearchIndex() {
           ),
       )
     ).flat();
-  for (const p of projects.filter((p) => p.id !== "metersphere")) {
+  for (const p of projects) {
     for (const [i, version] of p.versions.entries()) {
       for (const lang of p.locales) {
         const root = `content/${p.id}/${version}/${lang}`;

@@ -1,13 +1,14 @@
 {
   "repository": "fit2cloud-docs",
-  "commit": "994c5ada815bea1699ce294d98ce2fb068fdf087",
+  "commit": "6455c624809e90d2ee25751e01e539c0b392db9c",
   "documents": {
     "1panel": 218,
     "ai-gateway": 30,
-    "jumpserver": 463,
+    "jumpserver": 472,
     "maxkb": 156,
     "dataease": 246,
     "sqlbot": 63,
+    "metersphere": 171,
     "cordys": 59
   }
 }

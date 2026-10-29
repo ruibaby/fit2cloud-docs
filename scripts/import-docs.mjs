@@ -33,9 +33,7 @@ const walk = async (root) =>
     )
   ).flat();
 const counts = {};
-for (const project of projects.filter(
-  (p) => p.id !== "metersphere" && p.id !== "halo",
-)) {
+for (const project of projects.filter((p) => p.id !== "halo")) {
   const dest = path.resolve("content", project.id);
   await mkdir(dest, { recursive: true });
   const sidebars = {};
@@ -129,10 +127,16 @@ for (const project of projects.filter(
         '<a data-portal-link href="$2">$1</a>',
       );
       text = text.replace(
-        /^([ \t]*```)(mysql|pgsql|env|node)(?=\s|$)/gm,
+        /^([ \t]*```)(mysql|pgsql|env|node|pom\.xml)(?=\s|$)/gm,
         (_, fence, lang) =>
           fence +
-          { env: "dotenv", node: "bash", mysql: "sql", pgsql: "sql" }[lang],
+          {
+            env: "dotenv",
+            node: "bash",
+            mysql: "sql",
+            pgsql: "sql",
+            "pom.xml": "xml",
+          }[lang],
       );
       // Rspress checks local filenames before URL decoding.
       text = text.replace(

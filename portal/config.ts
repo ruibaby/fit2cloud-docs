@@ -67,7 +67,7 @@ export function projectSidebar(id: string) {
 }
 export async function createSiteConfig(id = "portal"): Promise<UserConfig> {
   const project = projects.find((p) => p.id === id);
-  if (id !== "portal" && (!project || id === "metersphere"))
+  if (id !== "portal" && !project)
     throw new Error(`Unknown docs project: ${id}`);
   const [
     { pluginSass },

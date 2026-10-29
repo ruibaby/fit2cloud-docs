@@ -14,6 +14,16 @@ title: 常见问题
 
 1Panel 安装脚本不支持 Anolis 系统，需更换为受支持的操作系统后再安装。1Panel 支持主流 Linux 发行版本（基于 Debian / RedHat，包括国产操作系统），常规 Ubuntu 等系统均支持。
 
+### 1.2 V1 升级 V2 时没有节点也要执行从节点命令吗？
+
+**问题**：原来 V1 没有节点，升级 V2 时还需要执行从节点相关的升级命令吗？
+
+**处理方式**：
+
+不需要。V1 没有节点时按主节点方式升级即可：先执行 `1panel-migrator upgrade core`，确认 V2 服务启动成功后再执行 `1panel-migrator upgrade website`。`1panel-migrator upgrade agent` 及在主节点「节点管理」页面添加从节点的步骤仅用于升级为从节点的场景。
+
+完整升级流程请参阅[操作步骤](../installation/v1-migrate-steps.mdx)。
+
 ## 2 主机与系统管理
 
 ### 2.1 1Panel 服务无法启动，报 GODEBUG "tlskyber" 错误怎么办？
@@ -65,6 +75,14 @@ sudo systemctl show-environment | grep '^GODEBUG='
 
 **注意**：修改全局配置会影响之后启动的其他服务；终端执行 `unset GODEBUG` 只影响当前终端，不能代替修改 systemd 配置。若不便改动全局配置，也可只在 `/etc/systemd/system` 下的 `1panel-core.service` 与 `1panel-agent.service` 中，为 `[Service]` 段补充 `UnsetEnvironment=GODEBUG`，使该变量不传入 1Panel 进程。
 
+### 2.2 文件管理里为什么看不到 /etc/fstab？
+
+**问题**：面板文件管理里明明有 /etc/fstab，为什么列表里不显示？
+
+**处理方式**：
+
+文件列表默认每页显示 100 条，文件较多时目标文件会排在第二页。点击下一页，或把每页显示条数改为 500 条即可看到。
+
 ## 3 应用商店与容器
 
 ### 3.1 应用安装拉取镜像失败怎么办？
@@ -100,6 +118,22 @@ sudo systemctl show-environment | grep '^GODEBUG='
 应用安装失败、镜像拉取超时，可在【容器】-【配置】中配置镜像加速器进行优化，加速地址填写 `https://docker.1panel.live`。若配置后拉取应用镜像仍然失败，可在论坛中进一步讨论。
 
 ## 4 网站与数据库管理
+
+### 4.1 PHP 高危漏洞如何升级修复？
+
+**问题**：PHP 出现高危漏洞，1Panel 里怎么升级 PHP 版本修复？
+
+**处理方式**：
+
+官方已发布单独的 PHP 与 Node.js 运行环境安全升级说明，请用户尽快升级 PHP 环境。完整升级说明请参阅[PHP 漏洞修复](../faq/runtime-security-upgrade.mdx)。
+
+### 4.2 网站如何切换 PHP 版本？
+
+**问题**：已创建的网站要切换 PHP 版本，只能删除重建吗？
+
+**处理方式**：
+
+不需要删除重建。在网站列表点击【配置】，进入基本配置的 PHP 项即可切换：静态页面类型的网站可在此选择 PHP 运行环境切换为 PHP 类型网站，PHP 类型的网站可以切换不同的 PHP 运行环境。
 
 ## 5 AI 网关与智能路由
 

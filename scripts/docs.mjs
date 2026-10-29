@@ -15,10 +15,7 @@ const root = fileURLToPath(new URL("../", import.meta.url));
 process.chdir(root);
 const cli = path.join(root, "node_modules/rstack/bin/rs.js");
 const projects = JSON.parse(await readFile("portal/projects.json", "utf8"));
-const sites = [
-  "portal",
-  ...projects.filter((p) => p.id !== "metersphere").map((p) => p.id),
-];
+const sites = ["portal", ...projects.map((p) => p.id)];
 const command = process.argv[2] || "dev";
 const option = (name) => process.argv[process.argv.indexOf(name) + 1];
 const project = process.argv.includes("--project")
