@@ -115,7 +115,7 @@ MerterSphere 应用数据进行了本地的持久化存储，所以 `msctl unins
 sql 初始化失败导致，需要连接 metersphere 数据库手动执行sql。
 
 * 到 github 源码上 https://github.com/metersphere/metersphere/tree/v2.3.1/system-setting/backend/src/main/resources/db/migration 下载对应文件名带 86 的 flyway sql。此处链接v2.3.1为安装的版本号，如果不是该版本，可切换到目标版本再下载sql文件.
-![! 安装部署-500错误](</img/metersphere-v2/faq/sql1.png>)\{ width="900px" \}
+![! 安装部署-500错误](</img/metersphere-v2/faq/sql1.png>)
 *  将文件上传到 MeterSphere 服务器，并将sql文件 copy 到容器中
 ```
     #将备份的sql数据复制至mysql容器
@@ -127,12 +127,12 @@ sql 初始化失败导致，需要连接 metersphere 数据库手动执行sql。
     #导入数据库文件
     source /V86__v1.10.1_release.sql
 ```
- ![! 安装部署-500错误](</img/metersphere-v2/faq/sql12.png>)\{ width="900px" \}
+ ![! 安装部署-500错误](</img/metersphere-v2/faq/sql12.png>)
 * 全部执行成功后，修改 metersphere_version 表对应版本 86 的 success 值为1，退出mysql容器然后 msctl reload 重启服务即可。
  ```
  update metersphere_version set success=1  where version=86;
 ```
- ![! 安装部署-500错误](</img/metersphere-v2/faq/sql3.png>)\{ width="900px" \}
+ ![! 安装部署-500错误](</img/metersphere-v2/faq/sql3.png>)
 
 
 :::
@@ -499,7 +499,7 @@ flushall
 
 
 ## 37 日志中提示：`java.io.FileNotFoundException：/opt/metersphere/logs/metersphere/ms-jmeter-run-log.log(no such file or directory)`
-![! 安装部署-500错误](</img/metersphere-v2/faq/FileNotFoundException.jpg>)\{ width="900px" \}
+![! 安装部署-500错误](</img/metersphere-v2/faq/FileNotFoundException.jpg>)
 
 :::note
 
@@ -534,7 +534,7 @@ spring.datasource.quartz.hikari.maximum-pool-size=你想要的数值
 :::
 
 
-![! metersphere导入格式](</img/metersphere-v2/faq/mysql_yml.jpg>)\{ width="900px" \}
+![! metersphere导入格式](</img/metersphere-v2/faq/mysql_yml.jpg>)
 
 ## 40 安装部署时报错：`Creating network "metersphere_ms-network" with driver "brige" Pool overlaps with other one on this address space`
 

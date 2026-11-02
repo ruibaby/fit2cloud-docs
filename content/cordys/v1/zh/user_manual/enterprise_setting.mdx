@@ -195,6 +195,8 @@ description: 介绍 Cordys CRM 企业设置中的界面设置、三方设置、�
 
 #### 3 企业微信工作台访问 Cordys CRM
 
+在企业微信管理后台将应用的**主页地址**配置为 `https://你的域名?oauth_start=wecom`，成员即可从企业微信工作台免登录访问 Cordys CRM。
+
 <img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/cordys/img/cordys/user_manual/wecom_workbench2.png"} alt="图 13  工作台访问" />
 
 <div style={{textAlign:"center",color:"#8a8f99",fontSize:"13px",margin:"6px 0 20px"}}>图 13  工作台访问</div>
@@ -272,13 +274,9 @@ description: 介绍 Cordys CRM 企业设置中的界面设置、三方设置、�
     - 添加网页应用（此功能可选）。如果需要在钉钉工作台访问 Cordys CRM，则必须添加此功能。
   - **配置网页应用**
       - **PC端访问地址**  
-        `https://你的域名`  
-        或  
-        `https://login.dingtalk.com/oauth2/auth?redirect_uri=https://你的域名&response_type=code&client_id=dingxxxxxxx&scope=openid&state=dddd&prompt=consent`
+        `https://你的域名?oauth_start=ding-talk`
       - **移动端访问地址**  
-        `https://你的域名`  
-        或  
-        `https://login.dingtalk.com/oauth2/auth?redirect_uri=https://你的域名%2Fmobile&response_type=code&client_id=dingxxxxxxx&scope=openid&state=dddd&prompt=consent`
+        `https://你的域名`
     
 <img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/cordys/img/cordys/user_manual/dingtalk_net_work_settings2.png"} alt="图 20  网页应用配置" />
 
@@ -420,10 +418,10 @@ description: 介绍 Cordys CRM 企业设置中的界面设置、三方设置、�
 
   - **配置网页应用**
       - **桌面端主页**   
-        `https://open.feishu.cn/open-apis/authen/v1/authorize?app_id=cli_****************&redirect_uri=https%3A%2F%2F你的域名&state=LARK`
+        `https://你的域名`
 
       - **移动端访问地址**  
-        `https://open.feishu.cn/open-apis/authen/v1/authorize?app_id=cli_****************&redirect_uri=https%3A%2F%2F你的域名&state=LARK`
+        `https://你的域名`
 
     
 <img style={{display:"block",margin:"16px auto",maxWidth:"100%"}} src={"/cordys/img/cordys/user_manual/lark_net_work_settings2.png"} alt="图 33  网页应用配置" />

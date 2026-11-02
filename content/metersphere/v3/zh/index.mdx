@@ -16,12 +16,13 @@ import styles from './product_landing.module.css';
     <div className={styles.heroDesc}>
       MeterSphere 是新一代的开源持续测试工具，内置基于大模型的 AI 助手，覆盖测试用例管理、
       测试计划执行、缺陷管理、接口测试与接口自动化，集 Postman 的易用与 JMeter 的灵活于一体，
-      并以「系统-组织-项目」分层设计支撑团队协作，让软件测试工作更简单、更高效，
+      并以“系统-组织-项目”分层设计支撑团队协作，让软件测试工作更简单、更高效，
       不再成为持续交付的瓶颈。
     </div>
     <div className={styles.heroBtns}>
       <Link className={styles.heroBtn} href="/about/changelog">产品动态</Link>
       <Link className={styles.heroBtn} href="https://community.fit2cloud.com/#/products/metersphere/downloads">下载安装</Link>
+      <Link className={styles.heroBtn} href="https://demo.metersphere.com/">快速体验</Link>
       <Link className={styles.heroBtn} href="https://metersphere.io/v3/pricing.html">如何购买</Link>
     </div>
   </div>
@@ -93,7 +94,7 @@ import styles from './product_landing.module.css';
         </div>
       </div>
       <div className={styles.linkGroup}>
-        <span className={styles.groupLabel}>快速开始</span>
+        <span className={styles.groupLabel}>快速入门</span>
         <div className={styles.subLinkRow}>
           <Link className={styles.subLink} href="/quick_start/test_case">使用用例管理</Link>
           <Link className={styles.subLink} href="/quick_start/api_test">使用接口测试</Link>
@@ -144,11 +145,11 @@ import styles from './product_landing.module.css';
         <span className={styles.groupLabel}>平台管理</span>
         <div className={styles.subLinkRow}>
           <Link className={styles.subLink} href="/user_manual/general">通用功能</Link>
-          <Link className={styles.subLink} href="/user_manual/workstation/index">工作台</Link>
+          <Link className={styles.subLink} href="/user_manual/workstation">工作台</Link>
           <Link className={styles.subLink} href="/user_manual/project_management/overview">项目管理</Link>
           <Link className={styles.subLink} href="/user_manual/system_management/intro">系统设置</Link>
           <Link className={styles.subLink} href="/user_manual/personal_center/information">个人中心</Link>
-          <Link className={styles.subLink} href="/user_manual/x-pack/intro">X-Pack</Link>
+          <Link className={styles.subLink} href="/user_manual/x-pack/intro">企业版功能</Link>
         </div>
       </div>
     </div>
@@ -211,14 +212,7 @@ import styles from './product_landing.module.css';
           <Link className={styles.subLink} href="/ask_question/install_question">安装部署常见问题</Link>
           <Link className={styles.subLink} href="/ask_question/api_question">接口测试常见问题</Link>
           <Link className={styles.subLink} href="/ask_question/ai_service">如何接入 AI 大模型？</Link>
-          <Link className={styles.subLink} href="/case_studies/user_cases">客户案例</Link>
-        </div>
-      </div>
-      <div className={styles.linkGroup}>
-        <Link className={styles.groupTitle} href="/about/contact">联系我们</Link>
-        <div className={styles.subLinkRow}>
-          <Link className={styles.subLink} href="/enterprise">申请企业版试用</Link>
-          <Link className={styles.subLink} href="https://bbs.fit2cloud.com/c/ms/8">社区论坛</Link>
+          <Link className={styles.subLink} href="/case_studies/user_cases">最佳实践</Link>
         </div>
       </div>
     </div>

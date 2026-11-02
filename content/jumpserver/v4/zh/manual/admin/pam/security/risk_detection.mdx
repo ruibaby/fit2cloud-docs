@@ -27,16 +27,17 @@ title: 风险检测
 
 
 - 详细参数说明:
-| 参数    | 说明 |
-|---------|------|
-| 名称    | 风险检测任务名称 |
-| 资产    | 需检测账号的资产 |
-| 节点    | 需检测账号的资产节点组 |
-| 引擎    | 检查账号密码强度、账号密码是否重复、是否为常用密码 |
-| 收件人  | 目前仅支持邮件发送 |
-| 周期执行    | 周期执行设置 |
-|激活   | 任务是否生效|
-|备注     |	非必填项，检测任务备注信息|
+<tbody>
+  <tr><td style={{padding:'8px'}}>基本设置</td><td style={{padding:'8px'}}>名称</td><td style={{padding:'8px'}}>风险检测任务名称。</td></tr>
+  <tr><td style={{padding:'8px'}}>基本设置</td><td style={{padding:'8px'}}>资产</td><td style={{padding:'8px'}}>需检测账号的资产。</td></tr>
+  <tr><td style={{padding:'8px'}}>基本设置</td><td style={{padding:'8px'}}>节点</td><td style={{padding:'8px'}}>需检测账号的资产节点组。</td></tr>
+  <tr><td style={{padding:'8px'}}>基本设置</td><td style={{padding:'8px'}}>引擎</td><td style={{padding:'8px'}}>检查账号密码强度、账号密码是否重复、是否为常用密码。</td></tr>
+  <tr><td style={{padding:'8px'}}>执行设置</td><td style={{padding:'8px'}}>收件人</td><td style={{padding:'8px'}}>检测结果接收人，目前仅支持邮件发送。</td></tr>
+  <tr><td style={{padding:'8px'}}>执行设置</td><td style={{padding:'8px'}}>周期执行</td><td style={{padding:'8px'}}>周期执行设置。</td></tr>
+  <tr><td style={{padding:'8px'}}>其它设置</td><td style={{padding:'8px'}}>激活</td><td style={{padding:'8px'}}>勾选后任务生效。</td></tr>
+  <tr><td style={{padding:'8px'}}>其它设置</td><td style={{padding:'8px'}}>备注</td><td style={{padding:'8px'}}>非必填项，检测任务备注信息。</td></tr>
+</tbody>
+
 
 
 - 点击 **执行** 按钮可立即运行检测任务，点击 **更多** 可编辑、删除或复制任务

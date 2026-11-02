@@ -69,3 +69,28 @@ title: 常见问题
 **处理方式**：
 
 在列表中点击表头的全选即可勾选全部记录，再执行批量删除。
+
+## 4 版本升级
+
+### 4.1 升级后 MySQL 容器启动失败或反复重启怎么办？
+
+**问题**：升级后终端提示 `dependency failed to start: container mysql is unhealthy`，cordys-crm 容器无法启动，`docker logs mysql` 中 MariaDB 反复报错退出：
+
+```
+[ERROR] mariadbd: Error writing file './ddl_recovery.log' (Errcode: 1 "Operation not permitted")
+[ERROR] Aborting
+```
+
+**处理方式**：
+
+原因为 CentOS 系统上 SELinux 与 bind mount 挂载冲突：SELinux 阻止容器内的 MariaDB 进程写入宿主机挂载的数据目录，MySQL 容器健康检查失败反复重启，依赖它的 cordys-crm 容器也随之无法启动。
+
+处理方法：编辑 docker-compose-mysql.yml，将 MySQL 的 volumes 调整为以下配置，在挂载路径末尾添加 `:Z` 标记，由 Docker 自动为宿主机目录设置 SELinux 安全标签（`${CORDYS_BASE}` 按实际安装路径替换，默认 `/opt`）：
+
+```yaml
+volumes:
+  - ${CORDYS_BASE}/cordys/conf/mysql/my.cnf:/etc/mysql/conf.d/my.cnf:Z
+  - cordys-mysql-data:/opt/cordys/data/mysql:Z
+```
+
+若日志中还出现 `Found option without preceding group in config file: /etc/mysql/conf.d/my.cnf`，可先尝试取消宿主机 my.cnf（默认 `/opt/cordys/conf/mysql/my.cnf`）中 `[mysqld]` 段下被注释的配置项，然后执行 `csctl restart` 重启服务。若能恢复正常，则无需调整上述挂载配置。

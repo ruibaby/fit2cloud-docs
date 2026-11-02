@@ -1,6 +1,6 @@
 {
   "repository": "fit2cloud-docs",
-  "commit": "6455c624809e90d2ee25751e01e539c0b392db9c",
+  "commit": "e3b2f942de4073f2f5d6dce450587108b811f9ad",
   "documents": {
     "1panel": 218,
     "ai-gateway": 30,
@@ -8,7 +8,7 @@
     "maxkb": 156,
     "dataease": 246,
     "sqlbot": 63,
-    "metersphere": 171,
+    "metersphere": 170,
     "cordys": 59
   }
 }
