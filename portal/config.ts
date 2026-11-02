@@ -131,10 +131,9 @@ export async function createSiteConfig(id = "portal"): Promise<UserConfig> {
       ),
     ),
     siteOrigin,
-    route: { cleanUrls: true },
-    llms:
-      id === "portal"
-        ? {
+    ...(id === "portal"
+      ? {
+          llms: {
             llmsTxt: ({ title, sections }) =>
               [
                 `# ${title}`,
@@ -165,8 +164,9 @@ export async function createSiteConfig(id = "portal"): Promise<UserConfig> {
                       .join("\n")}`,
                 ),
               ].join("\n\n") + "\n",
-          }
-        : true,
+          },
+        }
+      : {}),
     mediumZoom: { selector: ".rspress-doc img:not(.no-zoom)" },
     markdown: {
       showLineNumbers: id === "halo",
